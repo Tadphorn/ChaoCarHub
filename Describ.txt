@@ -1,0 +1,37 @@
+components
+    - Navbar
+    - Footer
+
+    Home
+    - HeroInHome
+    - PopularCar
+    - Promote
+    - Question
+    - SearchCar
+
+    MyRental
+    - HeroUser
+    - StatusBar
+      card
+        - CheckOut_Card
+        - PickUpCar_Card
+        - ReturnCar_Card
+        - History_Card
+    
+    Admin
+    - HeroUser
+    - AccessBar
+    - Table_Cus
+    - Table_Pay
+    - Table_Return
+    - Table_Car
+    
+views
+    - Home
+    - Car
+    - Sign_in
+    - Sign_up
+    - Pay
+    - DetailCar
+    - MyRental
+    - Admin
