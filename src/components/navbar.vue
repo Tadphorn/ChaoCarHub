@@ -15,37 +15,35 @@
         <div id="navbarBasicExample" class="navbar-menu ">
             <div class="navbar-end ">
                 <div class="navbar-item">
-                    <a href="index.html">
+                    <router-link to="/">
                         <img
                             src="https://media.discordapp.net/attachments/1072181252964233328/1073627391571808316/1177455.png">
-                    </a>
-
-                </div>
-                <div class="navbar-item">
-                    <a href="view_car.html">
-                        <img
-                            src="https://media.discordapp.net/attachments/1072181252964233328/1073627928706949120/9610755.png">
-                    </a>
+                    </router-link>
 
                 </div>
                 <div class="navbar-item has-dropdown is-hoverable has-text-centered">
-                    <a class="navbar-link" href="me_checkout.html">
-                        <img
-                            src="https://media.discordapp.net/attachments/1072181252964233328/1073622193784754257/1177568.png">
+                    <a class="navbar-link">
+                        <router-link to="/myrent">
+                            <img
+                                src="https://media.discordapp.net/attachments/1072181252964233328/1073622193784754257/1177568.png">
+                        </router-link>
                     </a>
                     <div class="navbar-dropdown">
                         <a class="navbar-item">
-                            <a href="sign_in.html">
+                            <router-link to="/sign_in">
                                 <strong>Sign in</strong>
-                            </a>
+                            </router-link>
                         </a>
                         <a class="navbar-item">
-                            <a href="sign_up.html">
+                            <router-link to="/sign_up">
                                 <strong>Sign up</strong>
-                            </a>
+                            </router-link>
                         </a>
                     </div>
                 </div>
+                <div class="navbar-item">
+                </div>
+            </div>
         </div>
-    </div>
-</nav></template>
+    </nav>
+</template>

@@ -1,5 +1,5 @@
 <script setup>
-import navbar1 from './components/Navbar.vue';
+import navbar1 from './components/navbar.vue';
 import { RouterView } from "vue-router";
 </script>
 
