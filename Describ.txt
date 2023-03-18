@@ -9,7 +9,7 @@ components
     - Question
     - SearchCar
 
-    MyRental
+    MyRent
     - HeroUser
     - StatusBar
       card
@@ -28,10 +28,9 @@ components
     
 views
     - Home
-    - Car
     - Sign_in
     - Sign_up
     - Pay
     - DetailCar
-    - MyRental
+    - MyRent
     - Admin
