@@ -8,6 +8,7 @@ components
     - Promote
     - Question
     - SearchCar
+    - filter_car
 
     MyRent
     - HeroUser
