@@ -66,11 +66,11 @@
             ราคาสำหรับ {{ calday }} วัน {{ totalprice }} บาท
           </p>
           <p class="column is-size-6">รวมที่ต้องชำระ : {{ totalprice }} บาท</p>
-          <a href="detail_car.html" class="column is-size-6">
+          <router-link to="/detailcar" class="column is-size-6">
             <button class="button btn has-text-white font" style="width: 100%">
               จองอีกครั้ง
             </button>
-          </a>
+        </router-link>
         </footer>
       </div>
     </div>

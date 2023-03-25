@@ -48,9 +48,10 @@
                 <div class="column px-6 ">
                     <p class="line "></p>
                 </div>
-                <div class="column px-6 ">
-                    <a href="me_checkout.html "> <button class="button is-fullwidth color_sign_white font "
-                        type="submit ">ยกเลิกการชำระเงิน</button></a>
+                <div class="column px-6 "> 
+                    <router-link to="/myrent"><button class="button is-fullwidth color_sign_white font "
+                        type="submit ">ยกเลิกการชำระเงิน</button></router-link>
+                    
             </div>
         </div>
     </div>
@@ -219,7 +220,7 @@ export default {
             this.bill = true
             const myjson = JSON.stringify(this.bill)
             localStorage.setItem("mybill", myjson)
-            location.href = "./me_checkout.html"
+            location.href = "./MyRent"
         },
         //page me
         cusname() {

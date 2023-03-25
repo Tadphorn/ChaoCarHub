@@ -185,24 +185,24 @@ export default {
     <!-- rent button -->
     <div class="columns">
       <div class="column">
-        <a href="view_car.html"
-          ><button
+        <router-link to="/">
+          <button
             class="button is-fullwidth is-large has-text-white font btn"
             type="submit "
           >
             เลือกรถคันอื่น
-          </button></a
+          </button></router-link
         >
       </div>
       <div class="column">
-        <div
-          class="button is-fullwidth is-large has-text-white font btn"
-          type="submit "
-        >
-          <router-link to="/myrent">
+        <router-link to="/myrent">
+          <button
+            class="button is-fullwidth is-large has-text-white font btn"
+            type="submit "
+          >
             <strong class="has-text-white">ทำการจอง</strong>
-          </router-link>
-        </div>
+          </button></router-link
+        >
       </div>
     </div>
   </div>

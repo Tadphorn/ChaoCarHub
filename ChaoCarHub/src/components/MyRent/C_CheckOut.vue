@@ -79,23 +79,22 @@
             ราคาสำหรับ {{ calday }} วัน {{ totalprice }} บาท
           </p>
           <p class="column is-size-6">รวมที่ต้องชำระ : {{ totalprice }} บาท</p>
-          <a
-            href="bill.html"
+          <div
             v-if="checkoutCar === false"
             class="column is-size-6"
-          >
+          ><router-link to="/pay">
             <button class="button btn has-text-white font" style="width: 100%">
               ชำระเงิน
-            </button>
-          </a>
-          <a v-if="checkoutCar === true" class="column is-size-6">
+            </button></router-link>
+          </div>
+          <div v-if="checkoutCar === true" class="column is-size-6">
             <button
               class="button btn has-text-white font"
               style="width: 100%; opacity: 40%"
             >
               ชำระเงิน
             </button>
-          </a>
+          </div>
         </footer>
       </div>
     </div>
