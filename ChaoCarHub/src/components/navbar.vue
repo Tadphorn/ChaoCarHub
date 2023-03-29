@@ -42,6 +42,11 @@
                     </div>
                 </div>
                 <div class="navbar-item">
+                    <router-link to="/admin">
+                        admin
+                    </router-link>
+                </div>
+                <div class="navbar-item">
                 </div>
             </div>
         </div>
