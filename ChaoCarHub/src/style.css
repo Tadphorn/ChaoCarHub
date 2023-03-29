@@ -340,3 +340,10 @@ body {
 .ertext {
     font-size: 0.7rem;
 }
+
+/* Admin */
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  
