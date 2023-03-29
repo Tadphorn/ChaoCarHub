@@ -46,6 +46,7 @@ body {
     color: var(--color-blue);
     background-color: white;
     border-radius: 2rem;
+
     border: 2px solid var(--color-blue);
     border-color: var(--color-blue);
 }
@@ -334,4 +335,8 @@ body {
 
 .card_dropdown_h:hover {
     background-color: var(--color-blue2);
+}
+
+.ertext {
+    font-size: 0.7rem;
 }
