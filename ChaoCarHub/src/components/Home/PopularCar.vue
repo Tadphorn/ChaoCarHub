@@ -68,7 +68,7 @@ export default {
                     />
                     <b
                       >{{ item.car_seat }} ที่นั้ง <br />
-                      เริ่มต้น {{ item.car_price }} บาท/วัน</b
+                      เริ่มต้น {{ item.car_rentprice }} บาท/วัน</b
                     >
                   </p>
                 </div>
@@ -111,7 +111,7 @@ export default {
                         />
                         <b
                           >{{ item.car_seat }} ที่นั้ง <br />
-                          เริ่มต้น {{ item.car_price }} บาท/วัน</b
+                          เริ่มต้น {{ item.car_rentprice }} บาท/วัน</b
                         >
                       </p>
                     </div>
