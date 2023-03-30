@@ -16,6 +16,7 @@ onMounted(CarStore.FetchCar);
       <th>จำนวนที่นั่ง</th>
       <th>จำนวนใส่กระเป๋า</th>
       <th>ราคา</th>
+      <th>สถานะรถ</th>
     </tr>
     <tr v-for="item in CarStore.carvalue">
       <td>{{ item.car_id }}</td>
@@ -32,6 +33,7 @@ onMounted(CarStore.FetchCar);
       <td>{{ item.car_seat }}</td>
       <td>{{ item.car_bag }}</td>
       <td>{{ item.car_rentprice }}</td>
+      <td></td>
     </tr>
   </table>
 </template>
