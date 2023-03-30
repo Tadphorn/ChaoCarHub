@@ -57,6 +57,12 @@ const router = createRouter({
             name: 'admin',
             component: () =>
                 import ('../views/Admin.vue')
+        },
+        {
+            path: '/updatecarcard',
+            name: 'updatecarcard',
+            component: () =>
+                import ('../components/Admin/UpdateCarCard.vue')
         }
     ]
 })
