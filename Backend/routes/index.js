@@ -8,7 +8,7 @@ router.post('/car', async function(req, res, next){
     const {car_id, car_img, car_name, car_brand, car_model, car_seat, car_bag, car_rentprice} = req.body
     try{
         const [rows, fields] = await pool.query("INSERT INTO car (`car_id`, `car_img`, `car_name`, `car_brand`, `car_model`, `car_seat`, `car_bag`, `car_rentprice`) value(?, ?, ?, ?, ?, ?, ?, ?)", 
-        [car_id, car_img, car_name, car_brand, car_model, car_seat, car_bag, car_rentprice]);
+        [car_id, car_img,  car_name, car_brand, car_model, car_seat, car_bag, car_rentprice]);
         return res.json({"message":`A new car is added`});
       } catch (err) {
         console.log(err)
