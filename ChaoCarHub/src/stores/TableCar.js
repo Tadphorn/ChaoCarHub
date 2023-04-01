@@ -12,4 +12,3 @@ export const UseCarStore = defineStore('car', () => {
     carvalue
 }
 })
-
