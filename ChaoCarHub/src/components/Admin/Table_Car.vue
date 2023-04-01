@@ -5,29 +5,29 @@ import router from "../../router";
 const CarStore = UseCarStore();
 onMounted(CarStore.FetchCar);
 
-const carId = ref('')
-const carImg = ref(
+const carImgAdd = ref(
   "https://car-with-driver.s3-ap-southeast-1.amazonaws.com/cars/yaris_2016-2019.png"
 );
-const carName = ref("Toyota Yaris");
-const carBrand = ref("Toyota");
-const carModel = ref("Yaris");
-const carSeat = ref("5");
-const carBag = ref("1");
-const carRentPrice = ref("1200");
+const carNameAdd = ref("Toyota Yaris");
+const carBrandAdd = ref("Toyota");
+const carModelAdd = ref("Yaris");
+const carSeatAdd = ref("5");
+const carBagAdd = ref("1");
+const carRentPriceAdd = ref("1200");
 
+// function add car
 const onCreate = () => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
-    car_img: carImg.value,
-    car_name: carName.value,
-    car_brand: carBrand.value,
-    car_model: carModel.value,
-    car_seat: carSeat.value,
-    car_bag: carBag.value,
-    car_rentprice: carRentPrice.value,
+    car_img: carImgAdd.value,
+    car_name: carNameAdd.value,
+    car_brand: carBrandAdd.value,
+    car_model: carModelAdd.value,
+    car_seat: carSeatAdd.value,
+    car_bag: carBagAdd.value,
+    car_rentprice: carRentPriceAdd.value,
   });
 
   var requestOptions = {
@@ -40,11 +40,14 @@ const onCreate = () => {
   fetch("http://localhost:3000/", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      alert(result.message)
+      alert(result.message);
     })
     .catch((error) => console.log("error", error));
+
+  document.location.reload();
 };
 
+// function delete car
 const onDelete = (id) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -63,9 +66,54 @@ const onDelete = (id) => {
   fetch("http://localhost:3000/", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      alert(result.message)
+      alert(result.message);
     })
     .catch((error) => console.log("error", error));
+
+  document.location.reload();
+};
+
+const carIdUpdate = ref('43')
+const carImgUpdate = ref(
+  "https://car-with-driver.s3-ap-southeast-1.amazonaws.com/cars/yaris_2016-2019.png"
+);
+const carNameUpdate = ref("update");
+const carBrandUpdate = ref("update");
+const carModelUpdate = ref("update");
+const carSeatUpdate = ref("6");
+const carBagUpdate = ref("10");
+const carRentPriceUpdate = ref("12007");
+// function update car
+const onUpdate = () => {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    car_id: carIdUpdate.value,
+    car_img: carImgUpdate.value,
+    car_name:carNameUpdate.value,
+    car_brand: carBrandUpdate.value,
+    car_model: carModelUpdate.value,
+    car_seat: carSeatUpdate.value,
+    car_bag: carBagUpdate.value,
+    car_rentprice: carRentPriceUpdate.value,
+  });
+
+  var requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch("http://localhost:3000/", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      alert(result.message);
+    })
+    .catch((error) => console.log("error", error));
+
+    document.location.reload();
 };
 </script>
 
@@ -89,7 +137,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
-                v-model="carImg"
+                v-model="carImgAdd"
                 type="text"
                 style="border-radius: 0px; border: 1px solid green"
               />
@@ -101,7 +149,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
-                v-model="carName"
+                v-model="carNameAdd"
                 type="text"
                 style="border-radius: 0px; border: 1px solid green"
               />
@@ -113,7 +161,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
-                v-model="carBrand"
+                v-model="carBrandAdd"
                 type="text"
                 style="border-radius: 0px; border: 1px solid green"
               />
@@ -125,7 +173,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
-                v-model="carModel"
+                v-model="carModelAdd"
                 type="text"
                 style="border-radius: 0px; border: 1px solid green"
               />
@@ -137,7 +185,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
-                v-model="carSeat"
+                v-model="carSeatAdd"
                 type="text"
                 style="border-radius: 0px; border: 1px solid green"
               />
@@ -149,7 +197,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
-                v-model="carBag"
+                v-model="carBagAdd"
                 type="text"
                 style="border-radius: 0px; border: 1px solid green"
               />
@@ -161,7 +209,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
-                v-model="carRentPrice"
+                v-model="carRentPriceAdd"
                 type="text"
                 style="border-radius: 0px; border: 1px solid green"
               />
@@ -196,6 +244,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
+                v-model="carIdUpdate"
                 type="text"
                 style="border-radius: 0px; border: 1px solid wheat"
               />
@@ -207,6 +256,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
+                v-model="carImgUpdate"
                 type="text"
                 style="border-radius: 0px; border: 1px solid wheat"
               />
@@ -218,6 +268,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
+                v-model="carNameUpdate"
                 type="text"
                 style="border-radius: 0px; border: 1px solid wheat"
               />
@@ -229,6 +280,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
+                v-model="carBrandUpdate"
                 type="text"
                 style="border-radius: 0px; border: 1px solid wheat"
               />
@@ -240,6 +292,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
+                v-model="carModelUpdate"
                 type="text"
                 style="border-radius: 0px; border: 1px solid wheat"
               />
@@ -251,6 +304,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
+                v-model="carSeatUpdate"
                 type="text"
                 style="border-radius: 0px; border: 1px solid wheat"
               />
@@ -262,6 +316,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
+                v-model="carBagUpdate"
                 type="text"
                 style="border-radius: 0px; border: 1px solid wheat"
               />
@@ -273,6 +328,7 @@ const onDelete = (id) => {
             <div class="control">
               <input
                 class="input"
+                v-model="carRentPriceUpdate"
                 type="text"
                 style="border-radius: 0px; border: 1px solid wheat"
               />
@@ -281,7 +337,7 @@ const onDelete = (id) => {
         </td>
         <td>
           <div class="control">
-            <button class="button is-warning">update</button>
+            <button class="button is-warning" @click="onUpdate">update</button>
           </div>
         </td>
       </tr>
@@ -302,10 +358,9 @@ const onDelete = (id) => {
         <th>จำนวนใส่กระเป๋า</th>
         <th>ราคา</th>
         <th>สถานะรถ</th>
-        <th>ลบรถ</th>
+        <th>action</th>
       </tr>
       <tr v-for="item in CarStore.carvalue" :key="item.car_id">
-        
         <td>{{ item.car_id }}</td>
         <td>
           <div class="card-image px-2 pt-2">
@@ -321,9 +376,11 @@ const onDelete = (id) => {
         <td>{{ item.car_bag }}</td>
         <td>{{ item.car_rentprice }}</td>
         <td></td>
-        <td class="has-text-danger">
-          <div class="control pt-1">
-            <button class="button is-danger" @click="onDelete(item.car_id)">delete</button>
+        <td class="has-text-danger p-2">
+          <div class="control">
+            <button class="button is-danger" @click="onDelete(item.car_id)">
+              delete
+            </button>
           </div>
         </td>
       </tr>

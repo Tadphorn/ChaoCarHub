@@ -28,6 +28,35 @@ router.post('/', async function(req, res, next){
     
   });
 
+  // Update car
+router.put('/', async function(req, res, next){
+  const {car_id, car_img, car_name, car_brand, car_model, car_seat, car_bag, car_rentprice, id} = req.body
+  try{
+      const [rows, fields] = await pool.query(
+          'UPDATE `car` SET car_id = ?, car_name = ?, car_brand = ?, car_model = ?, car_img = ?, car_seat = ?, car_bag = ?, car_rentprice = ? WHERE car_id = ?;',
+          [car_id, car_name, car_brand, car_model, car_img, car_seat, car_bag, car_rentprice, car_id]
+      );
+      console.log(rows);
+      return res.json({
+          "message": `Car ID ${car_id} is updated.`,
+          "comment": {
+              "car_id" : car_id,
+              "car_name": car_name,
+              "car_brand":car_brand,
+              "car_model": car_model,
+              "car_img": car_img,
+              "car_seat" : car_seat,
+              "car_bag" : car_bag,
+              "car_rentprice" : car_rentprice,
+            } //ดึงข้อมูล comment ที่เพิ่งถูก update ออกมา และ return ใน response 
+      });
+  }catch(err){
+      console.log(err)
+      return next(err);
+  }
+});
+
+
   // Delete Car
 router.delete('/', async function(req, res, next){
   const {id} = req.body
