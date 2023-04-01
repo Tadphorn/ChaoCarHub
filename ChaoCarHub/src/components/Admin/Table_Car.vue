@@ -32,8 +32,7 @@ const onCreate = () => {
   });
 
   if (
-    (carIdAdd.value != "",
-    carImgAdd.value != "" &&
+    (carIdAdd.value != "" && carImgAdd.value != "" &&
       carNameAdd.value != "" &&
       carBrandAdd.value != "" &&
       carModelAdd.value &&
@@ -110,73 +109,46 @@ const onUpdate = () => {
     car_bag: carBagUpdate.value,
     car_rentprice: carRentPriceUpdate.value,
   });
-
-  var requestOptions = {
-    method: "PUT",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
+  if (
+    (carIdUpdate.value != "" &&
+    carImgUpdate.value != "" &&
+      carNameUpdate.value != "" &&
+      carBrandUpdate.value != "" &&
+      carModelUpdate.value &&
+      carSeatUpdate.value != "" &&
+      carBagUpdate.value != "" &&
+      carRentPriceUpdate.value != "")
+  ) {
+    var requestOptions = {
+      method: "PUT",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    alert("อัพเดตรถสำเร็จแล้ว");
+    document.location.reload();
+  } else {
+    alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+  }
 
   fetch("http://localhost:3000/", requestOptions)
     .then((response) => response.json())
-    .then((result) => {
-      alert(result.message);
-    })
+    .then((result) => {})
     .catch((error) => console.log("error", error));
-
-  document.location.reload();
 };
 </script>
 
 <template>
-  <div class="p-2 has-text-centered">
-    <div class="" >
-      <table style="width: 100%">
-        <tr>
-          <th colspan="2">
-            ขณะนี้มีรถอยู่ในระบบทั้งหมด {{ CarStore.carvalue.length }} คัน
-            {{ car_id }}
-          </th>
-          <!-- <th v-for="(item, index) in CarStore.carvalue" :index="index">
-            <div v-if="item.car_brand === 'Toyota'">{{ item}}</div>
-          </th> -->
-          <th>
-            <div v-for="(item, index) in CarStore.carvalue">
-              <div v-if="item.car_brand == 'Toyota'">
-                {{ item.car_brand.length }}
-              </div>
-              <!-- {{ item.car_brand }} -->
-            </div>
-          </th>
-        </tr>
-        <tr>
-          <td>Jill</td>
-          <td>Smith</td>
-          <td>43</td>
-        </tr>
-        <tr>
-          <td>Eve</td>
-          <td>Jackson</td>
-          <td>57</td>
-        </tr>
-      </table>
-    </div>
-
+ 
+  <div class="p-5 is-size-5">
+    <router-link to="/admin"><div class="button has-background-primary is-size-5 has-text-white"><b>ย้อนกลับ ◀</b></div></router-link>
+    <div class="is-size-2 p-5 has-text-centered"><b><u>สำหรับเพิ่ม/ลบ/แก้ไข/แสดงรายละเอียดข้อมูลรถ</u></b></div>
     <!-- Add Car -->
-    <h1 class="is-size-4 p-5"><b>เพิ่มรถ (เฉพาะรถที่ยังไม่มีในระบบ)</b></h1>
-    <h5 class="has-text-left">
-      <b
-        >เงื่อนไขการเพิ่มรถการเพิ่มรถ <br />
-        1. รุ่นรถ Toyota รหัสรถขึ้นต้นด้วย 00 ต่อด้วยลำดับรถ ตัวอย่าง T001
-        <br />
-        2. รุ่นรถ Nissan รหัสรถขึ้นต้นด้วย 01 ต่อด้วยลำดับรถ ตัวอย่าง N001
-        <br />
-        3. รุ่นรถ Honda รหัสรถขึ้นต้นด้วย 02 ต่อด้วยลำดับรถ ตัวอย่าง H001</b
-      >
-    </h5>
+    <h1 class="is-size-4 p-5 has-text-centered">
+      <b class="has-background-success ">เพิ่มรถ (เฉพาะรถที่ยังไม่มีในระบบ)</b>
+    </h1>
     <table style="width: 100%">
-      <tr>
+      <tr class="has-background-success-light">
         <th>รหัสรถ</th>
         <th>รูปรถ</th>
         <th>ชื่อรถ</th>
@@ -293,10 +265,12 @@ const onUpdate = () => {
     </table>
   </div>
   <!-- Update Car -->
-  <div class="p-2 has-text-centered">
-    <h1 class="is-size-4 p-5"><b>แก้ไขรถ (เฉพาะรถที่มีอยู่แล้วในระบบ)</b></h1>
+  <div class="p-5 has-text-centered is-size-5">
+    <h1 class="is-size-4 p-5">
+      <b class="has-background-warning">แก้ไขรถ (เฉพาะรถที่มีอยู่แล้วในระบบ)</b>
+    </h1>
     <table style="width: 100%">
-      <tr>
+      <tr class="has-background-warning-light">
         <th>รหัสรถ</th>
         <th>รูปรถ</th>
         <th>ชื่อรถ</th>
@@ -413,14 +387,21 @@ const onUpdate = () => {
     </table>
   </div>
   <!-- Select Car -->
-  <div class="p-2 has-text-centered">
+  <div class="p-5 has-text-centered is-size-5">
     <h1 class="is-size-4 p-5">
-      <b>ตารางแสดงรายละเอียดรถทั้งหมดที่มีอยู่ในระบบ</b>
+      <b class="has-background-danger has-text-white"
+        >ตารางแสดงรายละเอียดรถทั้งหมดที่มีอยู่ในระบบ</b
+      ><br />
+      <b
+        >ขณะนี้มีรถอยู่ในระบบทั้งหมด
+        <b class="has-text-danger is-size-2">{{ CarStore.carvalue.length }} </b>
+        คัน</b
+      >
     </h1>
     <table style="width: 100%">
-      <tr>
+      <tr class="has-background-danger-light">
         <th>รหัสรถ</th>
-        <th>รูปรถ</th>
+        <th>รูปรถ.....</th>
         <th>ชื่อรถ</th>
         <th>ยี่ห้อรถ</th>
         <th>รุ่นรถ</th>
@@ -428,7 +409,7 @@ const onUpdate = () => {
         <th>จำนวนใส่กระเป๋า</th>
         <th>ราคา</th>
         <th>สถานะรถ</th>
-        <th>action</th>
+        <th>ลบรถ</th>
       </tr>
       <tr v-for="item in CarStore.carvalue" :key="item.car_id">
         <td>{{ item.car_id }}</td>
