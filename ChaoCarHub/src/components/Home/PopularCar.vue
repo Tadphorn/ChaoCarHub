@@ -91,7 +91,7 @@ export default {
         <div class="column">
           <P> <b class="is-size-3">Other</b> </P><br />
           <div class="is-multiline is-variable columns is-1 pl-6">
-            <div v-for="item in CarStore.carvalue" id="card_product " class="column is-one-quarter" v-show="item.car_id >= 15">
+            <div v-for="item in CarStore.carvalue" id="card_product " class="column is-one-quarter" v-show="item.car_id >= 15 && item.car_id <= 18">
               <div class="card has-text-centered is-border-radius">
                 <div class="card-image">
                   <figure class="image is-4by4">
