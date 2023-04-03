@@ -63,6 +63,12 @@ const router = createRouter({
             name: 'tablecar',
             component: () =>
                 import ('../components/Admin/Table_Car.vue')
+        },
+        {
+            path: '/showcar',
+            name: 'showcar',
+            component: () =>
+                import ('../views/ShowCar.vue')
         }
     ]
 })

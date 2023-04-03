@@ -32,7 +32,7 @@ export default {
 <template>
   <div class="container is-max-desktop">
     <div class="column">
-      <b> รถเช่ายอดฮิต<br /><br /> </b>
+      <b class="is-size-5"> รถเช่ายอดฮิต <router-link to="/showcar"><u class="has-text-danger">(ต้องการดูรถทั้งหมด คลิ้ก!)</u></router-link><br /><br /> </b>
       <div v-for="hitem in hothit" class="columns is-half">
         <div class="column is-two-fifths px-6 is-vertical">
           <div class="card-image">
