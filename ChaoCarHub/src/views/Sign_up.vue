@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref, reactive, onMounted } from "vue";
+import axios from 'axios';
 const fname = ref("");
 const lname = ref("");
 const username = ref("");
@@ -17,6 +18,7 @@ const error = reactive({
   email: "",
 });
 function validatefname() {
+  console.log(fname);
   if (fname.value === "") {
     error.fname = "กรุณากรอกชื่อ";
     return;
@@ -77,7 +79,7 @@ function validatePhone() {
   }
   error.phone = "";
 }
-function submit() {
+async function submit() {
   validatefname();
   validatelname();
   validateUsername();
@@ -97,8 +99,16 @@ function submit() {
     alert("กรุณากรอกข้อมูลให้ถูกต้อง");
     return;
   }
+  const fetchingData = await axios.post("http://localhost:3000/register", {
+    cus_fname: fname.value,
+    cus_lname: lname.value,
+    cus_username: username.value,
+    cus_pass: passw.value,
+    cus_phone: phone.value,
+    cus_email: email.value,
+  });
   alert("ลงทะเบียนสำเร็จ");
-  location.href = "/sign_in";
+  window.location('/sign_in')
 }
 </script>
 <template>
@@ -231,4 +241,3 @@ function submit() {
     </div>
   </div>
 </template>
-

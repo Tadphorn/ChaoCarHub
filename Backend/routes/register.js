@@ -7,6 +7,7 @@ router = express.Router();
 
   router.post("/register", async function  (req, res, next) {
     const {cus_fname, cus_lname, cus_username, cus_pass, cus_phone, cus_email} = req.body
+    console.log({cus_fname, cus_lname, cus_username, cus_pass, cus_phone, cus_email})
     bcrypt.hash(cus_pass, saltRounds, async function(err, hash){
         try {
             console.log(hash);
