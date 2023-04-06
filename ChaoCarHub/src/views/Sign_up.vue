@@ -1,3 +1,106 @@
+<script setup>
+import { computed, ref, reactive, onMounted } from "vue";
+
+
+const fname =  ref('')
+const lname =  ref('')
+const username =  ref('')
+const passw =  ref('')
+const passw2 =  ref('')
+const phone =  ref('')
+const email =  ref('')
+const error =  reactive({
+                fname: '',
+                lname: '',
+                username: '',
+                passw: '',
+                passw2: '',
+                phone: '',
+                email: ''
+                })
+function validatefname() {
+    console.log('hii here')
+    if (fname === '') {
+        error.fname = 'กรุณากรอกชื่อ'
+        return
+    }
+    error.fname = ''
+}
+function validatelname() {
+    if (lname === '') {
+        error.lname = 'กรุณากรอกนามสกุล'
+        return
+    }
+    error.lname = ''
+}
+function validateUsername() {
+    if (username === '') {
+        error.username = 'กรุณากรอกชื่อผู้ใช้'
+        return
+    }
+    error.username = ''
+}
+function validatePassw() {
+    if (passw === '') {
+        error.passw = 'กรุณากรอกรหัสผ่าน'
+        return
+    }
+
+    if (passw.length < 6) {
+        error.passw = 'รหัสผ่านห้ามน้อยกว่า 6 ตัวอักษร'
+        return
+    }
+    error.passw = ''
+}
+function validatePassw2() {
+    if (passw2 === '') {
+        error.passw2 = 'กรุณากรอกยืนยันรหัสผ่าน'
+        return
+    }
+
+    if (passw2 !== passw) {
+        error.passw2 = 'รหัสผ่านไม่ตรงกัน'
+        return
+    }
+
+    error.passw2 = ''
+}
+function validateEmail() {
+    if (email === '') {
+        error.email = 'กรุณากรอกอีเมล'
+        return
+    }
+    error.email = ''
+}
+function validatePhone() {
+    if (phone === '') {
+        error.phone = 'กรุณากรอกหมายเลขโทรศัพท์'
+        return
+    }
+    if (phone.length !== 10) {
+        error.phone = 'กรุณากรอกหมายเลขโทรศัพท์ที่ถูกต้อง'
+        return
+    }
+    error.phone = ''
+}
+function submit() {
+    validatefname()
+    validatelname()
+    validateUsername()
+    validatePassw()
+    validatePassw2()
+    validateEmail()
+    validatePhone()
+
+    if (error.fname !== '' || error.lname !== '' || error.username !== '' || error.passw !== '' || error.passw2 !== '' || error.email !== '' || error.phone !== '') {
+        alert('กรุณากรอกข้อมูลให้ถูกต้อง')
+        return
+    }
+    alert('ลงทะเบียนสำเร็จ')
+    location.href = "./sign_in"
+}
+</script>
+
 <template>
     <div class="hero is-fullheight">
 
@@ -73,7 +176,7 @@
     </div>
 </template>
 
-<script>
+<!-- <script>
 export default {
     name: 'vapp',
     data() {
@@ -179,4 +282,4 @@ export default {
         },
     },
 }
-</script>
+</script> -->
