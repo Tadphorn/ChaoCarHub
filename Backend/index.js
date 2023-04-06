@@ -8,10 +8,11 @@ app.use(cors())
 
 // routers
 const indexRouter = require('./routes/index')
-// const postRouter = require('./routes/post')
+const registerRouter = require('./routes/register')
 // const commentRouter = require('./routes/comment')
 
 app.use(indexRouter.router)
+app.use(registerRouter.router)
 // app.use(postRouter.router)
 // app.use(commentRouter.router)
 
