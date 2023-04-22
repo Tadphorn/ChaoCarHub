@@ -16,7 +16,7 @@
                     </div>
                     <div class="column px-5">
                         <a>
-                            <button @click="cusname()" class="button is-fullwidth color_sign_blue " type="submit">Sign in</button>
+                            <button @click="signin()" class="button is-fullwidth color_sign_blue " type="submit">Sign in</button>
                         </a>
                         <!-- <div @click="cusname()">
                             <router-link to="/"><button class="button  is-fullwidth color_sign_blue" type="submit">Sign in</button></router-link>
@@ -81,7 +81,7 @@ export default {
             // location.href = "./footer.vue"
         },
         //page me
-        cusname() {
+        signin() {
             this.validateUsername()
             this.validatePassw()
             if (this.error.username !== '' || this.error.passw !== '') {

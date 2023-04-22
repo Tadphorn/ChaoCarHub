@@ -40,18 +40,18 @@ router.post('/user/signup', async (req, res, next) => {
 })
 })
 
-router.post('/user/signup', async (req,res,next) =>{
+router.post('/user/signin', async (req,res,next) =>{
     const {username, password} = req.body
     try {
-        const [rows, fields] = await pool.query('SELECT * FROM customer WHERE cus_username = ?',
+        const [rows, fields] = await pool.query('SELECT * FROM user WHERE u_username = ?',
         [username])
         if(rows.length == 0){
             return res.json({status: "error", message: "user not found"})
     
         }else {
-            bcrypt.compare(password, rows[0].cus_pass, function(err,isLogin){
+            bcrypt.compare(password, rows[0].u_pass, function(err,isLogin){
                 if(isLogin){
-                    res.json({status:'ok', customer: rows[0]})
+                    res.json({status:'ok', user: rows[0]})
                 }
                 else{
                     res.json({status: 'Invalid Password', err: err})
