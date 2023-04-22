@@ -5,7 +5,7 @@ import Table_Car from "../components/Admin/Table_Car.vue";
 
 <template>
 <HeroAdmin/>
-<!-- <Table_Car></Table_Car> -->
+<Table_Car/>
 </template>
 
 

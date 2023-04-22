@@ -59,10 +59,10 @@ const router = createRouter({
                 import ('../views/Admin.vue')
         },
         {
-            path: '/tablecar',
-            name: 'tablecar',
+            path: '/crudcar',
+            name: 'crudcar',
             component: () =>
-                import ('../components/Admin/Table_Car.vue')
+                import ('../views/CRUD_Car.vue')
         },
         {
             path: '/showcar',

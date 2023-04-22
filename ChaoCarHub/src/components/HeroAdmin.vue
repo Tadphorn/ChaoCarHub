@@ -19,7 +19,7 @@ export default {
       <div class="column">
         <div class="columns">
             <div class="column is-4 has-text-centered">
-                <router-link to="/tablecar">
+                <router-link to="/crudcar">
                    <div class="card p-4">
                     <div class="card-image">
                             <img src="https://cdn-icons-png.flaticon.com/512/871/871867.png" alt="Placeholder image" width="150" height="150">
