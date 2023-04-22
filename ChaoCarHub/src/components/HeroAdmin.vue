@@ -29,7 +29,7 @@ export default {
                 </router-link>
             </div>
             <div class="column is-4 has-text-centered">
-                <router-link to="/tablecar">
+                <router-link to="">
                    <div class="card p-4">
                     <div class="card-image">
                             <img src="https://cdn-icons-png.flaticon.com/512/4906/4906266.png" alt="Placeholder image" width="150" height="150">
@@ -39,7 +39,7 @@ export default {
                 </router-link>
             </div>
             <div class="column is-4 has-text-centered">
-                <router-link to="/tablecar">
+                <router-link to="">
                    <div class="card p-4">
                     <div class="card-image">
                             <img src="https://cdn-icons-png.flaticon.com/512/4422/4422509.png" alt="Placeholder image" width="150" height="150">

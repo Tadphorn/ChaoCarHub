@@ -3,7 +3,7 @@ const pool = require('../config.js')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 router = express.Router();
-
+ 
 
   router.post("/register", async function  (req, res, next) {
     const {cus_fname, cus_lname, cus_username, cus_pass, cus_phone, cus_email} = req.body

@@ -62,6 +62,11 @@
                 <strong>Sign up</strong>
               </router-link>
             </a>
+            <a class="navbar-item">
+              <router-link to="">
+                <strong>Log out</strong>
+              </router-link>
+            </a>
           </div>
         </div>
         <div class="navbar-item">

@@ -1,13 +1,13 @@
 <script setup>
 import { computed, ref, reactive, onMounted } from "vue";
-import axios from 'axios';
-const fname = ref("");
-const lname = ref("");
-const username = ref("");
-const passw = ref("");
-const passw2 = ref("");
-const phone = ref("");
-const email = ref("");
+import axios from "axios";
+const fname = ref("ดวงกมล");
+const lname = ref("พบสูงเนิน");
+const username = ref("Chompoo");
+const passw = ref("123456");
+const passw2 = ref("123456");
+const phone = ref("0624965299");
+const email = ref("abc@gmaill.com");
 const error = reactive({
   fname: "",
   lname: "",
@@ -99,16 +99,30 @@ async function submit() {
     alert("กรุณากรอกข้อมูลให้ถูกต้อง");
     return;
   }
-  const fetchingData = await axios.post("http://localhost:3000/register", {
-    cus_fname: fname.value,
-    cus_lname: lname.value,
-    cus_username: username.value,
-    cus_pass: passw.value,
-    cus_phone: phone.value,
-    cus_email: email.value,
-  });
-  alert("ลงทะเบียนสำเร็จ");
-  window.location('/sign_in')
+
+  axios
+    .post("http://localhost:3000/user/signup", {
+        u_fname: fname.value,
+        u_lname: lname.value,
+        u_username: username.value,
+        u_pass: passw.value,
+        u_phone: phone.value,
+        u_email: email.value,
+    })
+  
+    .then((res) => {
+      console.log(res)
+      if(res.data.check === false){
+        alert("This username is already exist");
+      }
+        alert("Sign up Success");
+        // router.push('/')
+        window.location.href = '/sign_in'
+    })
+    .catch((err) => {
+      alert("Sign up Not Success");
+      console.log(err)
+    });
 }
 </script>
 <template>
