@@ -7,6 +7,14 @@ onMounted(CarStore.FetchCar);
 </script>
 
 <template>
+  <div class="p-5 is-size-5">
+    <router-link to="/admin"
+      ><div class="button has-background-info is-size-5 has-text-white">
+        <b>ย้อนกลับ ◀</b>
+      </div></router-link
+    >
+  </div>
+  
   <div class="p-5 has-text-centered is-size-5">
     <h1 class="is-size-4 p-5">
       <b class="has-background-danger has-text-white"
@@ -28,7 +36,7 @@ onMounted(CarStore.FetchCar);
         <th>จำนวนที่นั่ง</th>
         <th>จำนวนใส่กระเป๋า</th>
         <th>ราคา</th>
-        <th>สถานะรถ</th>
+        <th>Update && Delete</th>
       </tr>
       <tr v-for="item in CarStore.carvalue" :key="item.car_id">
         <td>{{ item.car_code }}</td>
@@ -45,7 +53,24 @@ onMounted(CarStore.FetchCar);
         <td>{{ item.car_seat }}</td>
         <td>{{ item.car_bag }}</td>
         <td>{{ item.car_rentprice }}</td>
-        <td></td>
+        <td class="has-text-danger p-2">
+          <div class="control">
+            <div class="level-item">
+            <button class="button is-warning">
+                <span>Edit</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-edit"></i>
+                 </span>
+            </button>&nbsp
+            <button class="button is-danger is-outlined">
+              <span>Delete</span>
+              <span class="icon is-small">
+                <i class="fas fa-times"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+        </td>
       </tr>
     </table>
   </div>

@@ -33,7 +33,7 @@ router.put('/', async function(req, res, next){
       );
       console.log(rows);
       return res.json({
-          "message": `Car ID ${car_id} is updated.`,
+          "message": `Car ID ${car_id} is updated.`, 
           "comment": {
               "car_id" : car_id,
               "car_name": car_name,

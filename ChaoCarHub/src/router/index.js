@@ -70,6 +70,20 @@ const router = createRouter({
             component: () =>
                 import ('../views/ShowCar.vue')
         }
+        ,
+        {
+            path: '/tablecar',
+            name: 'tablecar',
+            component: () =>
+                import ('../components/Admin/Table_Car.vue')
+        }
+        ,
+        {
+            path: '/tableud',
+            name: 'tableud',
+            component: () =>
+                import ('../components/Admin/Table_UpdateDeleteCar.vue')
+        }
     ]
 })
 

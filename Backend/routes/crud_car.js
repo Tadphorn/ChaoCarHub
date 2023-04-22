@@ -29,28 +29,28 @@ router.get("/car", async function (req, res, next) {
   });
 
   const upload = multer({ storage: storage });
+  // upload.array("myImageCar", 5),
 //   add car 
-router.post("/car", upload.array("myImageCar", 5) , async function (req, res, next) {
-    const file = req.files;
-    let pathArray = [];
-
-    if (!file) {
-    return res.status(400).json({ message: "Please upload a file" });
-  }
+router.post("/car", async function (req, res, next) {
+  //   const file = req.files;
+  //   let pathArray = [];
+ 
+  //   if (!file) {
+  //   return res.status(400).json({ message: "Please upload a file" });
+  // }
 
     const {car_code, car_brand, car_model, car_seat, car_bag, car_rentprice} = req.body
-
+    console.log('car_code1',car_code, car_brand, car_model, car_seat, car_bag, car_rentprice)
     const conn = await pool.getConnection();
     await conn.beginTransaction();
 
     try {
         let results = await conn.query(
-          "INSERT INTO car(car_code, car_brand, car_model, car_seat, car_bag, car_rentprice) " +
-          "VALUES(?, ?, ?, ?, ?, ?);",
+          "INSERT INTO car(`car_code`, `car_brand`, `car_model`, `car_seat`, `car_bag`, `car_rentprice`) VALUES(?, ?, ?, ?, ?, ?)",
           [car_code, car_brand, car_model, car_seat, car_bag, car_rentprice]
         );
         
-        // const carId = results[0].insertId;
+        const carId = results[0].insertId;
 
         // req.files.forEach((file, index) => {
         //     let path = [carId, file.path.substring(6), index == 0 ? 1 : 0];
@@ -63,7 +63,7 @@ router.post("/car", upload.array("myImageCar", 5) , async function (req, res, ne
         //   );
 
           await conn.commit();
-          res.send("success!");
+          return res.json({message: "success"});
         } catch (err) {
           await conn.rollback();
           return res.status(400).json(err);

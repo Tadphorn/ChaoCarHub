@@ -1,7 +1,7 @@
 <script setup>
-import { UseCarStore } from "../stores/TableCar";
+import {  UsecrudCarStore } from "../stores/crud_Car";
 import { computed, ref, reactive, onMounted } from "vue";
-const CarStore = UseCarStore();
+const CarStore =  UsecrudCarStore();
 onMounted(CarStore.FetchCar);
 </script>
 

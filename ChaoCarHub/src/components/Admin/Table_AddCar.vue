@@ -12,31 +12,9 @@ export default {
 <script setup>
 import { computed, ref, reactive, onMounted } from "vue";
 import axios from "axios";
-const carCode = ref("TEST001");
-const carBrand = ref("Toyota");
-const carModel = ref("Yaris");
-const carSeat = ref("5");
-const carBag = ref("1");
-const carPrice = ref("1200");
-
-async function addCar() {
-  let formData = new FormData();
-  formData.append("car_code", carCode.value);
-  formData.append("car_brand", carBrand.value);
-  formData.append("car_model", carModel.value);
-  formData.append("car_seat", carSeat.value);
-  formData.append("car_bag", carBag.value);
-  formData.append("car_price", carPrice.value);
-  console.log('carcode',carCode.value, carBrand.value, carModel.value, carSeat.value, carBag.value,carPrice.value)
-  //   this.car.forEach((image) => {
-  //     formData.append("myImageCar", image);
-  //   });
-
-  axios
-    .post("http://localhost:3000/car", formData)
-    .then((res) =>{'>...<'})
-    .catch((e) => console.log(e.response.data));
-}
+// use pinia file
+import { UsecrudCarStore } from "@/stores/crud_Car";
+const crudCarStore  = UsecrudCarStore()
 </script>
 <template>
   <section class="hero p-5 is-size-5">
@@ -57,7 +35,7 @@ async function addCar() {
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carCode"
+                      v-model="crudCarStore.carCode"
                       class="input"
                       type="text"
                       placeholder="T001"
@@ -88,7 +66,7 @@ async function addCar() {
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carBrand"
+                      v-model="crudCarStore.carBrand"
                       class="input"
                       type="text"
                       placeholder="Toyota"
@@ -102,7 +80,7 @@ async function addCar() {
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carModel"
+                      v-model="crudCarStore.carModel"
                       class="input"
                       type="text"
                       placeholder="Yaris"
@@ -118,7 +96,7 @@ async function addCar() {
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carSeat"
+                      v-model="crudCarStore.carSeat"
                       class="input"
                       type="text"
                       placeholder="4"
@@ -132,7 +110,7 @@ async function addCar() {
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carBag"
+                      v-model="crudCarStore.carBag"
                       class="input"
                       type="text"
                       placeholder="2"
@@ -146,7 +124,7 @@ async function addCar() {
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carPrice"
+                      v-model="crudCarStore.carPrice"
                       class="input"
                       type="text"
                       placeholder="1190"
@@ -157,10 +135,10 @@ async function addCar() {
             </div>
             <div class="field is-grouped" style="float: right">
               <div class="control">
-                <button class="button is-info" @click="addCar">Submit</button>
+                <button class="button is-info" @click="crudCarStore.addCar">Submit</button>
               </div>
               <div class="control">
-                <button class="button is-info is-light">Cancel</button>
+                <router-link to="/admin"> <button class="button is-info is-light">Cancel</button></router-link>
               </div>
             </div>
           </div>
