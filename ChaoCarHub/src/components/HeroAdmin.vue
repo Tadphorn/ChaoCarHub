@@ -58,7 +58,7 @@ export default {
               </div>
               <div class="columns">
                 <div class="card column mt-1 has-background-primary-light">
-                  <router-link to="/">
+                  <router-link to="">
                   <div class="card-image has-text-centered" >
                             <img class="" src="https://cdn-icons-png.flaticon.com/512/4422/4422557.png" alt="Placeholder image" width="50" height="50">
                             <br><b>ตรวจสอบการคืนรถ</b>
