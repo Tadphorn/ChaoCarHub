@@ -16,7 +16,7 @@ export const UsecrudCarStore = defineStore("car", () => {
   const carPrice = ref("1200");
 
   const addCar = async () => {
-    console.log('hiiiiii')
+    // console.log('hiiiiii')
     const fetchingData = await axios.post("http://localhost:3000/car", {
       car_code: carCode.value,
       car_brand: carBrand.value,

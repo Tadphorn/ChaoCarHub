@@ -1,22 +1,166 @@
 import { defineStore } from 'pinia'
-import { computed, ref, reactive, onMounted } from "vue";
 import axios from 'axios';
-export const UseCarStore = defineStore('car', () => {
-  const signinData = ref([])
-  const FetchSignin = async () => {
-    const fetchingData = await axios.post('http://localhost:3000')
-    carvalue.value = fetchingData.data;
+import { computed, ref, reactive, onMounted } from "vue";
+
+export const UseregisterStore = defineStore('register', () => {
+
+  const fname = ref("ดวงกมล");
+  const lname = ref("พบสูงเนิน");
+  const username = ref("Chompoo");
+  const passw = ref("123456");
+  const passw2 = ref("123456");
+  const phone = ref("0624965299");
+  const email = ref("abc@gmaill.com");
+  const error = reactive({
+    fname: "",
+    lname: "",
+    username: "",
+    passw: "",
+    passw2: "",
+    phone: "",
+    email: "",
+  });
+  function validatefname() {
+    console.log(fname);
+    if (fname.value === "") {
+      error.fname = "กรุณากรอกชื่อ";
+      return;
+    }
+    error.fname = "";
+  }
+  function validatelname() {
+    if (lname.value === "") {
+      error.lname = "กรุณากรอกนามสกุล";
+      return;
+    }
+    error.lname = "";
+  }
+  function validateUsername() {
+    if (username.value === "") {
+      error.username = "กรุณากรอกชื่อผู้ใช้";
+      return;
+    }
+    error.username = "";
+  }
+  function validatePassw() {
+    if (passw.value === "") {
+      error.passw = "กรุณากรอกรหัสผ่าน";
+      return;
+    }
+    if (passw.length < 6) {
+      error.passw = "รหัสผ่านห้ามน้อยกว่า 6 ตัวอักษร";
+      return;
+    }
+    error.passw = "";
+  }
+  function validatePassw2() {
+    if (passw2.value === "") {
+      error.passw2 = "กรุณากรอกยืนยันรหัสผ่าน";
+      return;
+    }
+    if (passw2.value !== passw.value) {
+      error.passw2 = "รหัสผ่านไม่ตรงกัน";
+      return;
+    }
+    error.passw2 = "";
+  }
+  function validateEmail() {
+    if (email.value === "") {
+      error.email = "กรุณากรอกอีเมล";
+      return;
+    }
+    error.email = "";
+  }
+  function validatePhone() {
+    if (phone.value === "") {
+      error.phone = "กรุณากรอกหมายเลขโทรศัพท์";
+      return;
+    }
+    if (phone.value.length !== 10) {
+      error.phone = "กรุณากรอกหมายเลขโทรศัพท์ที่ถูกต้อง";
+      return;
+    }
+    error.phone = "";
+  }
+  async function submitSignup() {
+    validatefname();
+    validatelname();
+    validateUsername();
+    validatePassw();
+    validatePassw2();
+    validateEmail();
+    validatePhone();
+    if (
+      error.fname !== "" ||
+      error.lname !== "" ||
+      error.username !== "" ||
+      error.passw !== "" ||
+      error.passw2 !== "" ||
+      error.email !== "" ||
+      error.phone !== ""
+    ) {
+      alert("กรุณากรอกข้อมูลให้ถูกต้อง");
+      return;
+    }
+
+    axios.post("http://localhost:3000/user/signup", {
+      u_fname: fname.value,
+      u_lname: lname.value,
+      u_username: username.value,
+      u_pass: passw.value,
+      u_phone: phone.value,
+      u_email: email.value,
+    })
+
+      .then((res) => {
+        // console.log(res)
+        if (res.data.check === false) {
+          alert("This username is already exist");
+        }
+        alert("Sign up Success");
+        // router.push('/')
+        window.location.href = '/sign_in'
+      })
+      .catch((err) => {
+        alert("Sign up Not Success");
+        console.log(error.response.data)
+      });
   }
 
-  const onCreate = (carData) => {
-    console.log(carData)
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-   
-  };
+  async function submitSignin() {
+    this.validateUsername()
+    this.validatePassw()
+    if (this.error.username !== '' || this.error.passw !== '') {
+      alert('กรุณากรอกข้อมูลให้ถูกต้อง')
+      return
+    }
+    const fetchingData = await axios.post("http://localhost:3000/user/signin", {
+      username: username.value,
+       password: passw.value
+    });
+    // const token = fetchingData.data.token
+    // localStorage.setItem('token', token)
+    location.href = './'
+  }
 
   return {
-    
+    fname,
+    lname,
+    username,
+    passw,
+    passw2,
+    phone,
+    email,
+    error,
+    validatefname,
+    validatefname,
+    validatelname,
+    validateUsername,
+    validatePassw,
+    validatePassw2,
+    validateEmail,
+    validatePhone,
+    submitSignup,
+    submitSignin
   }
 })
