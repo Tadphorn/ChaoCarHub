@@ -84,6 +84,13 @@ const router = createRouter({
             component: () =>
                 import ('../components/Admin/Table_UpdateDeleteCar.vue')
         }
+        ,
+        {
+            path: '/tablepayment',
+            name: 'tablepayment',
+            component: () =>
+                import ('../components/Admin/Table_Pay.vue')
+        }
     ]
 })
 

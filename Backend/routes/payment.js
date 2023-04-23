@@ -1,7 +1,17 @@
 const express = require('express');
 const pool = require('../config.js')
 
-router = express.Router();
+router = express.Router();  
+
+router.get("/userpayment", async function (req, res, next) {
+  try {
+      const [rows, fields] = await pool.query('SELECT * FROM payment')
+      return res.json(rows)
+  } catch (err) {
+      return res.status(500).json(err)
+    }
+  
+});
 
 router.post("/userpayment", async function (req, res, next) { 
       const {pay_cr_name, pay_cr_num, pay_cr_exp, pay_cr_cvc, pay_status, pay_amount} = req.body

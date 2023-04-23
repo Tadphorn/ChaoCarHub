@@ -45,7 +45,7 @@ onMounted(CarStore.FetchCar);
         <td>{{ item.car_seat }}</td>
         <td>{{ item.car_bag }}</td>
         <td>{{ item.car_rentprice }}</td>
-        <td></td>
+        <td>ว่าง (เพิ่ม car_status)</td>
       </tr>
     </table>
   </div>

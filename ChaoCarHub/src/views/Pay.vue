@@ -1,6 +1,6 @@
 <script setup>
-import { UseaymentStore } from "@/stores/payment";
-const paymentStore  = UseaymentStore()
+import { UsepaymentStore } from "@/stores/payment";
+const paymentStore  = UsepaymentStore()
 </script>
 
 <template>
