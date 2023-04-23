@@ -11,12 +11,14 @@ app.use(cors())
 // routers
 const indexRouter = require('./routes/index')
 const carRouter = require('./routes/crud_car')
-const UserRouter = require('./routes/user')
+const userRouter = require('./routes/user')
+const payment = require('./routes/payment')
 // const commentRouter = require('./routes/comment')
 
 app.use(indexRouter.router)
 app.use(carRouter.router)
-app.use(UserRouter.router)
+app.use(userRouter.router)
+app.use(payment.router)
 // app.use(postRouter.router)
 // app.use(commentRouter.router)
 
