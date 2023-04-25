@@ -28,7 +28,7 @@ async function logger (req, res, next) {
          // Set user
          const [users] = await pool.query(
              'SELECT u_id, u_username, u_fname, u_lname, u_phone, u_email' + 
-             'FROM user WHERE id = ?', [token.u_id]
+             'FROM user WHERE u_id = ?', [token.u_id]
          )
          req.user = users[0]
      

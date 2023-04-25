@@ -6,7 +6,7 @@ export const UseregisterStore = defineStore('register', () => {
 
   const fname = ref("ดวงกมล");
   const lname = ref("พบสูงเนิน");
-  const username = ref("Chompoo");
+  const username = ref("chompoo");
   const passw = ref("123456");
   const passw2 = ref("123456");
   const phone = ref("0624965299");
@@ -123,7 +123,7 @@ export const UseregisterStore = defineStore('register', () => {
       })
       .catch((err) => {
         alert("Sign up Not Success");
-        console.log(error.response.data)
+        console.log(err.response.data)
       });
   }
 
@@ -136,11 +136,32 @@ export const UseregisterStore = defineStore('register', () => {
     }
     const fetchingData = await axios.post("http://localhost:3000/user/signin", {
       username: username.value,
-       password: passw.value
+      password: passw.value
     });
-    // const token = fetchingData.data.token
-    // localStorage.setItem('token', token)
-    location.href = './'
+    const token = fetchingData.data.token
+    console.log(token)
+    localStorage.setItem('token', token)
+
+    if (fetchingData.status === 200) {
+      console.log("login")
+      location.href = './myrent'
+      // this.$router.push({ path: "/" });
+    }
+  }
+
+  //get user information
+  function onAuthChange() {
+    const token = localStorage.getItem('token')
+    if (token) {
+      this.getUser()
+    }
+  }
+
+  function getUser() {
+    const token = localStorage.getItem('token')
+    axios.get('http://localhost:3000/user/me', { headers: { Authorization: 'Bearer ' + token } }).then(res => {
+      this.user = res.data
+    })
   }
 
   return {
@@ -161,6 +182,8 @@ export const UseregisterStore = defineStore('register', () => {
     validateEmail,
     validatePhone,
     submitSignup,
-    submitSignin
+    submitSignin,
+    onAuthChange,
+    getUser
   }
 })

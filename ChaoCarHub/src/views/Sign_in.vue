@@ -22,7 +22,7 @@ const registerStore  = UseregisterStore()
                         <input v-model="passw" class="input input_password" type="password" placeholder="Password" :class="{'is-danger': registerStore.error.passw}" @input="registerStore.validatePassw()">
                         <span class="has-text-danger ertext ml-3">{{registerStore.error.passw}}</span>
                     </div>
-                    <div class="column px-5">
+                    <div class="column px-5"> 
                         <a>
                             <button @click="registerStore.submitSignin()" class="button is-fullwidth color_sign_blue " type="submit">Sign in</button>
                         </a>

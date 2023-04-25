@@ -7,10 +7,10 @@ const { isLoggedIn } = require('../middlewares')
 router = express.Router();
 
 // // test isLoggedIn
-//  router.get('/user/me', isLoggedIn, async (req, res, next) => {
-//          // req.user ถูก save ข้อมูล user จาก database ใน middleware function "isLoggedIn"
-//          res.json(req.user)
-//      })
+ router.get('/user/me', isLoggedIn, async (req, res, next) => {
+         // req.user ถูก save ข้อมูล user จาก database ใน middleware function "isLoggedIn"
+         res.json(req.user)
+     })
 
 router.post('/user/signup', async (req, res, next) => {
 
@@ -56,18 +56,22 @@ router.post('/user/signin', async (req, res, next) => {
         const [rows, fields] = await conn.query('SELECT * FROM user WHERE u_username = ?',
             [username])
         if (rows.length == 0) {
-            return res.json({ status: "error", message: "user not found" })
-
-        } else {
-            bcrypt.compare(password, rows[0].u_pass, function (err, isLogin) {
-                if (isLogin) {
-                    res.json({ status: 'ok', user: rows[0] })
-                }
-                else {
-                    res.json({ status: 'Invalid Password', err: err })
-                }
-            })
+            // return res.json({ status: "error", message: "user not found" })
+            throw new Error('Incorrect username or password')
         }
+        if(!(await bcrypt.compare(password, rows[0].u_pass))) {
+            throw new Error('Incorrect username or password')
+        }
+        //  else {
+        //     bcrypt.compare(password, rows[0].u_pass, function (err, isLogin) {
+        //         if (isLogin) {
+        //             res.json({ status: 'ok', user: rows[0] })
+        //         }
+        //         else {
+        //             res.json({ status: 'Invalid Password', err: err })
+        //         }
+        //     })
+        // }
         console.log(rows[0].u_id)
 
         // Check if token already existed
