@@ -14,7 +14,7 @@ export const UsecrudCarStore = defineStore("car", () => {
   const carSeat = ref("5");
   const carBag = ref("1");
   const carPrice = ref("1200");
-
+  let carImge = document.getElementById("imageCar")
   const addCar = async () => {
     // console.log('hiiiiii')
     const fetchingData = await axios.post("http://localhost:3000/car", {
@@ -24,11 +24,16 @@ export const UsecrudCarStore = defineStore("car", () => {
       car_seat: carSeat.value,
       car_bag: carBag.value,
       car_rentprice: carPrice.value,
+      myImageCar: carImge
     });
     if(fetchingData.data.message == 'success'){
       alert('New car added')
     }
   };
+
+  // selectImages(event) {
+  //   this.images = event.target.files;
+  // },
 
   return {
     FetchCar,
@@ -39,6 +44,7 @@ export const UsecrudCarStore = defineStore("car", () => {
     carSeat,
     carBag,
     carPrice,
+    carImge,
     addCar
   };
 });

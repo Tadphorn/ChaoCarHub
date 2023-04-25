@@ -35,9 +35,10 @@ onMounted(CarStore.FetchCar);
         <td>
           <div class="card-image px-2 pt-2">
             <figure class="image is-4by3">
-              <img :src="item.car_img" alt="Placeholder image " />
+              <img :src="item.car_img" alt="!!!!" />
+              <!-- <img :src="`http://localhost:3000/${item.car_img}`" alt=""> -->
             </figure>
-          </div>
+          </div> 
         </td>
         <td>{{ item.car_brand }} {{ item.car_model }}</td>
         <td>{{ item.car_brand }}</td>

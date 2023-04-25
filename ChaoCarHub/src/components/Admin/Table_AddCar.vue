@@ -1,9 +1,47 @@
 <script>
 export default {
+  data() {
+    return {
+      carCode: "TEST001",
+      carBrand: "Toyota",
+      carModel: "Yaris",
+      carSeat: 5,
+      carBag: 1,
+      carPrice: 1200,
+      file: null
+    };
+  },
   methods: {
     showSelectImage(image) {
       // for preview only
       return URL.createObjectURL(image);
+    },
+    handleFileUpload(){
+      this.file = this.$refs.file.files[0];
+    },
+    addCar() {
+      let formData = new FormData();
+      formData.append("car_code", this.carCode);
+      formData.append("car_brand", this.carBrand);
+      formData.append("car_model", this.carModel);
+      formData.append("car_seat", this.carSeat);
+      formData.append("car_bag", this.carBag);
+      formData.append("car_rentprice", this.carPrice);
+      formData.append("myImageCar", this.file);
+
+      axios.post('http://localhost:3000/car', formData, {
+              headers: {
+              'Content-Type': 'multipart/form-data'
+              }
+          }).then(response => {
+              this.$router.push({path: '/admin'}) // Success! -> redirect to home page
+          })
+          .catch(error => {
+              console.log(error.message);
+          });
+    },
+    selectImages(event) {
+      this.images = event.target.files;
     },
   },
 };
@@ -13,8 +51,8 @@ export default {
 import { computed, ref, reactive, onMounted } from "vue";
 import axios from "axios";
 // use pinia file
-import { UsecrudCarStore } from "@/stores/crud_Car";
-const crudCarStore  = UsecrudCarStore()
+// import { UsecrudCarStore } from "@/stores/crud_Car";
+// const crudCarStore = UsecrudCarStore();
 </script>
 <template>
   <section class="hero p-5 is-size-5">
@@ -35,7 +73,7 @@ const crudCarStore  = UsecrudCarStore()
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="crudCarStore.carCode"
+                      v-model="carCode"
                       class="input"
                       type="text"
                       placeholder="T001"
@@ -46,15 +84,26 @@ const crudCarStore  = UsecrudCarStore()
               <div class="column is-half">
                 <div class="field">
                   <label class="label">รูปรถ</label>
-                  <div class="card-image">
-                    <input
-                      class="mb-5"
-                      multiple
-                      type="file"
-                      name="myImageCar"
-                      accept="image/png, image/jpeg, image/webp"
-                      @change="selectImages"
-                    />
+                  <div class="file is-info has-name is-normal">
+                    <label class="file-label">
+                      <input
+                        class="file-input"
+                        type="file"
+                        name="myImageCar"
+                        accept="image/png, image/jpeg, image/webp"
+                        multiple
+                        ref="file"
+                        id="file"
+                        @change="handleFileUpload()"
+                      />
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label"> Image file… </span>
+                      </span>
+                      <span class="file-name"> .jpg .png </span>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -66,7 +115,7 @@ const crudCarStore  = UsecrudCarStore()
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="crudCarStore.carBrand"
+                      v-model="carBrand"
                       class="input"
                       type="text"
                       placeholder="Toyota"
@@ -80,7 +129,7 @@ const crudCarStore  = UsecrudCarStore()
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="crudCarStore.carModel"
+                      v-model="carModel"
                       class="input"
                       type="text"
                       placeholder="Yaris"
@@ -96,7 +145,7 @@ const crudCarStore  = UsecrudCarStore()
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="crudCarStore.carSeat"
+                      v-model="carSeat"
                       class="input"
                       type="text"
                       placeholder="4"
@@ -110,7 +159,7 @@ const crudCarStore  = UsecrudCarStore()
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="crudCarStore.carBag"
+                      v-model="carBag"
                       class="input"
                       type="text"
                       placeholder="2"
@@ -124,7 +173,7 @@ const crudCarStore  = UsecrudCarStore()
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="crudCarStore.carPrice"
+                      v-model="carPrice"
                       class="input"
                       type="text"
                       placeholder="1190"
@@ -135,10 +184,14 @@ const crudCarStore  = UsecrudCarStore()
             </div>
             <div class="field is-grouped" style="float: right">
               <div class="control">
-                <button class="button is-info" @click="crudCarStore.addCar">Submit</button>
+                <button class="button is-info" @click="addCar">Submit</button>
               </div>
               <div class="control">
-                <router-link to="/admin"> <button class="button is-info is-light">Cancel</button></router-link>
+                <router-link to="/admin">
+                  <button class="button is-info is-light">
+                    Cancel
+                  </button></router-link
+                >
               </div>
             </div>
           </div>
