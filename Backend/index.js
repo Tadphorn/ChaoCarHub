@@ -8,12 +8,18 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(cors())
 
-// routers
+// routers 
 const indexRouter = require('./routes/index')
 const carRouter = require('./routes/crud_car')
 const userRouter = require('./routes/user')
 const payment = require('./routes/payment')
 // const commentRouter = require('./routes/comment')
+
+// Statics
+app.use(express.static('static'))
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 
 app.use(indexRouter.router)
 app.use(carRouter.router)

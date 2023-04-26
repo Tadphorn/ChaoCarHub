@@ -35,8 +35,8 @@ onMounted(CarStore.FetchCar);
         <td>
           <div class="card-image px-2 pt-2">
             <figure class="image is-4by3">
-              <img :src="item.car_img" alt="!!!!" />
-              <!-- <img :src="`http://localhost:3000/${item.car_img}`" alt=""> -->
+              <!-- <img :src="item.car_img" alt="!!!!" /> -->
+              <img :src="`http://localhost:3000/${item.car_img}`" alt="">
             </figure>
           </div> 
         </td>
@@ -46,7 +46,7 @@ onMounted(CarStore.FetchCar);
         <td>{{ item.car_seat }}</td>
         <td>{{ item.car_bag }}</td>
         <td>{{ item.car_rentprice }}</td>
-        <td>ว่าง (เพิ่ม car_status)</td>
+        <td>ว่าง</td>
       </tr>
     </table>
   </div>

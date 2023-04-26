@@ -16,12 +16,8 @@ onMounted(CarStore.FetchCar);
   </div>
   
   <div class="p-5 has-text-centered is-size-5">
-    <h1 class="is-size-4 p-5">
-      <b class="has-background-danger has-text-white"
-        >ตารางแสดงรายละเอียดรถทั้งหมดที่มีอยู่ในระบบ</b
-      ><br />
-      <b
-        >ขณะนี้มีรถอยู่ในระบบทั้งหมด
+    <h1 class="is-size-3 pb-6">
+      <b>ขณะนี้มีรถอยู่ในระบบทั้งหมด
         <b class="has-text-danger is-size-2">{{ CarStore.carvalue.length }} </b>
         คัน</b
       >
@@ -44,7 +40,7 @@ onMounted(CarStore.FetchCar);
         <td>
           <div class="card-image px-2 pt-2">
             <figure class="image is-4by3">
-              <img :src="item.car_img" alt="Placeholder image " />
+              <img :src="`http://localhost:3000/${item.car_img}`" alt="">
             </figure>
           </div>
         </td>
@@ -54,7 +50,7 @@ onMounted(CarStore.FetchCar);
         <td>{{ item.car_seat }}</td>
         <td>{{ item.car_bag }}</td>
         <td>{{ item.car_rentprice }}</td>
-        <td></td>
+        <td>ว่าง</td>
         <td class="has-text-danger p-2">
           <div class="control">
             <div class="level-item">
