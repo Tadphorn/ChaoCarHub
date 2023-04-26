@@ -63,16 +63,6 @@ router.post('/user/signin', async (req, res, next) => {
         if(!(await bcrypt.compare(password, rows[0].u_pass))) {
             throw new Error('Incorrect username or password')
         }
-        //  else {
-        //     bcrypt.compare(password, rows[0].u_pass, function (err, isLogin) {
-        //         if (isLogin) {
-        //             res.json({ status: 'ok', user: rows[0] })
-        //         }
-        //         else {
-        //             res.json({ status: 'Invalid Password', err: err })
-        //         }
-        //     })
-        // }
         console.log(rows[0].u_id)
 
         // Check if token already existed

@@ -46,7 +46,7 @@ onMounted(CarStore.FetchCar);
                   <a
                     href="#"
                     rel="nofollow"
-                    @click="search()"
+                    @click.prevent="$router.push('/detailcar')"
                     class="card-footer-item is-color-green3 is-size-6 is-color-green3 has-text-white"
                     >จองคันนี้</a
                   >

@@ -143,7 +143,7 @@ export const UseregisterStore = defineStore('register', () => {
       password: passw.value
     });
     const token = fetchingData.data.token
-    console.log(token)
+    // console.log(token)
     localStorage.setItem('token', token)
 
     if (fetchingData.status === 200) {
