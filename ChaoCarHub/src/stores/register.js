@@ -7,13 +7,13 @@ export const UseregisterStore = defineStore('register', () => {
 
   const router = useRouter()
 
-  const fname = ref("ดวงกมล");
-  const lname = ref("พบสูงเนิน");
-  const username = ref("chompoo");
+  const fname = ref("");
+  const lname = ref("");
+  const username = ref("");
   const passw = ref("");
   const passw2 = ref("");
-  const phone = ref("0624965299");
-  const email = ref("abc@gmaill.com");
+  const phone = ref("");
+  const email = ref("");
   const error = reactive({
     fname: "",
     lname: "",
@@ -151,7 +151,7 @@ export const UseregisterStore = defineStore('register', () => {
       router.push('/myrent');
     }
   }
-
+  //get user from db
   const userProfile = ref({})
   async function getUser() {
     const token = localStorage.getItem('token')
@@ -159,9 +159,14 @@ export const UseregisterStore = defineStore('register', () => {
     const { data } = fetchingData;
     console.log(data)
     userProfile.value = data
+    //check role
+    if(userProfile.value.role === 'admin'){
+      localStorage.setItem('isAdmin', true)
+      console.log('hi admin')
+    }
   }
   
-  // get user information
+  // get user from localStorage
   function onAuthChange() {
     const token = localStorage.getItem('token')
     if (token) {
@@ -172,7 +177,11 @@ export const UseregisterStore = defineStore('register', () => {
   function logout(){
     console.log('logout')
     localStorage.removeItem('token')
+    if(userProfile.value.role === 'admin'){
+      localStorage.removeItem('isAdmin')
+    }
     userProfile.value = null
+    
     router.push('/sign_in')
    }
   
