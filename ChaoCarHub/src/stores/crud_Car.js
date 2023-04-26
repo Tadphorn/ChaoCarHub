@@ -8,43 +8,25 @@ export const UsecrudCarStore = defineStore("car", () => {
     carvalue.value = fetchingData.data;
   };
 
-  const carCode = ref("TEST001");
-  const carBrand = ref("Toyota");
-  const carModel = ref("Yaris"); 
-  const carSeat = ref("5");
-  const carBag = ref("1");
-  const carPrice = ref("1200");
-  let carImge = document.getElementById("imageCar")
-  const addCar = async () => {
-    // console.log('hiiiiii')
-    const fetchingData = await axios.post("http://localhost:3000/car", {
-      car_code: carCode.value,
-      car_brand: carBrand.value,
-      car_model: carModel.value,
-      car_seat: carSeat.value,
-      car_bag: carBag.value,
-      car_rentprice: carPrice.value,
-      myImageCar: carImge
-    });
-    if(fetchingData.data.message == 'success'){
-      alert('New car added')
+  function deleteCar(carId) {
+    // console.log(carId)
+    const result = confirm(`Are you sure you want to delete this car ${carId}`);
+    if (result) {
+      axios
+        .delete(`http://localhost:3000/car/${carId}`)
+        .then((response) => {
+          console.log(response);
+          // this.$router.push({path: '/admin'})
+        })
+        .catch((error) => {
+          error = error.message;
+        });
     }
-  };
-
-  // selectImages(event) {
-  //   this.images = event.target.files;
-  // },
+  }
 
   return {
     FetchCar,
     carvalue,
-    carCode,
-    carBrand,
-    carModel,
-    carSeat,
-    carBag,
-    carPrice,
-    carImge,
-    addCar
+    deleteCar
   };
 });

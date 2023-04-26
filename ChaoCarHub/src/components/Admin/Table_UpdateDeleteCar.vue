@@ -51,7 +51,7 @@ onMounted(CarStore.FetchCar);
         <td>{{ item.car_bag }}</td>
         <td>{{ item.car_rentprice }}</td>
         <td>ว่าง</td>
-        <td class="has-text-danger p-2">
+        <td class="has-text-danger">
           <div class="control">
             <div class="level-item">
             <button class="button is-warning">
@@ -60,7 +60,7 @@ onMounted(CarStore.FetchCar);
                     <i class="fas fa-edit"></i>
                  </span>
             </button>&nbsp
-            <button class="button is-danger is-outlined">
+            <button class="button is-danger is-outlined" @click="CarStore.deleteCar(item.car_id)">
               <span>Delete</span>
               <span class="icon is-small">
                 <i class="fas fa-times"></i>

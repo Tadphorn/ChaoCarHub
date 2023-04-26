@@ -33,16 +33,16 @@ const upload = multer({ storage: storage });
 
 //   add car 
 router.post("/car", upload.single("myImageCar"), async function (req, res, next) {
-    const file = req.file;
+  const file = req.file;
 
-    if (!file) {
+  if (!file) {
     return res.status(400).json({ message: "Please upload a file" });
   }
 
-  const { car_code, car_brand, car_model, car_seat, car_bag, car_rentprice} = req.body
+  const { car_code, car_brand, car_model, car_seat, car_bag, car_rentprice } = req.body
   const conn = await pool.getConnection();
   await conn.beginTransaction();
-  console.log("filepath", file)
+  // console.log("filepath", file)
   try {
     const results = await conn.query(
       "INSERT INTO car(`car_code`, `car_brand`, `car_model`, `car_seat`, `car_bag`, `car_rentprice`, `car_img`) VALUES(?, ?, ?, ?, ?, ?, ?)",
@@ -59,9 +59,21 @@ router.post("/car", upload.single("myImageCar"), async function (req, res, next)
   }
 });
 
+router.delete('/car/:id', async function (req, res, next) {
+  const carId = req.params.id
+  try {
+      const [rows, fields] = await pool.query(
+        'DELETE FROM car WHERE car_id = ?', [carId]
+      )
+      res.json("success")
+  } catch (error) {
+      res.status(500).json(error)
+  } 
+});
+
 router.post("/test", upload.single("myImageCar"), async function (req, res, next) {
   const file = req.file;
-  
-})
+
+});
 
 exports.router = router;

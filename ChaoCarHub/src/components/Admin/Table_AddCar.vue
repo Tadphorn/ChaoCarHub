@@ -12,10 +12,6 @@ export default {
     };
   },
   methods: {
-    showSelectImage(image) {
-      // for preview only
-      return URL.createObjectURL(image);
-    },
     handleFileUpload(){
       this.file = this.$refs.file.files[0];
     },
@@ -50,7 +46,6 @@ export default {
 <script setup>
 import { computed, ref, reactive, onMounted } from "vue";
 import axios from "axios";
-// use pinia file
 // import { UsecrudCarStore } from "@/stores/crud_Car";
 // const crudCarStore = UsecrudCarStore();
 </script>
