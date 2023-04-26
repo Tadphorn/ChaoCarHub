@@ -1,3 +1,10 @@
+<script setup>
+import { computed, ref, reactive, onMounted } from "vue";
+// use pinia file
+import { UseregisterStore } from "@/stores/register";
+const registerStore  = UseregisterStore()
+
+</script>
 <template>
   <nav
     class="navbar border_t"
@@ -62,10 +69,9 @@
                 <strong>Sign up</strong>
               </router-link>
             </a>
-            <a class="navbar-item">
-              <router-link to="">
+            <a class="navbar-item" @click="registerStore.logout()">
                 <strong>Log out</strong>
-              </router-link>
+    
             </a>
           </div>
         </div>

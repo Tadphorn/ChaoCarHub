@@ -1,10 +1,5 @@
-<script>
-export default{
-    created() {
-        this.showname = JSON.parse(localStorage.getItem("myname"))
-        console.log(this.showname)
-    }
-}
+<script setup>
+
 </script>
 
 <template>
