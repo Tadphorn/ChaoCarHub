@@ -20,7 +20,7 @@ onMounted(CarStore.FetchCar);
               <div class="card has-text-centered is-border-radius ">
                 <div class="card-image p-2">
                   <figure class="image is-4by3">
-                    <img :src="item.car_img" alt="Placeholder image " />
+                    <img :src="`http://localhost:3000/${item.car_img}`" alt="" />
                   </figure>
                 </div>
                 <div class="card-content">

@@ -54,7 +54,7 @@ export default {
               <div class="card has-text-centered is-border-radius">
                 <div class="card-image px-5 pt-2">
                   <figure class="image is-4by3">
-                    <img :src="item.car_img" alt="Placeholder image " />
+                    <img :src="`http://localhost:3000/${item.car_img}`" alt="" />
                   </figure>
                 </div>
                 <div class="card-content">
@@ -91,13 +91,13 @@ export default {
         <div class="column">
           <P> <b class="is-size-3">Other</b> </P><br />
           <div class="is-multiline is-variable columns is-1 pl-6">
-            <div v-for="item in CarStore.carvalue" id="card_product " class="column is-one-quarter" v-show="item.car_id >= 15 && item.car_id <= 18">
+            <div v-for="item in CarStore.carvalue" id="card_product " class="column is-one-quarter" v-show="item.car_id >= 15">
               <div class="card has-text-centered is-border-radius">
                 <div class="card-image">
                   <figure class="image is-4by4">
-                    <img :src="item.car_img" alt="Placeholder image " />
+                    <img :src="`http://localhost:3000/${item.car_img}`" alt="" />
                   </figure>
-                </div>
+                </div> 
                 <div class="card-content">
                   <div class="media">
                     <div class="media-content">
