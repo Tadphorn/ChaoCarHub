@@ -3,10 +3,12 @@ import { computed, ref, reactive, onMounted } from "vue";
 // use pinia file
 import { UseregisterStore } from "@/stores/register";
 const registerStore  = UseregisterStore()
-   
+
+
 </script>
 
 <template>
+
     <div class="hero is-fullheight">
         <div class="img_logo"></div>
         <div class="hero-body is-justify-content-center is-align-items-center">
@@ -19,7 +21,7 @@ const registerStore  = UseregisterStore()
                         <span class="has-text-danger ertext ml-3">{{registerStore.error.username}}</span>
                     </div>
                     <div class="column px-5">
-                        <input v-model="passw" class="input input_password" type="password" placeholder="Password" :class="{'is-danger': registerStore.error.passw}" @input="registerStore.validatePassw()">
+                        <input v-model="registerStore.passw" class="input input_password" type="password" placeholder="Password" :class="{'is-danger': registerStore.error.passw}" @input="registerStore.validatePassw()">
                         <span class="has-text-danger ertext ml-3">{{registerStore.error.passw}}</span>
                     </div>
                     <div class="column px-5"> 

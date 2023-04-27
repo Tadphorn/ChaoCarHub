@@ -1,16 +1,19 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
 import { computed, ref, reactive, onMounted } from "vue";
+import { useRouter } from 'vue-router'
 
 export const UseregisterStore = defineStore('register', () => {
 
-  const fname = ref("ดวงกมล");
-  const lname = ref("พบสูงเนิน");
-  const username = ref("chompoo");
-  const passw = ref("123456");
-  const passw2 = ref("123456");
-  const phone = ref("0624965299");
-  const email = ref("abc@gmaill.com");
+  const router = useRouter()
+
+  const fname = ref("");
+  const lname = ref("");
+  const username = ref("");
+  const passw = ref("");
+  const passw2 = ref("");
+  const phone = ref("");
+  const email = ref("");
   const error = reactive({
     fname: "",
     lname: "",
@@ -118,7 +121,7 @@ export const UseregisterStore = defineStore('register', () => {
           alert("This username is already exist");
         }
         alert("Sign up Success");
-        // router.push('/')
+        router.push('/')
         window.location.href = '/sign_in'
       })
       .catch((err) => {
@@ -128,9 +131,10 @@ export const UseregisterStore = defineStore('register', () => {
   }
 
   async function submitSignin() {
-    this.validateUsername()
-    this.validatePassw()
-    if (this.error.username !== '' || this.error.passw !== '') {
+    console.log("5555");
+    validateUsername()
+    validatePassw()
+    if (error.username !== '' || error.passw !== '') {
       alert('กรุณากรอกข้อมูลให้ถูกต้อง')
       return
     }
@@ -139,30 +143,48 @@ export const UseregisterStore = defineStore('register', () => {
       password: passw.value
     });
     const token = fetchingData.data.token
-    console.log(token)
+    // console.log(token)
     localStorage.setItem('token', token)
 
     if (fetchingData.status === 200) {
       console.log("login")
-      location.href = './myrent'
-      // this.$router.push({ path: "/" });
+      router.push('/myrent');
     }
   }
-
-  //get user information
+  //get user from db
+  const userProfile = ref({})
+  async function getUser() {
+    const token = localStorage.getItem('token')
+    const fetchingData = await axios.get('http://localhost:3000/user/me', { headers: { Authorization: 'Bearer ' + token } })
+    const { data } = fetchingData;
+    console.log(data)
+    userProfile.value = data
+    //check role
+    if(userProfile.value.role === 'admin'){
+      localStorage.setItem('isAdmin', true)
+      console.log('hi admin')
+    }
+  }
+  
+  // get user from localStorage
   function onAuthChange() {
     const token = localStorage.getItem('token')
     if (token) {
-      this.getUser()
+      getUser()
     }
   }
 
-  function getUser() {
-    const token = localStorage.getItem('token')
-    axios.get('http://localhost:3000/user/me', { headers: { Authorization: 'Bearer ' + token } }).then(res => {
-      this.user = res.data
-    })
-  }
+  function logout(){
+    console.log('logout')
+    localStorage.removeItem('token')
+    if(userProfile.value.role === 'admin'){
+      localStorage.removeItem('isAdmin')
+    }
+    userProfile.value = null
+    
+    router.push('/sign_in')
+   }
+  
 
   return {
     fname,
@@ -184,6 +206,8 @@ export const UseregisterStore = defineStore('register', () => {
     submitSignup,
     submitSignin,
     onAuthChange,
-    getUser
+    getUser,
+    userProfile,
+    logout
   }
 })

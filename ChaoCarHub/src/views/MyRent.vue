@@ -9,17 +9,27 @@ import StatusBar from "../components/MyRent/StatusBar.vue";
 import { computed, ref, reactive, onMounted } from "vue";
 import { UseregisterStore } from "@/stores/register";
 const registerStore  = UseregisterStore()
-onMounted(registerStore.onAuthChange())
+// onMounted(registerStore.onAuthChange())
+onMounted(async () => {
+      const user =  registerStore.onAuthChange()
+      
+    });
 
 </script>
 
 <template>
   <HeroUser></HeroUser>
   <StatusBar></StatusBar>
-  <mCheckout></mCheckout>
+  <div v-if="registerStore.userProfile">
+    <h1> {{ registerStore.userProfile.u_fname }} {{ registerStore.userProfile.u_lname }}</h1>
+  </div>
+  
+  <!-- <router-view :key="$route.fullPath" @auth-change="onAuthChange" /> -->
+  <!-- <mCheckout></mCheckout>
   <mPickupcar></mPickupcar>
   <mReturncar></mReturncar>
-  <mHistory></mHistory>
+  <mHistory></mHistory> -->
+
 </template>
 
 
