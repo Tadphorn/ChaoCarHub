@@ -17,6 +17,44 @@ const storage = multer.diskStorage({
     );
   },
 });
+//for homepage
+router.get("/car/nissan", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query('SELECT * FROM car WHERE car_brand = "Nissan"')
+    return res.json(rows)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+
+});
+
+router.get("/car/honda", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query('SELECT * FROM car WHERE car_brand = "Honda"')
+    return res.json(rows)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+
+});
+
+router.get("/car/toyota", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query('SELECT * FROM car WHERE car_brand = "Toyota"')
+    return res.json(rows)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+});
+
+router.get("/car/other", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query('SELECT * FROM car WHERE car_brand not in( "Toyota", "Honda", "Nissan")')
+    return res.json(rows)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+});
 
 // select Car
 router.get("/car", async function (req, res, next) {
