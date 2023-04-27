@@ -27,15 +27,12 @@ defineProps({
           >
         </p>
       </div>
+      <!-- <router-link :to="{ name: 'detailcar', params: { id: parseInt(item.car_id) } }"> -->
       <footer class="card-footer">
-        <a
-          href="#"
-          rel="nofollow"
-          @click="search()"
-          class="card-footer-item is-color-green3 is-size-6 is-color-green3 has-text-white"
-          >จองคันนี้</a
-        >
+        <a href="#" rel="nofollow" @click.prevent="$router.push('/detailcar')"
+          class="card-footer-item is-color-green3 is-size-6 is-color-green3 has-text-white">จองคันนี้</a>
       </footer>
+    <!-- </router-link> -->
     </div>
   </div>
 </template>

@@ -17,7 +17,7 @@ export default {
       "แฟชั่น ไอซ์แลนด์",
     ],
     store: {},
-    myname: "",
+    myname: "", 
     rentdate: {
       // dsent:
       // dreturn:
@@ -98,15 +98,14 @@ export default {
 </script>
 
 <template>
-  <div class="container is-max-widescreen p-5">
-    <!-- All other tile elements -->
+  <!-- <div class="container is-max-widescreen p-5">
     <div class="p-5">
       <div class="columns">
         <div class="column is-5 ml-5">
           <h1 class="is-size-2 ml-6">{{ store.brand }} {{ store.model }}</h1>
           <img :src="store.img" alt="" />
         </div>
-        <!-- icon -->
+        
         <div class="column ml-4 mt-4 is-2 is-size-5">
           <img
             class="icond tobottom"
@@ -127,7 +126,7 @@ export default {
           />
           Auto
         </div>
-        <!-- sidecard -->
+        
         <div class="column is-4 is-size-5 mt-2">
           <div class="box tobottom1">
             <h1>ราคานี้รวม</h1>
@@ -140,7 +139,7 @@ export default {
         </div>
       </div>
     </div>
-    <!--show price -->
+    
     <div class="box box-radius">
       <div class="columns p-5 is-size-5">
         <div class="column is-6">
@@ -181,7 +180,7 @@ export default {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- rent button -->
     <div class="columns">
       <div class="column">
@@ -205,5 +204,5 @@ export default {
         >
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 </template>

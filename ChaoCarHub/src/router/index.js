@@ -39,7 +39,7 @@ const routes = [
             import('../components/Home/Filter_Car.vue')
     },
     {
-        path: '/detailcar',
+        path: '/detailcar/:id',
         name: 'detailcar',
         component: () =>
             import('../views/DetailCar.vue')
