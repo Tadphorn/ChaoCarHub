@@ -6,6 +6,15 @@ const CarStore = UsecrudCarStore();
 onMounted(CarStore.FetchCar);
 </script>
 
+<script>
+export default {
+  data() {
+    return {
+      editCar: false
+    };
+  },
+};
+</script>
 <template>
   <div class="p-5 is-size-5">
     <router-link to="/admin"
@@ -13,11 +22,16 @@ onMounted(CarStore.FetchCar);
         <b>ย้อนกลับ ◀</b>
       </div></router-link
     >
+    <!-- ==========popup=========== -->
+    <div v-if="editCar === true">
+      สวัสดีค่ะ
+    </div>
+    <!-- ========================== -->
   </div>
-  
-  <div class="p-5 has-text-centered is-size-5">
+  <div class="p-5 has-text-centered is-size-5" v-bind:class="{ 'is-active': editCar }">
     <h1 class="is-size-3 pb-6">
-      <b>ขณะนี้มีรถอยู่ในระบบทั้งหมด
+      <b
+        >ขณะนี้มีรถอยู่ในระบบทั้งหมด
         <b class="has-text-danger is-size-2">{{ CarStore.carvalue.length }} </b>
         คัน</b
       >
@@ -40,7 +54,7 @@ onMounted(CarStore.FetchCar);
         <td>
           <div class="card-image px-2 pt-2">
             <figure class="image is-4by3">
-              <img :src="`http://localhost:3000/${item.car_img}`" alt="">
+              <img :src="`http://localhost:3000/${item.car_img}`" alt="" />
             </figure>
           </div>
         </td>
@@ -53,21 +67,24 @@ onMounted(CarStore.FetchCar);
         <td>ว่าง</td>
         <td class="has-text-danger">
           <div class="control">
-            <div class="level-item">
-            <button class="button is-warning">
+            <div class="level-item" @click="editCar = !editCar">
+              <button class="button is-warning">
                 <span>Edit</span>
-                  <span class="icon is-small">
-                    <i class="fas fa-edit"></i>
-                 </span>
-            </button>&nbsp
-            <button class="button is-danger is-outlined" @click="CarStore.deleteCar(item.car_id)">
-              <span>Delete</span>
-              <span class="icon is-small">
-                <i class="fas fa-times"></i>
-              </span>
-            </button>
+                <span class="icon is-small">
+                  <i class="fas fa-edit"></i>
+                </span></button
+              >&nbsp
+              <button
+                class="button is-danger is-outlined"
+                @click="CarStore.deleteCar(item.car_id)"
+              >
+                <span>Delete</span>
+                <span class="icon is-small">
+                  <i class="fas fa-times"></i>
+                </span>
+              </button>
+            </div>
           </div>
-        </div>
         </td>
       </tr>
     </table>

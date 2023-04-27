@@ -21,45 +21,45 @@ export const UsepaymentStore = defineStore('payment', () => {
     });
 
     function validateName() {
-        if (this.name === '') {
-            this.errorbill.name = 'กรุณากรอกชื่อบนบัตรเคดิต'
+        if (name === '') {
+            errorbill.name = 'กรุณากรอกชื่อบนบัตรเคดิต'
             return
         }
-        this.errorbill.name = ''
+        errorbill.name = ''
     }
 
     function validateNumbercreditcard() {
-        if (this.numbercreditcard === '') {
-            this.errorbill.numbercreditcard = 'กรุณากรอกหมายเลขบัตร'
+        if (numbercreditcard === '') {
+            errorbill.numbercreditcard = 'กรุณากรอกหมายเลขบัตร'
             return
         }
-        this.errorbill.numbercreditcard = ''
+        errorbill.numbercreditcard = ''
     }
 
     function validateExpirationDate() {
-        if (this.expirationdate === '') {
-            this.errorbill.expirationdate = 'กรุณากรอกวันหมดอายุ'
+        if (expirationdate === '') {
+            errorbill.expirationdate = 'กรุณากรอกวันหมดอายุ'
             return
         }
-        this.errorbill.expirationdate = ''
+        errorbill.expirationdate = ''
     }
 
     function validateCvc() {
-        if (this.cvc === '') {
-            this.errorbill.cvc = 'กรุณากรอก CVC '
+        if (cvc === '') {
+            errorbill.cvc = 'กรุณากรอก CVC '
             return
         }
 
-        this.errorbill.cvc = ''
+        errorbill.cvc = ''
     }
 
     async function submitbill() {
-        this.validateName()
-        this.validateNumbercreditcard()
-        this.validateExpirationDate()
-        this.validateCvc()
+        validateName()
+        validateNumbercreditcard()
+        validateExpirationDate()
+        validateCvc()
 
-        if (this.errorbill.name !== '' || this.errorbill.numbercreditcard !== '' || this.errorbill.expirationdate !== '' || this.errorbill.cvc != '') {
+        if (errorbill.name !== '' || errorbill.numbercreditcard !== '' || errorbill.expirationdate !== '' || errorbill.cvc != '') {
             alert('กรุณากรอกข้อมูลให้ถูกต้อง')
             return
         }
