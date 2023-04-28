@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
 import { computed, ref, reactive, onMounted } from "vue";
+import { useLocalStorage } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 
 export const UserentCarStore = defineStore('rent', () => {
@@ -8,8 +9,10 @@ export const UserentCarStore = defineStore('rent', () => {
 
   const brandcar = ["All", "Toyota", "Nissan", "Honda", "Mercedes Benz Sport", "Hyundai", "MG", "BMW",]
   const seatcar = ["2", "4", "5", "6", "7", "9"]
-  const  locationcar = ["สนามบินดอนเมือง", "สนามบินสุวรรณภูมิ", "สถานีรถไฟดอนเมือง", "ไอทีสแควร์", "BTS อนุสาวรีย์", "BTS อโศก", "BTS ช่องนนทรี", "ธรรมศาสตร์ รังสิต", "ฟิวเจอร์ปาร์ค รังสิต", "เซ็นทรัล อีสต์วิลล์", "แอร์พอร์ตลิงค์ ลาดกระบัง", "เซ็นทรัล พระราม 2", "แฟชั่น ไอซ์แลนด์"]
+  const locationcar = ["สนามบินดอนเมือง", "สนามบินสุวรรณภูมิ", "สถานีรถไฟดอนเมือง", "ไอทีสแควร์", "BTS อนุสาวรีย์", "BTS อโศก", "BTS ช่องนนทรี", "ธรรมศาสตร์ รังสิต", "ฟิวเจอร์ปาร์ค รังสิต", "เซ็นทรัล อีสต์วิลล์", "แอร์พอร์ตลิงค์ ลาดกระบัง", "เซ็นทรัล พระราม 2", "แฟชั่น ไอซ์แลนด์"]
 
+  //rent detail in localstorage
+  const rentData = useLocalStorage('rentData', {})
   const rentInfo = reactive({
     timePickup: "",
     dayPickup: "",
@@ -34,43 +37,15 @@ export const UserentCarStore = defineStore('rent', () => {
   const fetchSingleCar = async (id) => {
     console.log(id)
     return (await axios.get(`http://localhost:3000/detailcar/${id}`)).data[0]
-   }
-
-  const CheckDaypickup = new Date(rentInfo.dayPickup);
-  function validateRentDsend() {
-    if (rentInfo.dayPickup === "" || rentInfo.timePickup === "") {
-      error.dayPickup = "กรุณากรอกวันและเวลารับรถ";
-      return;
-    }
-    const today = new Date();
-    if (CheckDaypickup <= today) {
-      error.dayPickup = "ห้ามเลือกวันในอดีต";
-      return;
-    }
-    error.dayPickup = "";
   }
 
-  function validateRentDreturn() {
-    if (rentInfo.dayReturn === "" || rentInfo.timeReturn === "") {
-      error.dayReturn = "กรุณากรอกวันและเวลาคืนรถ";
-      return;
-    }
-    const CheckDayreturn = new Date(rentInfo.dayReturn);
-    if (CheckDayreturn < CheckDaypickup) {
-      error.dayReturn = "กรุณาเลือกวันหลังจากวันรับรถ";
-      return;
-    }
-    error.dayReturn = "";
-  }
-
+  //search car
   const filterCar = ref([])
   async function searchCar() {
-    // validateRentDsend();
-    // validateRentDreturn();
-    // if (error.dayPickup !== "" || error.dayReturn !== "") {
-    //   alert("กรุณากรอกวันที่ และเวลารับรถ/คืนรถ");
-    //   return;
-    // }
+    requiredInputCheck()
+    validateDateTime()
+    //store rentInfo in localstorage
+    rentData.value = rentInfo
     const fetchingData = await axios.post("http://localhost:3000/search", {
       brand: filBrand.value,
       price: filPrice.value,
@@ -78,8 +53,59 @@ export const UserentCarStore = defineStore('rent', () => {
     });
     filterCar.value = fetchingData.data;
     // console.log(filterCar.value)
-    router.push('/showcar')
+    // router.push('/showcar')
+
   }
+
+  function requiredInputCheck() {
+    if (rentInfo.dayPickup === "" || rentInfo.timePickup === "") {
+      error.dayPickup = "กรุณากรอกวัน และเวลารับรถ";
+      return;
+    }
+    if (rentInfo.dayReturn === "" || rentInfo.timeReturn === "") {
+      error.dayReturn = "กรุณากรอกวัน และเวลาคืนรถ";
+      return;
+    }
+    error.dayPickup = ""
+    error.dayReturn = ""
+  }
+
+  function validateDateTime() {
+    const currentDate = new Date()
+    const rentDate = new Date(`${rentInfo.dayPickup}T${rentInfo.timePickup}`);
+    //  console.log(rentDate)
+    const returnDate = new Date(`${rentInfo.dayReturn}T${rentInfo.timeReturn}`);
+
+    // Get the difference between the two dates in milliseconds
+    const differenceInMs = returnDate.getTime() - rentDate.getTime();
+    const diffCurrentRent = (rentDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
+    //  console.log('difday', diffCurrentRent)
+
+    // Convert the difference to days
+    const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
+    if (rentDate < currentDate) {
+      alert("ห้ามเลือกวันในอดีต")
+      return
+    }
+    if (diffCurrentRent < 1) {
+      alert("กรุณาจองล่วงหน้าอย่างน้อย 1-2 วัน")
+      return
+    }
+    if (differenceInDays < 0) {
+      alert("กรุณาเลือกวันคืนรถ ที่ถัดจากวันรับรถ")
+      return
+    }
+    if (differenceInDays < 1 && differenceInDays >= 0) {
+      alert("ระยะเวลาในการเช่าต้องมากกว่า 24 ชม.")
+      return
+    }
+    if (differenceInDays > 30) {
+      alert("ระยะเวลาในการเช่าห้ามเกิน 30 วัน")
+      return
+    }
+    //  console.log(`The difference between ${rentDate} and ${returnDate} is ${differenceInDays} days.`);
+  }
+
   return {
     brandcar,
     seatcar,
@@ -88,11 +114,12 @@ export const UserentCarStore = defineStore('rent', () => {
     filBrand,
     filPrice,
     filSeat,
-    validateRentDsend,
-    validateRentDreturn,
     searchCar,
     filterCar,
     fetchSingleCar,
-    locationcar
+    locationcar,
+    rentData,
+    validateDateTime,
+    requiredInputCheck
   }
 })

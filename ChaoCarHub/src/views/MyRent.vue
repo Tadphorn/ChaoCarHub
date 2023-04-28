@@ -20,9 +20,6 @@ onMounted(async () => {
 <template>
   <HeroUser></HeroUser>
   <StatusBar></StatusBar>
-  <div v-if="registerStore.userProfile">
-    <h1> {{ registerStore.userProfile.u_fname }} {{ registerStore.userProfile.u_lname }}</h1>
-  </div>
   
   <!-- <router-view :key="$route.fullPath" @auth-change="onAuthChange" /> -->
   <!-- <mCheckout></mCheckout>
