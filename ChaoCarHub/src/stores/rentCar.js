@@ -92,6 +92,7 @@ export const UserentCarStore = defineStore('rent', () => {
     validateRentDreturn,
     searchCar,
     filterCar,
-    fetchSingleCar
+    fetchSingleCar,
+    locationcar
   }
 })
