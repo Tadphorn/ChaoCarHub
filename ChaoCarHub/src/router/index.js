@@ -32,12 +32,12 @@ const routes = [
         component: () =>
             import('../views/Pay.vue')
     },
-    {
-        path: '/filter_car',
-        name: 'filter_car',
-        component: () =>
-            import('../components/Home/Filter_Car.vue')
-    },
+    // {
+    //     path: '/filter_car',
+    //     name: 'filter_car',
+    //     component: () =>
+    //         import('../components/Home/Filter_Car.vue')
+    // },
     {
         path: '/detailcar/:id',
         name: 'detailcar',
@@ -62,7 +62,7 @@ const routes = [
         path: '/showcar',
         name: 'showcar',
         component: () =>
-            import('../views/ShowCar.vue')
+            import('../components/Home/ShowCar.vue')
     }
     ,
     {

@@ -40,17 +40,19 @@ const rentCarStore =  UserentCarStore()
                         <option v-for="brandcar in rentCarStore.brandcar" :key="brandcar.id " :value="brandcar">
                             {{brandcar}}
                         </option>
-                    </select>
+                    </select> 
                         </div>
                     </div>
                     <div class="column ">
                         ช่วงราคา<br>
-                        <div class="select ">
+                        <div class="select">
                             <select v-model="rentCarStore.filPrice" class="font">
-                        <option v-for="pricecar in rentCarStore.pricecar" :key="pricecar.id " :value="pricecar">
-                            {{pricecar}} ฿
-                        </option>
-                    </select>
+                                <option value="0-20000">All</option>
+                                <option value="0-1999">0-1999</option>
+                                <option value="2000-4999">2000-4999</option>
+                                <option value="5000-9999">5000-9999</option>
+                                <option value="10000-20000">10000 ขึ้นไป</option>
+                            </select>
                         </div>
                     </div>
                     <div class="column ">
@@ -64,7 +66,7 @@ const rentCarStore =  UserentCarStore()
                         </div>
                     </div>
                 </div>
-                <button @click="rentCarStore.search()" class="button color-card-search has-text-white font " style="width: 100%; " type="submit ">
+                <button @click="rentCarStore.searchCar()" class="button color-card-search has-text-white font " style="width: 100%; " type="submit ">
                   ค้นหารถว่าง                  
                 </button>
             </div>

@@ -1,109 +1,24 @@
-<script>
-export default {
-  data: () => ({
-    locationcar: [
-      "สนามบินดอนเมือง",
-      "สนามบินสุวรรณภูมิ",
-      "สถานีรถไฟดอนเมือง",
-      "ไอทีสแควร์",
-      "BTS อนุสาวรีย์",
-      "BTS อโศก",
-      "BTS ช่องนนทรี",
-      "ธรรมศาสตร์ รังสิต",
-      "ฟิวเจอร์ปาร์ค รังสิต",
-      "เซ็นทรัล อีสต์วิลล์",
-      "แอร์พอร์ตลิงค์ ลาดกระบัง",
-      "เซ็นทรัล พระราม 2",
-      "แฟชั่น ไอซ์แลนด์",
-    ],
-    store: {},
-    myname: "", 
-    rentdate: {
-      // dsent:
-      // dreturn:
-      // time:
-    },
-    // station1:'',
-    // station2:'',
-    rstation: {
-      st1: "",
-      st2: "",
-    },
-    returnCar: false,
-    checkoutCar: false,
-    name: "",
-    numbercreditcard: "",
-    expirationdate: "",
-    cvc: "",
-    errorbill: {
-      name: "",
-      numbercreditcard: "",
-      expirationdate: "",
-      cvc: "",
-    },
-    cancel: false,
-    d1: 0,
-    d2: 0,
-  }),
-  created() {
-    // customer car
-    const text = JSON.parse(localStorage.getItem("mycart"));
-    this.store = text;
+<script setup>
+import { UserentCarStore } from "@/stores/rentCar";
+import { computed, ref, reactive, onMounted } from "vue";
+import { useRoute } from "vue-router";
+const rentCarStore = UserentCarStore();
+const route = useRoute()
+const {id} = route.params
+onMounted(async () => {
+  rentCarStore.carDetail = await rentCarStore.fetchSingleCar(id)
+})
 
-    const string = JSON.parse(localStorage.getItem("myname"));
-    this.myname = string;
-
-    const date = JSON.parse(localStorage.getItem("rentDate"));
-    this.rentdate = date;
-
-    const sta = JSON.parse(localStorage.getItem("rentStation"));
-    this.rstation = sta;
-
-    //checkbill
-    const bool = JSON.parse(localStorage.getItem("mybill"));
-    if (bool != null) {
-      this.checkoutCar = bool;
-    }
-    localStorage.setItem("mybill", false);
-  },
-  methods: {
-    tocheckout() {
-      // this.rstation.st1 = this.station1
-      // this.rstation.st2 = this.station2
-      const sta = JSON.stringify(this.rstation);
-      localStorage.setItem("rentStation", sta);
-    },
-  },
-  computed: {
-    reversdate() {
-      let re = this.rentdate.dsend.split("-");
-      console.log(re);
-      this.d1 = re[2];
-      return re[2] + "/" + re[1] + "/" + re[0];
-    },
-    reversdate2() {
-      let re = this.rentdate.dreturn.split("-");
-      console.log(re);
-      this.d2 = re[2];
-      return re[2] + "/" + re[1] + "/" + re[0];
-    },
-    calday() {
-      return this.d2 - this.d1;
-    },
-    totalprice() {
-      return this.calday * this.store.price;
-    },
-  },
-};
-</script>
+ </script>
 
 <template>
-  <!-- <div class="container is-max-widescreen p-5">
+  <h1> {{ rentCarStore.carDetail }}</h1>
+  <div class="container is-max-widescreen p-5">
     <div class="p-5">
       <div class="columns">
         <div class="column is-5 ml-5">
-          <h1 class="is-size-2 ml-6">{{ store.brand }} {{ store.model }}</h1>
-          <img :src="store.img" alt="" />
+          <h1 class="is-size-2 ml-6">{{ rentCarStore.carDetail.car_brand }} {{ rentCarStore.carDetail.car_model }}</h1>
+          <!-- <img :src="`http://localhost:3000/${rentCarStore.carDetail.car_img}/${id}`" alt="" /> -->
         </div>
         
         <div class="column ml-4 mt-4 is-2 is-size-5">
@@ -112,13 +27,13 @@ export default {
             src="https://cdn.discordapp.com/attachments/1072181252964233328/1078900607802408990/user.png"
             alt=""
           />
-          {{ store.seat }} ที่นั้ง<br />
+          <!-- {{ rentCarStore.carDetail.car_seat }} ที่นั้ง<br /> -->
           <img
             class="icond mt-3"
             src="https://cdn.discordapp.com/attachments/1072181252964233328/1078900607567540294/bag.png"
             alt=""
           />
-          {{ store.bag }} กระเป๋า<br />
+          <!-- {{ rentCarStore.carDetail.car_bag }} กระเป๋า<br /> -->
           <img
             class="icond mt-3"
             src="https://cdn.discordapp.com/attachments/1072181252964233328/1078900607286509598/car-gear.png"
@@ -144,11 +59,11 @@ export default {
       <div class="columns p-5 is-size-5">
         <div class="column is-6">
           <p><b>รายละเอียดราคารถ</b></p>
-          <p>ค่าบริการรถยนต์เช่า {{ store.price }} บาท</p>
+          <!-- <p>ค่าบริการรถยนต์เช่า {{ rentCarStore.carDetail.car_price }} บาท</p> -->
         </div>
         <div class="column is-6">
           <p>
-            <b>ราคาสำหรับ {{ calday }} วัน {{ totalprice }} บาท</b>
+            <b>ราคาสำหรับ calday วัน  totalprice  บาท</b>
           </p>
         </div>
       </div>
@@ -157,32 +72,33 @@ export default {
       <div class="columns p-5 is-size-5">
         <div class="column is-6">
           <p><b>การรับรถ</b></p>
-          <p>{{ reversdate }} เวลา {{ rentdate.time }} น.</p>
-          <p class="is-size-6"><b>สถานที่รับรถ</b></p>
+          <!-- <p> {{ rentCarStore.rentInfo.dayPickup }} เวลา {{ rentCarStore.rentInfo.timePickup }} น.</p> -->
+          <p class="is-size-6">
+            <b>สถานที่รับรถ</b></p>
           <div class="select">
-            <select v-model="rstation.st1" class="font">
-              <option v-for="loca in locationcar" :key="loca.id" :value="loca">
+            <!-- <select v-model="rentCarStore.rentInfo.placePickup" class="font">
+              <option v-for="loca in rentCarStore.locationcar" :key="loca.id" :value="loca">
                 {{ loca }}
               </option>
-            </select>
+            </select> -->
           </div>
         </div>
         <div class="column is-6">
           <p><b>การคืนรถ</b></p>
-          <p>{{ reversdate2 }} เวลา {{ rentdate.time }} น.</p>
+          <!-- <p>{{  rentCarStore.rentInfo.dayReturn }} เวลา {{ rentCarStore.rentInfo.timeReturn }} น.</p> -->
           <p class="is-size-6"><b>สถานที่คืนรถ</b></p>
           <div class="select">
-            <select v-model="rstation.st2" class="font">
-              <option v-for="loca in locationcar" :key="loca.id" :value="loca">
+            <!-- <select v-model="rentCarStore.rentInfo.placeReturn" class="font">
+              <option v-for="loca in rentCarStore.locationcar" :key="loca.id" :value="loca">
                 {{ loca }}
               </option>
-            </select>
+            </select> -->
           </div>
         </div>
       </div>
-    </div> -->
-    <!-- rent button -->
-    <div class="columns">
+    </div>
+  
+     <div class="columns">
       <div class="column">
         <router-link to="/">
           <button
@@ -204,5 +120,5 @@ export default {
         >
       </div>
     </div>
-  <!-- </div> -->
+  </div>
 </template>

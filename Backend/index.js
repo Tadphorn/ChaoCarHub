@@ -9,10 +9,10 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 app.use(cors())
 
 // routers 
-const indexRouter = require('./routes/index')
+const rentcarRouter = require('./routes/rent_car')
 const carRouter = require('./routes/crud_car')
 const userRouter = require('./routes/user')
-const payment = require('./routes/payment')
+const paymentRouter = require('./routes/payment')
 // const commentRouter = require('./routes/comment')
 
 // Statics
@@ -21,10 +21,10 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 
-app.use(indexRouter.router)
+app.use(rentcarRouter.router)
 app.use(carRouter.router)
 app.use(userRouter.router)
-app.use(payment.router)
+app.use(paymentRouter.router)
 // app.use(postRouter.router)
 // app.use(commentRouter.router)
 
