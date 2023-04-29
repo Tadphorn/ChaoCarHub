@@ -95,27 +95,22 @@ export const UserentCarStore = defineStore('rent', () => {
     const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
     if (rentDate < currentDate) {
       error.incorrectDate = "ห้ามเลือกวันในอดีต"
-      // alert("ห้ามเลือกวันในอดีต")
       return 
     }
     if (diffCurrentRent < 1) {
       error.incorrectDate = "กรุณาจองล่วงหน้าอย่างน้อย 1-2 วัน"
-      // alert("กรุณาจองล่วงหน้าอย่างน้อย 1-2 วัน")
       return 
     }
     if (differenceInDays < 0) {
       error.incorrectDate = "กรุณาเลือกวันคืนรถ ที่ถัดจากวันรับรถ"
-      // alert("กรุณาเลือกวันคืนรถ ที่ถัดจากวันรับรถ")
       return 
     }
     if (differenceInDays < 1 && differenceInDays >= 0) {
       error.incorrectDate = "ระยะเวลาในการเช่าต้องมากกว่า 24 ชม."
-      // alert("ระยะเวลาในการเช่าต้องมากกว่า 24 ชม.")
       return 
     }
     if (differenceInDays > 30) {
       error.incorrectDate = "ระยะเวลาในการเช่าห้ามเกิน 30 วัน"
-      // alert("ระยะเวลาในการเช่าห้ามเกิน 30 วัน")
       return 
     }
     error.incorrectDate = ""
