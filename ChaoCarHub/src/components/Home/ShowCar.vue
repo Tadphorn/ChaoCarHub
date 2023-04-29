@@ -7,7 +7,7 @@ onMounted(rentCarStore.searchCar);
 </script>
 
 <template>
-  <h1>{{ rentCarStore.filterCar }}</h1>
+  <!-- <h1>{{ rentCarStore.filterCar }}</h1> -->
   <div class="container is-max-desktop">
     <div class="column pl-6">
         <div class="column">

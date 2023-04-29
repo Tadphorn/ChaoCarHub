@@ -7,25 +7,26 @@ const rentCarStore =  UserentCarStore()
 
 <template>
     <div class="column">
-        <div class="hero-body ">
+        <div class="hero-body ">            
             <div class="card  p-5 has-background-primary-light ">
+                
                 <p class="title is-size-6 ">
                     1. ระบุวันเดินทาง
                 </p>
-                <p class="subtitle is-size-6 ">
+                <p class="subtitle is-size-6 ">                   
                     <div class="columns ">
                         <div class="column is-6 ">
                             วันและเวลารับรถ<br>
-                            <input v-model="rentCarStore.rentInfo.dayPickup" class="cololr_input_card" type="date" data-start-date="10/24/2019" :class="{ 'is-danger': rentCarStore.error.dayPickup} " @input="rentCarStore.validateRentDsend()">
-                            <input v-model="rentCarStore.rentInfo.timePickup" class="cololr_input_card" type="time" id="appt " name="appt" min="09:00" max="18:00" required @input="rentCarStore.validateRentDsend()"><br>
-                            <span class="has-text-danger ertext ml-3 ">{{rentCarStore.error.timePickup}}</span>
+                            <input v-model="rentCarStore.rentInfo.dayPickup" class="cololr_input_card" type="date" data-start-date="10/24/2019" :class="{ 'is-danger': rentCarStore.error.dayPickup} " @input="rentCarStore.requiredInputCheck()">
+                            <input v-model="rentCarStore.rentInfo.timePickup" class="cololr_input_card" type="time" id="appt " name="appt" min="09:00" max="18:00" required @input="rentCarStore.requiredInputCheck()"><br>
+                            <span class="has-text-danger ertext ml-3 ">{{rentCarStore.error.dayPickup}}</span>
 
                         </div>
                         <div class="column is-6 ">
                             วันและเวลาคืนรถ<br>
-                            <input v-model="rentCarStore.rentInfo.dayReturn" class="cololr_input_card" type="date" data-start-date="10/24/2019" :class="{ 'is-danger': rentCarStore.error.dayReturn} " @input="rentCarStore.validateRentDreturn()">
-                            <input v-model="rentCarStore.rentInfo.timeReturn" class="cololr_input_card" type="time" id="appt " name="appt" min="09:00" max="18:00" required @input="rentCarStore.validateRentDreturn()"><br>
-                            <span class="has-text-danger ertext ml-3 ">{{rentCarStore.error.timeReturn}}</span>
+                            <input v-model="rentCarStore.rentInfo.dayReturn" class="cololr_input_card" type="date" data-start-date="10/24/2019" :class="{ 'is-danger': rentCarStore.error.dayReturn} " @input="rentCarStore.requiredInputCheck()">
+                            <input v-model="rentCarStore.rentInfo.timeReturn" class="cololr_input_card" type="time" id="appt " name="appt" min="09:00" max="18:00" required @input="rentCarStore.requiredInputCheck()"><br>
+                            <span class="has-text-danger ertext ml-3 ">{{rentCarStore.error.dayReturn}}</span>
                         </div>
                     </div>
                 </p>
@@ -69,7 +70,9 @@ const rentCarStore =  UserentCarStore()
                 <button @click="rentCarStore.searchCar()" class="button color-card-search has-text-white font " style="width: 100%; " type="submit ">
                   ค้นหารถว่าง                  
                 </button>
+           
             </div>
+        
         </div>
     </div>
 </template>
