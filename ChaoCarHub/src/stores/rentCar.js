@@ -23,12 +23,13 @@ export const UserentCarStore = defineStore('rent', () => {
   })
   const error = reactive({
     dayPickup: "",
-    timePickup: "",
-    timeReturn: "",
+    // timePickup: "",
+    // timeReturn: "",
+    incorrectDate: "",
     dayReturn: "",
   })
   //v-model select option
-  const filBrand = ref('Toyota')
+  const filBrand = ref('All')
   const filPrice = ref("0-20000")
   const filSeat = ref('4')
 
@@ -44,6 +45,14 @@ export const UserentCarStore = defineStore('rent', () => {
   async function searchCar() {
     requiredInputCheck()
     validateDateTime()
+    console.log(!!error.dayPickup, 'or', !!error.dayReturn)
+    if (!!error.dayPickup || !!error.dayReturn) {
+      return
+    }
+    if(!!error.incorrectDate){
+      alert(error.incorrectDate)
+      return
+    }
     //store rentInfo in localstorage
     rentData.value = rentInfo
     const fetchingData = await axios.post("http://localhost:3000/search", {
@@ -53,7 +62,8 @@ export const UserentCarStore = defineStore('rent', () => {
     });
     filterCar.value = fetchingData.data;
     // console.log(filterCar.value)
-    // router.push('/showcar')
+    router.push('/showcar')
+
 
   }
 
@@ -84,25 +94,31 @@ export const UserentCarStore = defineStore('rent', () => {
     // Convert the difference to days
     const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
     if (rentDate < currentDate) {
-      alert("ห้ามเลือกวันในอดีต")
-      return
+      error.incorrectDate = "ห้ามเลือกวันในอดีต"
+      // alert("ห้ามเลือกวันในอดีต")
+      return 
     }
     if (diffCurrentRent < 1) {
-      alert("กรุณาจองล่วงหน้าอย่างน้อย 1-2 วัน")
-      return
+      error.incorrectDate = "กรุณาจองล่วงหน้าอย่างน้อย 1-2 วัน"
+      // alert("กรุณาจองล่วงหน้าอย่างน้อย 1-2 วัน")
+      return 
     }
     if (differenceInDays < 0) {
-      alert("กรุณาเลือกวันคืนรถ ที่ถัดจากวันรับรถ")
-      return
+      error.incorrectDate = "กรุณาเลือกวันคืนรถ ที่ถัดจากวันรับรถ"
+      // alert("กรุณาเลือกวันคืนรถ ที่ถัดจากวันรับรถ")
+      return 
     }
     if (differenceInDays < 1 && differenceInDays >= 0) {
-      alert("ระยะเวลาในการเช่าต้องมากกว่า 24 ชม.")
-      return
+      error.incorrectDate = "ระยะเวลาในการเช่าต้องมากกว่า 24 ชม."
+      // alert("ระยะเวลาในการเช่าต้องมากกว่า 24 ชม.")
+      return 
     }
     if (differenceInDays > 30) {
-      alert("ระยะเวลาในการเช่าห้ามเกิน 30 วัน")
-      return
+      error.incorrectDate = "ระยะเวลาในการเช่าห้ามเกิน 30 วัน"
+      // alert("ระยะเวลาในการเช่าห้ามเกิน 30 วัน")
+      return 
     }
+    error.incorrectDate = ""
     //  console.log(`The difference between ${rentDate} and ${returnDate} is ${differenceInDays} days.`);
   }
 
