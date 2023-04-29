@@ -3,24 +3,33 @@ import { UserentCarStore } from "@/stores/rentCar";
 import { computed, ref, reactive, onMounted } from "vue";
 import { useRoute } from "vue-router";
 const rentCarStore = UserentCarStore();
-const route = useRoute()
-const {id} = route.params
+const route = useRoute();
+const { id } = route.params;
 onMounted(async () => {
-  rentCarStore.carDetail = await rentCarStore.fetchSingleCar(id)
-})
-
- </script>
+  rentCarStore.carDetail = await rentCarStore.fetchSingleCar(id);
+});
+const totalPrice = computed(() => {
+  return (rentCarStore.rentData.amountDays * rentCarStore.carDetail.car_rentprice);
+});
+</script>
 
 <template>
-  <!-- <h1> {{ rentCarStore.carDetail }}</h1> -->
+  <!-- <h1> {{ totalPrice }}</h1>
+  <h1> {{ rentCarStore.rentData }}</h1> -->
   <div class="container is-max-widescreen p-5">
     <div class="p-5">
       <div class="columns">
         <div class="column is-5 ml-5">
-          <h1 class="is-size-2 ml-6">{{ rentCarStore.carDetail?.car_brand }} {{ rentCarStore.carDetail?.car_model }}</h1>
-          <img :src="`http://localhost:3000/${rentCarStore.carDetail?.car_img}`" alt="" />
+          <h1 class="is-size-2 ml-6">
+            {{ rentCarStore.carDetail?.car_brand }}
+            {{ rentCarStore.carDetail?.car_model }}
+          </h1>
+          <img
+            :src="`http://localhost:3000/${rentCarStore.carDetail?.car_img}`"
+            alt=""
+          />
         </div>
-        
+
         <div class="column ml-4 mt-4 is-2 is-size-5">
           <img
             class="icond tobottom"
@@ -41,7 +50,7 @@ onMounted(async () => {
           />
           Auto
         </div>
-        
+
         <div class="column is-4 is-size-5 mt-2">
           <div class="box tobottom1">
             <h1>ราคานี้รวม</h1>
@@ -54,16 +63,21 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    
+
     <div class="box box-radius">
       <div class="columns p-5 is-size-5">
         <div class="column is-6">
           <p><b>รายละเอียดราคารถ</b></p>
-          <p>ค่าบริการรถยนต์เช่า {{ rentCarStore.carDetail?.car_rentprice }} บาท</p>
+          <p>
+            ค่าบริการรถยนต์เช่า {{ rentCarStore.carDetail?.car_rentprice }} บาท
+          </p>
         </div>
         <div class="column is-6">
           <p>
-            <b>ราคาสำหรับ calday วัน  totalprice  บาท</b>
+            <b
+              >ราคาสำหรับ {{ rentCarStore.rentData.amountDays }} วัน
+              {{ totalPrice }} บาท</b
+            >
           </p>
         </div>
       </div>
@@ -72,12 +86,20 @@ onMounted(async () => {
       <div class="columns p-5 is-size-5">
         <div class="column is-6">
           <p><b>การรับรถ</b></p>
-          <p> {{ rentCarStore.rentInfo.dayPickup }} เวลา {{ rentCarStore.rentInfo.timePickup }} น.</p>
+          <p>
+            {{ rentCarStore.rentInfo.dayPickup }} เวลา
+            {{ rentCarStore.rentInfo.timePickup }} น.
+          </p>
           <p class="is-size-6">
-            <b>สถานที่รับรถ</b></p>
+            <b>สถานที่รับรถ</b>
+          </p>
           <div class="select">
             <select v-model="rentCarStore.rentInfo.placePickup" class="font">
-              <option v-for="loca in rentCarStore.locationcar" :key="loca.id" :value="loca">
+              <option
+                v-for="loca in rentCarStore.locationcar"
+                :key="loca.id"
+                :value="loca"
+              >
                 {{ loca }}
               </option>
             </select>
@@ -85,11 +107,18 @@ onMounted(async () => {
         </div>
         <div class="column is-6">
           <p><b>การคืนรถ</b></p>
-          <p>{{  rentCarStore.rentInfo.dayReturn }} เวลา {{ rentCarStore.rentInfo.timeReturn }} น.</p>
+          <p>
+            {{ rentCarStore.rentInfo.dayReturn }} เวลา
+            {{ rentCarStore.rentInfo.timeReturn }} น.
+          </p>
           <p class="is-size-6"><b>สถานที่คืนรถ</b></p>
           <div class="select">
             <select v-model="rentCarStore.rentInfo.placeReturn" class="font">
-              <option v-for="loca in rentCarStore.locationcar" :key="loca.id" :value="loca">
+              <option
+                v-for="loca in rentCarStore.locationcar"
+                :key="loca.id"
+                :value="loca"
+              >
                 {{ loca }}
               </option>
             </select>
@@ -97,8 +126,8 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-  
-     <div class="columns">
+
+    <div class="columns">
       <div class="column">
         <router-link to="/">
           <button

@@ -19,8 +19,10 @@ export const UserentCarStore = defineStore('rent', () => {
     timeReturn: "",
     dayReturn: "",
     placePickup: "",
-    placeReturn: ""
+    placeReturn: "",
+    amountDays: 0
   })
+  
   const error = reactive({
     dayPickup: "",
     // timePickup: "",
@@ -33,12 +35,16 @@ export const UserentCarStore = defineStore('rent', () => {
   const filPrice = ref("0-20000")
   const filSeat = ref('4')
 
-  //fetch single car  
+
+
+  //fetch single car 
   const carDetail = ref({})
-  const fetchSingleCar = async (id) => {
+  const fetchSingleCar = async(id) => {
     console.log(id)
     return (await axios.get(`http://localhost:3000/detailcar/${id}`)).data[0]
   }
+
+  
 
   //search car
   const filterCar = ref([])
@@ -49,7 +55,7 @@ export const UserentCarStore = defineStore('rent', () => {
     if (!!error.dayPickup || !!error.dayReturn) {
       return
     }
-    if(!!error.incorrectDate){
+    if (!!error.incorrectDate) {
       alert(error.incorrectDate)
       return
     }
@@ -63,9 +69,9 @@ export const UserentCarStore = defineStore('rent', () => {
     filterCar.value = fetchingData.data;
     // console.log(filterCar.value)
     router.push('/showcar')
-
-
   }
+
+
 
   function requiredInputCheck() {
     if (rentInfo.dayPickup === "" || rentInfo.timePickup === "") {
@@ -86,32 +92,30 @@ export const UserentCarStore = defineStore('rent', () => {
     //  console.log(rentDate)
     const returnDate = new Date(`${rentInfo.dayReturn}T${rentInfo.timeReturn}`);
 
-    // Get the difference between the two dates in milliseconds
-    const differenceInMs = returnDate.getTime() - rentDate.getTime();
     const diffCurrentRent = (rentDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
-    //  console.log('difday', diffCurrentRent)
-
-    // Convert the difference to days
-    const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
+    //amount rent day
+    rentInfo.amountDays = (returnDate.getTime() - rentDate.getTime()) / (1000 * 60 * 60 * 24);
+    rentInfo.amountDays = rentInfo.amountDays.toFixed(0)
+    // console.log(rentInfo.amountDays)
     if (rentDate < currentDate) {
       error.incorrectDate = "ห้ามเลือกวันในอดีต"
-      return 
+      return
     }
     if (diffCurrentRent < 1) {
       error.incorrectDate = "กรุณาจองล่วงหน้าอย่างน้อย 1-2 วัน"
-      return 
+      return
     }
-    if (differenceInDays < 0) {
+    if (rentInfo.amountDays < 0) {
       error.incorrectDate = "กรุณาเลือกวันคืนรถ ที่ถัดจากวันรับรถ"
-      return 
+      return
     }
-    if (differenceInDays < 1 && differenceInDays >= 0) {
+    if (rentInfo.amountDays < 1 && rentInfo.amountDays >= 0) {
       error.incorrectDate = "ระยะเวลาในการเช่าต้องมากกว่า 24 ชม."
-      return 
+      return
     }
-    if (differenceInDays > 30) {
+    if (rentInfo.amountDays > 30) {
       error.incorrectDate = "ระยะเวลาในการเช่าห้ามเกิน 30 วัน"
-      return 
+      return
     }
     error.incorrectDate = ""
     //  console.log(`The difference between ${rentDate} and ${returnDate} is ${differenceInDays} days.`);
@@ -131,6 +135,7 @@ export const UserentCarStore = defineStore('rent', () => {
     locationcar,
     rentData,
     validateDateTime,
-    requiredInputCheck
+    requiredInputCheck,
+    carDetail,
   }
 })
