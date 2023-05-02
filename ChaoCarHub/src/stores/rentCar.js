@@ -121,6 +121,23 @@ export const UserentCarStore = defineStore('rent', () => {
     //  console.log(`The difference between ${rentDate} and ${returnDate} is ${differenceInDays} days.`);
   }
 
+  async function  rentThisCar(userId, carId){
+    //update localStorage
+    console.log("user_id", userId)
+    const fetchingData =  await axios.post("http://localhost:3000/rent", {
+      timePickup: rentData.value.timePickup,
+      dayPickup: rentData.value.dayPickup,
+      timeReturn: rentData.value.dayReturn,
+      dayReturn: rentData.value.placePickup,
+      placePickup: rentInfo.placePickup,
+      placeReturn: rentInfo.placeReturn,
+      amountDays: rentData.value.amountDays,
+      carId: carId, 
+      userId: userId
+    });
+    router.push('/myrent')
+  }
+
   return {
     brandcar,
     seatcar,
@@ -137,5 +154,6 @@ export const UserentCarStore = defineStore('rent', () => {
     validateDateTime,
     requiredInputCheck,
     carDetail,
+    rentThisCar
   }
 })

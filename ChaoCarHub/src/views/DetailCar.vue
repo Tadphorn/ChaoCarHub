@@ -2,11 +2,15 @@
 import { UserentCarStore } from "@/stores/rentCar";
 import { computed, ref, reactive, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { UseregisterStore } from "@/stores/register";
+const registerStore  = UseregisterStore()
+
 const rentCarStore = UserentCarStore();
 const route = useRoute();
 const { id } = route.params;
 onMounted(async () => {
   rentCarStore.carDetail = await rentCarStore.fetchSingleCar(id);
+  registerStore.onAuthChange()
 });
 const totalPrice = computed(() => {
   return (rentCarStore.rentData.amountDays * rentCarStore.carDetail.car_rentprice);
@@ -14,8 +18,8 @@ const totalPrice = computed(() => {
 </script>
 
 <template>
-  <!-- <h1> {{ totalPrice }}</h1>
-  <h1> {{ rentCarStore.rentData }}</h1> -->
+  <h1> {{ registerStore.userProfile.u_id }}</h1>
+  <!-- <h1> {{ rentCarStore.rentData }}</h1> -->
   <div class="container is-max-widescreen p-5">
     <div class="p-5">
       <div class="columns">
@@ -139,14 +143,15 @@ const totalPrice = computed(() => {
         >
       </div>
       <div class="column">
-        <router-link to="/myrent">
+        <!-- <router-link to="/myrent"> -->
           <button
             class="button is-fullwidth is-large has-text-white font btn"
             type="submit "
+            @click="rentCarStore.rentThisCar(registerStore.userProfile.u_id, id)"
           >
             <strong class="has-text-white">ทำการจอง</strong>
-          </button></router-link
-        >
+          </button>
+          <!-- </router-link> -->
       </div>
     </div>
   </div>

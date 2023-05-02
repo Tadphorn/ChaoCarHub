@@ -166,7 +166,7 @@ export const UseregisterStore = defineStore('register', () => {
     }
   }
   
-  // get user from localStorage
+ 
   function onAuthChange() {
     const token = localStorage.getItem('token')
     if (token) {
