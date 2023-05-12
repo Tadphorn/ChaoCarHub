@@ -16,16 +16,11 @@ defineProps({
         <p class="title is-size-6 limit_text">
           {{ item.car_brand }} {{ item.car_model }}
         </p>
-        <p class="subtitle is-size-7">
-          <img
-            src="https://media.discordapp.net/attachments/1072181252964233328/1077073362708332614/image_18.png "
-            alt=" "
-          />
-          <b
-            >{{ item.car_seat }} ที่นั้ง <br />
-            เริ่มต้น {{ item.car_rentprice }} บาท/วัน</b
-          >
-        </p>
+        <div class="subtitle is-size-7 ">
+          <img src="https://media.discordapp.net/attachments/1072181252964233328/1077073362708332614/image_18.png " alt=" "/>
+          <b>{{ item.car_seat }} ที่นั้ง <br />
+            เริ่มต้น {{ item.car_rentprice }} บาท/วัน</b>
+        </div>
       </div>
       <router-link :to="{ name: 'detailcar', params: { id: parseInt(item.car_id) } }">
       <footer class="card-footer">
