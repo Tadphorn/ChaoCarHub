@@ -7,12 +7,25 @@ onMounted(rentCarStore.searchCar);
 </script>
 
 <template>
+<div class="columns is-mobile has-background-primary-light">
+  <div class="column is-half is-offset-one-quarter">
+    <div class="columns">
+      <div class="column is-4 has-text-centered pt-6 is-size-1" style="font-family: 'Titan One', cursive;">
+        <br>Car rent <br>service<br>
+        <router-link to="/">
+        <button class="button is-primary is-outlined" style="border:2px solid; border-radius:45px;">Search car</button>
+        </router-link>
+      </div>
+        <div class="column"><img src="https://o.remove.bg/downloads/758fff88-e9bc-4141-999c-14980e0cf112/istockphoto-1161013241-170667a-removebg-preview.png" /></div>
+    </div>
+  </div>
+</div>
   <!-- <h1>{{ rentCarStore.filterCar }}</h1> -->
   <div class="container is-max-desktop">
-    <div class="column pl-6">
-        <div class="column">
-          <div class="is-multiline is-variable columns is-1 pl-6">
-            <CardCar v-for="item in rentCarStore.filterCar" :item="item"></CardCar>
+    <div class="column px-6">
+        <div class="column px-6">
+          <div class="is-multiline is-variable columns is-1">
+            <CardCar v-for="item in rentCarStore.filterCar" :item="item" id="card_product " class="column is-one-quarter"></CardCar>
           </div>
         </div>
     </div>
