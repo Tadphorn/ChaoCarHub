@@ -127,8 +127,8 @@ export const UserentCarStore = defineStore('rent', () => {
     const fetchingData =  await axios.post("http://localhost:3000/rent", {
       timePickup: rentData.value.timePickup,
       dayPickup: rentData.value.dayPickup,
-      timeReturn: rentData.value.dayReturn,
-      dayReturn: rentData.value.placePickup,
+      timeReturn: rentData.value.timeReturn,
+      dayReturn: rentData.value.dayReturn,
       placePickup: rentInfo.placePickup,
       placeReturn: rentInfo.placeReturn,
       amountDays: rentData.value.amountDays,

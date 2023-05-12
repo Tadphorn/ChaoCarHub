@@ -13,7 +13,8 @@ const rentcarRouter = require('./routes/rent_car')
 const carRouter = require('./routes/crud_car')
 const userRouter = require('./routes/user')
 const paymentRouter = require('./routes/payment')
-// const commentRouter = require('./routes/comment')
+const myrentRouter = require('./routes/myrent')
+
 
 // Statics
 app.use(express.static('static'))
@@ -25,8 +26,7 @@ app.use(rentcarRouter.router)
 app.use(carRouter.router)
 app.use(userRouter.router)
 app.use(paymentRouter.router)
-// app.use(postRouter.router)
-// app.use(commentRouter.router)
+app.use(myrentRouter.router)
 
 app.listen(3000, () => {
   console.log(`Example app listening at http://localhost:3000`)
