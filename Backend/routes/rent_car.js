@@ -46,13 +46,13 @@ router.get("/detailcar/:carId", async function (req, res, next) {
 
 
 router.post("/rent", async function (req, res, next) {
-    const {timePickup, dayPickup, timeReturn, dayReturn, placePickup, placeReturn, amountDays, carId, userId} = req.body
-    console.log(timePickup, dayPickup, timeReturn, dayReturn, placePickup, placeReturn, amountDays)
+    const {totalPrice, timePickup, dayPickup, timeReturn, dayReturn, placePickup, placeReturn, amountDays, carId, userId} = req.body
+    // console.log(timePickup, dayPickup, timeReturn, dayReturn, placePickup, placeReturn, amountDays)
     try {
   
-      const [rows, fields] = await pool.query("INSERT INTO rental(r_time_pickup, r_day_pickup, r_time_return, r_day_return, r_place_pickup, r_place_return, r_amountdays, r_status, car_id, u_id, r_timestamp) " +
-      "VALUE(?, ?, ?, ?, ?, ?, ?, 'รอชำระเงิน', ?, ?, CURRENT_TIMESTAMP) ",
-        [timePickup, dayPickup, timeReturn, dayReturn, placePickup, placeReturn, amountDays, carId, userId]);
+      const [rows, fields] = await pool.query("INSERT INTO rental(r_totalprice, r_time_pickup, r_day_pickup, r_time_return, r_day_return, r_place_pickup, r_place_return, r_amountdays, r_status, car_id, u_id, r_timestamp) " +
+      "VALUE(?, ?, ?, ?, ?, ?, ?, ?, 'รอชำระเงิน', ?, ?, CURRENT_TIMESTAMP) ",
+        [totalPrice, timePickup, dayPickup, timeReturn, dayReturn, placePickup, placeReturn, amountDays, carId, userId]);
       return res.json(rows);
   
     } catch (err) {
@@ -62,18 +62,5 @@ router.post("/rent", async function (req, res, next) {
     }
     });
 
-
-    router.delete("/rent/:id", async function (req, res, next) {
-      try {
-    
-        const [rows, fields] = await pool.query("DELETE FROM rental WHERE r_id = ?", [req.params.id])
-        return res.json({message: `Delete car Id ${req.params.id}`});
-    
-      } catch (err) {
-        console.log(err)
-        res.json({message: "can't find rent Id"})
-        return next(err);
-      }
-      });
 
 exports.router = router;

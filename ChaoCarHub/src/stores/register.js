@@ -131,7 +131,7 @@ export const UseregisterStore = defineStore('register', () => {
   }
 
   async function submitSignin() {
-    console.log("5555");
+    // console.log("5555");
     validateUsername()
     validatePassw()
     if (error.username !== '' || error.passw !== '') {

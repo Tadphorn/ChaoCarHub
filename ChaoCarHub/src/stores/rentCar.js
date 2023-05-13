@@ -121,10 +121,11 @@ export const UserentCarStore = defineStore('rent', () => {
     //  console.log(`The difference between ${rentDate} and ${returnDate} is ${differenceInDays} days.`);
   }
 
-  async function  rentThisCar(userId, carId){
+  async function  rentThisCar(userId, carId, totalPrice){
     //update localStorage
-    console.log("user_id", userId)
+    console.log("price ", totalPrice)
     const fetchingData =  await axios.post("http://localhost:3000/rent", {
+      totalPrice: totalPrice,
       timePickup: rentData.value.timePickup,
       dayPickup: rentData.value.dayPickup,
       timeReturn: rentData.value.timeReturn,
