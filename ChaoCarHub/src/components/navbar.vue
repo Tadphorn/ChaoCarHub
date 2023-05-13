@@ -7,7 +7,8 @@ const registerStore  = UseregisterStore()
 onMounted(async () => {
       const user =  registerStore.onAuthChange()
     });
-    
+
+const check = true;
 </script>
 <template>
   <nav
@@ -54,7 +55,7 @@ onMounted(async () => {
             />
           </router-link>
         </div>
-        <div class="navbar-item has-dropdown is-hoverable has-text-centered" v-if="registerStore.userProfile?.role !== 'admin'">
+        <div class="navbar-item has-dropdown is-hoverable has-text-centered" v-if="registerStore.userProfile?.role !== 'admin' && registerStore.userProfile?.role !== 'user'">
           <a class="navbar-link">
             <router-link to="/myrent">
               <img
@@ -75,7 +76,21 @@ onMounted(async () => {
             </a>
             <a class="navbar-item" @click="registerStore.logout()">
                 <strong>Log out</strong>
-    
+            </a>
+          </div>
+          
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable has-text-centered" v-if="registerStore.userProfile?.role === 'user'">
+          <a class="navbar-link">
+            <router-link to="/myrent">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1646/1646838.png"
+              />
+            </router-link>
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" @click="registerStore.logout()">
+                <strong>Log out</strong>
             </a>
           </div>
         </div>
@@ -88,19 +103,8 @@ onMounted(async () => {
             </router-link>
           </a>
           <div class="navbar-dropdown">
-            <a class="navbar-item">
-              <router-link to="/sign_in">
-                <strong>Sign in</strong>
-              </router-link>
-            </a>
-            <a class="navbar-item">
-              <router-link to="/sign_up">
-                <strong>Sign up</strong>
-              </router-link>
-            </a>
             <a class="navbar-item" @click="registerStore.logout()">
                 <strong>Log out</strong>
-    
             </a>
           </div>
         </div>
@@ -108,4 +112,15 @@ onMounted(async () => {
       </div>
     </div>
   </nav>
+  <!-- <router-view :key="$route.fullPath" @auth-change="registerStore.onAuthChange" :user="user" /> -->
 </template>
+
+<!-- <script>
+export default {
+  data () {
+    return {
+      user: null,
+    }
+  }
+}
+</script> -->
