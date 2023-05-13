@@ -131,7 +131,7 @@ export const UseregisterStore = defineStore('register', () => {
   }
 
   async function submitSignin() {
-    console.log("5555");
+    console.log("login naja");
     validateUsername()
     validatePassw()
     if (error.username !== '' || error.passw !== '') {
@@ -147,9 +147,17 @@ export const UseregisterStore = defineStore('register', () => {
     localStorage.setItem('token', token)
 
     if (fetchingData.status === 200) {
-      console.log("login")
+      console.log("login user")
       router.push('/myrent');
     }
+    // if (fetchingData.status === 200 && userProfile.value.role !== 'admin') {
+    //   console.log("login user")
+    //   router.push('/myrent');
+    // }
+    // else if (fetchingData.status === 200 && userProfile.value.role === 'admin') {
+    //   console.log("login admin")
+    //   router.push('/admin');
+    // }
   }
   //get user from db
   const userProfile = ref({})
@@ -179,13 +187,13 @@ export const UseregisterStore = defineStore('register', () => {
     localStorage.removeItem('token')
     if(userProfile.value.role === 'admin'){
       localStorage.removeItem('isAdmin')
-    }
+    }3
     userProfile.value = null
     
     router.push('/sign_in')
    }
   
-
+   const token = localStorage.getItem('token')
   return {
     fname,
     lname,
@@ -208,6 +216,7 @@ export const UseregisterStore = defineStore('register', () => {
     onAuthChange,
     getUser,
     userProfile,
-    logout
+    logout,
+    token
   }
 })

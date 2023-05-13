@@ -7,7 +7,7 @@ import mHistory from "../components/MyRent/C_History.vue"
 import StatusBar from "../components/MyRent/StatusBar.vue";
 
 import { computed, ref, reactive, onMounted } from "vue";
-import { UseregisterStore } from "@/stores/register";
+import { UseregisterStore } from "@/stores/register"; 
 const registerStore  = UseregisterStore()
 // onMounted(registerStore.onAuthChange())
 onMounted(async () => {

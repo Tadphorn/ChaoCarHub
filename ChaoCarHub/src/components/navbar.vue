@@ -4,6 +4,10 @@ import { computed, ref, reactive, onMounted } from "vue";
 import { UseregisterStore } from "@/stores/register";
 const registerStore  = UseregisterStore()
 
+onMounted(async () => {
+      const user =  registerStore.onAuthChange()
+    });
+    
 </script>
 <template>
   <nav
@@ -50,7 +54,7 @@ const registerStore  = UseregisterStore()
             />
           </router-link>
         </div>
-        <div class="navbar-item has-dropdown is-hoverable has-text-centered">
+        <div class="navbar-item has-dropdown is-hoverable has-text-centered" v-if="registerStore.userProfile?.role !== 'admin'">
           <a class="navbar-link">
             <router-link to="/myrent">
               <img
@@ -75,8 +79,30 @@ const registerStore  = UseregisterStore()
             </a>
           </div>
         </div>
-        <div class="navbar-item">
-          <router-link to="/admin"> admin </router-link>
+        <div class="navbar-item has-dropdown is-hoverable has-text-centered" v-if="registerStore.userProfile?.role === 'admin'">
+          <a class="navbar-link">
+            <router-link to="/admin">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1647/1647545.png"
+              />
+            </router-link>
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              <router-link to="/sign_in">
+                <strong>Sign in</strong>
+              </router-link>
+            </a>
+            <a class="navbar-item">
+              <router-link to="/sign_up">
+                <strong>Sign up</strong>
+              </router-link>
+            </a>
+            <a class="navbar-item" @click="registerStore.logout()">
+                <strong>Log out</strong>
+    
+            </a>
+          </div>
         </div>
         <div class="navbar-item"></div>
       </div>
