@@ -69,8 +69,7 @@ export const UsepaymentStore = defineStore('payment', () => {
             pay_cr_num: numbercreditcard.value,
             pay_cr_exp: expirationdate.value,
             pay_cr_cvc: cvc.value,
-            pay_amount: "ต้องดึงราคารวมมาใส่",
-            pay_status: "In the midst of verification",
+            pay_status: "รอตรวจสอบ",
         })
             .then((res) => {
                 // console.log(res)
