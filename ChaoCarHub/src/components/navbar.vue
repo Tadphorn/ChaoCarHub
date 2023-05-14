@@ -4,6 +4,11 @@ import { computed, ref, reactive, onMounted } from "vue";
 import { UseregisterStore } from "@/stores/register";
 const registerStore  = UseregisterStore()
 
+onMounted(async () => {
+      const user =  registerStore.onAuthChange()
+    });
+
+const check = true;
 </script>
 <template>
   <nav
@@ -50,7 +55,7 @@ const registerStore  = UseregisterStore()
             />
           </router-link>
         </div>
-        <div class="navbar-item has-dropdown is-hoverable has-text-centered">
+        <div class="navbar-item has-dropdown is-hoverable has-text-centered" v-if="registerStore.userProfile?.role !== 'admin' && registerStore.userProfile?.role !== 'user'">
           <a class="navbar-link">
             <router-link to="/myrent">
               <img
@@ -71,15 +76,51 @@ const registerStore  = UseregisterStore()
             </a>
             <a class="navbar-item" @click="registerStore.logout()">
                 <strong>Log out</strong>
-    
+            </a>
+          </div>
+          
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable has-text-centered" v-if="registerStore.userProfile?.role === 'user'">
+          <a class="navbar-link">
+            <router-link to="/myrent">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1646/1646838.png"
+              />
+            </router-link>
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" @click="registerStore.logout()">
+                <strong>Log out</strong>
             </a>
           </div>
         </div>
-        <div class="navbar-item">
-          <router-link to="/admin"> admin </router-link>
+        <div class="navbar-item has-dropdown is-hoverable has-text-centered" v-if="registerStore.userProfile?.role === 'admin'">
+          <a class="navbar-link">
+            <router-link to="/admin">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1647/1647545.png"
+              />
+            </router-link>
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" @click="registerStore.logout()">
+                <strong>Log out</strong>
+            </a>
+          </div>
         </div>
         <div class="navbar-item"></div>
       </div>
     </div>
   </nav>
+  <!-- <router-view :key="$route.fullPath" @auth-change="registerStore.onAuthChange" :user="user" /> -->
 </template>
+
+<!-- <script>
+export default {
+  data () {
+    return {
+      user: null,
+    }
+  }
+}
+</script> -->
