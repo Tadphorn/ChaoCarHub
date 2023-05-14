@@ -147,7 +147,7 @@ const totalPrice = computed(() => {
           <button
             class="button is-fullwidth is-large has-text-white font btn"
             type="submit "
-            @click="rentCarStore.rentThisCar(registerStore.userProfile.u_id, id)"
+            @click="rentCarStore.rentThisCar(registerStore.userProfile.u_id, id, totalPrice)"
           >
             <strong class="has-text-white">ทำการจอง</strong>
           </button>

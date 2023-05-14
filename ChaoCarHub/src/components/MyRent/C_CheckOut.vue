@@ -1,13 +1,22 @@
+<script setup>
+import { UsemyrentStore } from "@/stores/myRent"
+const myrentStore  = UsemyrentStore()
+defineProps({
+  item: Object,
+});
+</script>
+
 <template>
-  <div v-if="cancel == false" class="columns pb-6">
+  <!-- <h1> {{ item.car_id }}</h1> -->
+  <div class="columns pb-6">
     <div class="column is-half is-8 is-offset-2 pt-6">
       <div class="card has-text-centered p-5">
         <div class="columns is-10">
           <div class="card-header-title columns is-7">
             <div class="column is-8 is-size-3">
-              {{ store.brand }} {{ store.model }}
+              {{ item.car_brand }} {{ item.car_model }}
               <div class="card-image image is-4by3">
-                <img :src="store.img" />
+                <img :src="`http://localhost:3000/${item.car_img}`" />
               </div>
             </div>
             <div class="column pl-6">
@@ -18,7 +27,7 @@
                     height="20"
                     width="20"
                   />
-                  <span class="pl-2">{{ store.seat }} ที่นั้ง</span>
+                  <span class="pl-2">{{ item.car_seat }} ที่นั้ง</span>
                 </p>
               </div>
               <div class="column pt-5">
@@ -28,7 +37,7 @@
                     height="20"
                     width="20"
                   />
-                  <span class="pl-2">{{ store.bag }} กระเป๋า</span>
+                  <span class="pl-2">{{ item.car_bag }} กระเป๋า</span>
                 </p>
               </div>
               <div class="column pt-5">
@@ -56,31 +65,33 @@
             <div class="column p-5 is-size-6">
               <div class="column has-text-left">
                 <p><b>การรับรถ</b></p>
-                <p>{{ rstation.st1 }}</p>
-                <p>{{ reversdate }} เวลา {{ rentdate.time }} น.</p>
+                <p>{{ item.r_place_pickup }}</p>
+                <p>{{ item.dayPickup }} เวลา {{ item.r_time_pickup.slice(0, 5) }} น.</p>
               </div>
               <div class="column has-text-left">
                 <p><b>การคืนรถ</b></p>
-                <p>{{ rstation.st2 }}</p>
-                <p>{{ reversdate2 }} เวลา {{ rentdate.time }} น.</p>
+                <p>{{ item.r_place_return }}</p>
+                <p>{{ item.dayReturn }} เวลา {{ item.r_time_return.slice(0, 5) }} น.</p>
               </div>
             </div>
           </div>
-          <div v-if="checkoutCar === false" class="column is-1">
-            <a @click="cancel = true"
+
+          <!-- trash -->
+          <div class="column is-1">
+            <a @click="myrentStore.cancel(item.r_id)"
               ><img
                 src="https://media.discordapp.net/attachments/1072181252964233328/1079348472068702238/delete_1.png"
             /></a>
           </div>
-          <!-- confirm cancel -->
+         
         </div>
         <footer class="columns">
           <p class="column is-size-6">
-            ราคาสำหรับ {{ calday }} วัน {{ totalprice }} บาท
+            ราคาสำหรับ {{ item.r_amountdays }} วัน {{ item.r_totalprice }} บาท
           </p>
-          <p class="column is-size-6">รวมที่ต้องชำระ : {{ totalprice }} บาท</p>
+          <p class="column is-size-6">รวมที่ต้องชำระ : {{ item.r_totalprice }} บาท</p>
           <div
-            v-if="checkoutCar === false"
+            
             class="column is-size-6"
           ><router-link to="/pay">
             <button class="button btn has-text-white font" style="width: 100%">
@@ -101,88 +112,3 @@
   </div>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    store: {},
-    myname: "",
-    rentdate: {
-      // dsent:
-      // dreturn:
-      // time:
-    },
-    // station1:'',
-    // station2:'',
-    rstation: {
-      st1: "",
-      st2: "",
-    },
-    returnCar: false,
-    checkoutCar: false,
-    name: "",
-    numbercreditcard: "",
-    expirationdate: "",
-    cvc: "",
-    errorbill: {
-      name: "",
-      numbercreditcard: "",
-      expirationdate: "",
-      cvc: "",
-    },
-    cancel: false,
-    d1: 0,
-    d2: 0,
-  }),
-  created() {
-    // customer car
-    const text = JSON.parse(localStorage.getItem("mycart"));
-    this.store = text;
-
-    const string = JSON.parse(localStorage.getItem("myname"));
-    this.myname = string;
-
-    const date = JSON.parse(localStorage.getItem("rentDate"));
-    this.rentdate = date;
-
-    const sta = JSON.parse(localStorage.getItem("rentStation"));
-    this.rstation = sta;
-
-    //checkbill
-    const bool = JSON.parse(localStorage.getItem("mybill"));
-    if (bool != null) {
-      this.checkoutCar = bool;
-    }
-    localStorage.setItem("mybill", false);
-  },
-  methods: {
-    tocheckout() {
-      // this.rstation.st1 = this.station1
-      // this.rstation.st2 = this.station2
-      const sta = JSON.stringify(this.rstation);
-      localStorage.setItem("rentStation", sta);
-    },
-  },
-  computed: {
-    reversdate() {
-      let re = this.rentdate.dsend.split("-");
-      console.log(re);
-      this.d1 = re[2];
-      return re[2] + "/" + re[1] + "/" + re[0];
-    },
-    reversdate2() {
-      let re = this.rentdate.dreturn.split("-");
-      console.log(re);
-      this.d2 = re[2];
-      return re[2] + "/" + re[1] + "/" + re[0];
-    },
-    calday() {
-      return this.d2 - this.d1;
-    },
-    totalprice() {
-      return this.calday * this.store.price;
-    },
-  },
-};
-</script>
-
-<style></style>
