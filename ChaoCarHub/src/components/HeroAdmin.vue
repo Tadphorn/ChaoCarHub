@@ -1,5 +1,9 @@
-<script>
-
+<script setup>
+import { computed, ref, reactive, onMounted } from "vue";
+// use pinia file
+import { UseregisterStore } from "@/stores/register";
+const registerStore  = UseregisterStore()
+// onMounted()
 </script>
 
 <template>
@@ -7,8 +11,8 @@
     <div class="hero-body columns">
       <div class="column is-4">
         <p class="title">
-          {{ showname }}
-        </p>
+          {{registerStore.userProfile?.u_fname}} {{registerStore.userProfile?.u_lname}}
+        </p> 
         <p class="subtitle">Track your rental status here!</p>
       </div>
       <div class="column">

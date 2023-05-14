@@ -9,8 +9,8 @@ export const UseregisterStore = defineStore('register', () => {
 
   const fname = ref("");
   const lname = ref("");
-  const username = ref("");
-  const passw = ref("");
+  const username = ref("chompoo");
+  const passw = ref("123456");
   const passw2 = ref("");
   const phone = ref("");
   const email = ref("");
@@ -131,7 +131,6 @@ export const UseregisterStore = defineStore('register', () => {
   }
 
   async function submitSignin() {
-    console.log("5555");
     validateUsername()
     validatePassw()
     if (error.username !== '' || error.passw !== '') {
@@ -143,12 +142,14 @@ export const UseregisterStore = defineStore('register', () => {
       password: passw.value
     });
     const token = fetchingData.data.token
-    // console.log(token)
+    console.log(token)
     localStorage.setItem('token', token)
 
     if (fetchingData.status === 200) {
-      console.log("login")
-      router.push('/myrent');
+      console.log("ล็อกอินสำเร็จ")
+      window.location.href = '/'
+      // router.push('/home')
+      // window.location.reload()
     }
   }
   //get user from db
@@ -157,7 +158,7 @@ export const UseregisterStore = defineStore('register', () => {
     const token = localStorage.getItem('token')
     const fetchingData = await axios.get('http://localhost:3000/user/me', { headers: { Authorization: 'Bearer ' + token } })
     const { data } = fetchingData;
-    console.log(data)
+    // console.log(data)
     userProfile.value = data
     //check role
     if(userProfile.value.role === 'admin'){
@@ -179,13 +180,13 @@ export const UseregisterStore = defineStore('register', () => {
     localStorage.removeItem('token')
     if(userProfile.value.role === 'admin'){
       localStorage.removeItem('isAdmin')
-    }
+    }3
     userProfile.value = null
-    
-    router.push('/sign_in')
+    window.location.href = '/sign_in'
+    // router.push('/sign_in')
    }
   
-
+   const token = localStorage.getItem('token')
   return {
     fname,
     lname,
@@ -208,6 +209,7 @@ export const UseregisterStore = defineStore('register', () => {
     onAuthChange,
     getUser,
     userProfile,
-    logout
+    logout,
+    token
   }
 })
