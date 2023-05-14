@@ -51,7 +51,7 @@ router.post("/rent", async function (req, res, next) {
     try {
   
       const [rows, fields] = await pool.query("INSERT INTO rental(r_totalprice, r_time_pickup, r_day_pickup, r_time_return, r_day_return, r_place_pickup, r_place_return, r_amountdays, r_status, car_id, u_id, r_timestamp) " +
-      "VALUE(?, ?, ?, ?, ?, ?, ?, ?, 'รอชำระเงิน', ?, ?, CURRENT_TIMESTAMP) ",
+      "VALUE(?, ?, ?, ?, ?, ?, ?, ?, 'checkout', ?, ?, CURRENT_TIMESTAMP) ",
         [totalPrice, timePickup, dayPickup, timeReturn, dayReturn, placePickup, placeReturn, amountDays, carId, userId]);
       return res.json(rows);
   

@@ -32,12 +32,6 @@ const routes = [
         component: () =>
             import('../views/Pay.vue')
     },
-    // {
-    //     path: '/filter_car',
-    //     name: 'filter_car',
-    //     component: () =>
-    //         import('../components/Home/Filter_Car.vue')
-    // },
     {
         path: '/detailcar/:id',
         name: 'detailcar',
@@ -86,8 +80,7 @@ const routes = [
         name: 'tablepayment',
         component: () =>
             import('../components/Admin/Table_Pay.vue')
-    }
-
+    },
 ];
 
 const router = createRouter({
