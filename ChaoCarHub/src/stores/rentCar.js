@@ -22,7 +22,7 @@ export const UserentCarStore = defineStore('rent', () => {
     placeReturn: "",
     amountDays: 0
   })
-  
+
   const error = reactive({
     dayPickup: "",
     // timePickup: "",
@@ -39,12 +39,12 @@ export const UserentCarStore = defineStore('rent', () => {
 
   //fetch single car 
   const carDetail = ref({})
-  const fetchSingleCar = async(id) => {
+  const fetchSingleCar = async (id) => {
     console.log(id)
     return (await axios.get(`http://localhost:3000/detailcar/${id}`)).data[0]
   }
 
-  
+
 
   //search car
   const filterCar = ref([])
@@ -70,8 +70,6 @@ export const UserentCarStore = defineStore('rent', () => {
     // console.log(filterCar.value)
     router.push('/showcar')
   }
-
-
 
   function requiredInputCheck() {
     if (rentInfo.dayPickup === "" || rentInfo.timePickup === "") {
@@ -121,10 +119,10 @@ export const UserentCarStore = defineStore('rent', () => {
     //  console.log(`The difference between ${rentDate} and ${returnDate} is ${differenceInDays} days.`);
   }
 
-  async function  rentThisCar(userId, carId, totalPrice){
+  async function rentThisCar(userId, carId, totalPrice) {
     //update localStorage
     console.log("price ", totalPrice)
-    const fetchingData =  await axios.post("http://localhost:3000/rent", {
+    const fetchingData = await axios.post("http://localhost:3000/rent", {
       totalPrice: totalPrice,
       timePickup: rentData.value.timePickup,
       dayPickup: rentData.value.dayPickup,
@@ -133,10 +131,17 @@ export const UserentCarStore = defineStore('rent', () => {
       placePickup: rentInfo.placePickup,
       placeReturn: rentInfo.placeReturn,
       amountDays: rentData.value.amountDays,
-      carId: carId, 
+      carId: carId,
       userId: userId
     });
     router.push('/myrent')
+  }
+  async function reserveCar() {
+    if (rentInfo.dayPickup === "" || rentInfo.timePickup === "" || rentInfo.dayReturn === "" || rentInfo.timeReturn === "") {
+      alert("กรุณากรอกวันและเวลาจองรถ")
+      router.push('/')
+    }
+    // router.push({  name: 'detailcar', params: { id: parseInt(item.car_id) } })
   }
 
   return {
@@ -155,6 +160,7 @@ export const UserentCarStore = defineStore('rent', () => {
     validateDateTime,
     requiredInputCheck,
     carDetail,
-    rentThisCar
+    rentThisCar,
+    reserveCar
   }
 })

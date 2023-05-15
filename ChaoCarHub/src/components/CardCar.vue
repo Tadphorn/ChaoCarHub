@@ -1,4 +1,7 @@
 <script setup>
+import { UserentCarStore} from '@/stores/rentCar'
+import { computed, ref, reactive, onMounted } from "vue";
+const rentCarStore =  UserentCarStore()
 defineProps({
   item: Object,
 });
@@ -22,11 +25,13 @@ defineProps({
             เริ่มต้น {{ item.car_rentprice }} บาท/วัน</b>
         </div>
       </div>
-      <router-link :to="{ name: 'detailcar', params: { id: parseInt(item.car_id) } }">
-      <footer class="card-footer">
-        <div class="card-footer-item is-color-green3 is-size-6 is-color-green3 has-text-white">จองคันนี้</div>
-      </footer>
-    </router-link>
+      <div @click="rentCarStore.reserveCar">
+          <router-link :to="{ name: 'detailcar', params: { id: parseInt(item.car_id) } }">
+            <footer class="card-footer">
+            <div class="card-footer-item is-color-green3 is-size-6 is-color-green3 has-text-white">จองคันนี้</div>
+            </footer>
+         </router-link>
+      </div>
     </div>
   </div>
 </template>
