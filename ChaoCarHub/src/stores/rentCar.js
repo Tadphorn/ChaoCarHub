@@ -136,12 +136,14 @@ export const UserentCarStore = defineStore('rent', () => {
     });
     router.push('/myrent')
   }
-  async function reserveCar() {
-    if (rentInfo.dayPickup === "" || rentInfo.timePickup === "" || rentInfo.dayReturn === "" || rentInfo.timeReturn === "") {
+  
+  async function reserveCar(item) {
+    if (rentInfo.dayPickup === "" || rentInfo.timePickup === "" || rentInfo.dayReturn === "" || rentInfo.timeReturn === "") {    
       alert("กรุณากรอกวันและเวลาจองรถ")
-      router.push('/')
     }
-    // router.push({  name: 'detailcar', params: { id: parseInt(item.car_id) } })
+    else{
+      router.push({  name: 'detailcar', params: { id: parseInt(item) } })
+    }
   }
 
   return {

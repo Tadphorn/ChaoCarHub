@@ -25,12 +25,10 @@ defineProps({
             เริ่มต้น {{ item.car_rentprice }} บาท/วัน</b>
         </div>
       </div>
-      <div @click="rentCarStore.reserveCar">
-          <router-link :to="{ name: 'detailcar', params: { id: parseInt(item.car_id) } }">
-            <footer class="card-footer">
+      <div @click="rentCarStore.reserveCar(item.car_id)">
+          <footer class="card-footer">
             <div class="card-footer-item is-color-green3 is-size-6 is-color-green3 has-text-white">จองคันนี้</div>
-            </footer>
-         </router-link>
+          </footer>
       </div>
     </div>
   </div>
