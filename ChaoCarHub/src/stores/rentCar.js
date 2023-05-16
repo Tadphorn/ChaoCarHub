@@ -120,11 +120,15 @@ export const UserentCarStore = defineStore('rent', () => {
     }
     error.incorrectDate = ""
     //  console.log(`The difference between ${rentDate} and ${returnDate} is ${differenceInDays} days.`);
-  }
+  } 
 
   async function rentThisCar(userId, carId, totalPrice) {
     //update localStorage
     console.log("price ", totalPrice)
+    if (rentInfo.placePickup === '' || rentInfo.placeReturn === '') {
+      alert('กรุณากรอกสถานที่รับรถและคืนรถ')
+    }
+    else{
     const fetchingData = await axios.post("http://localhost:3000/rent", {
       totalPrice: totalPrice,
       timePickup: rentData.value.timePickup,
@@ -137,7 +141,7 @@ export const UserentCarStore = defineStore('rent', () => {
       carId: carId,
       userId: userId
     });
-    router.push('/myrent')
+    router.push('/myrent')}
   }
   
   async function reserveCar(item) {

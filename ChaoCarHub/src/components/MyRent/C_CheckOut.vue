@@ -76,14 +76,24 @@ defineProps({
             </div>
           </div>
 
-          <!-- trash -->
-          <div class="column is-1">
-            <a @click="myrentStore.cancel(item.r_id)"
-              ><img
-                src="https://media.discordapp.net/attachments/1072181252964233328/1079348472068702238/delete_1.png"
-            /></a>
+        <!-- trash -->
+        <div class="column is-1">
+            <a @click="myrentStore.showConfirmation(item.car_brand, item.car_model, item.r_id)">
+              <img src="https://media.discordapp.net/attachments/1072181252964233328/1079348472068702238/delete_1.png"/>
+            </a>
+          <div v-if="myrentStore.showAlert">
+            <div class="modal">
+              <div class="modal-content">
+                <p class="is-size-5">{{ myrentStore.alertMessage }}</p><br>
+                  <div class="buttons">
+                    <button class="button is-size-6 has-background-success has-text-white" @click="myrentStore.confirm(true)">Ok</button>
+                    <button class="button is-size-6 has-background-danger has-text-white" @click="myrentStore.confirm(false)">Cancel</button>
+                  </div>
+              </div>
+            </div>
           </div>
-         
+        </div>
+  
         </div>
         <footer class="columns">
           <p class="column is-size-6">
