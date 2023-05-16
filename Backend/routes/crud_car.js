@@ -67,6 +67,16 @@ router.get("/car", async function (req, res, next) {
 
 });
 
+router.get("/car/:id", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query('SELECT * FROM car WHERE car_id=?', [req.params.id])
+    return res.json(rows)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+
+});
+
 const upload = multer({ storage: storage });
 
 //   add car 

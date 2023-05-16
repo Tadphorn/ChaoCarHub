@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref, reactive, onMounted } from "vue";
 import axios from "axios";
+import router from "../router";
 export const UsecrudCarStore = defineStore("car", () => {
   const carvalue = ref([]);
   const FetchCar = async () => {
@@ -32,13 +33,13 @@ export const UsecrudCarStore = defineStore("car", () => {
     othercar.value = fetchingData.data;
   };
 
-  const showAlert = ref(false);
+  const showAlertDelete = ref(false);
   const alertMessage = ref('');
   const confirmResult = ref(null);
   const carId = ref(0)
 
   async function showConfirmation(carBrand, carModel, car_id) {
-    showAlert.value = true;
+    showAlertDelete.value = true;
     alertMessage.value = `กรุณากดยืนยันการลบรถ ${carBrand} ${carModel} ออกจากระบบ`;
     carId.value = car_id
     // console.log("car id ", carId.value)
@@ -46,7 +47,7 @@ export const UsecrudCarStore = defineStore("car", () => {
 
   async function confirmdeleteCar(result) {
     confirmResult.value = result;
-    showAlert.value = false;
+    showAlertDelete.value = false;
     if (result) {
       // ถ้ากดตกลงก็จะลบ card
       try {
@@ -59,6 +60,15 @@ export const UsecrudCarStore = defineStore("car", () => {
       }
     }
   }
+
+  const carupdate = ref([]);
+  async function editCar(carId) {
+    const fetchingData = await axios.get(`http://localhost:3000/car/${carId}`);
+    carupdate.value = fetchingData.data;
+    console.log(carupdate.value)
+    
+    // router.push('/tableupdatecar')
+  }
   return {
     FetchCar,
     carvalue,
@@ -70,10 +80,12 @@ export const UsecrudCarStore = defineStore("car", () => {
     hondacar,
     FetchCarOther,
     othercar,
-    showAlert,
+    showAlertDelete,
     alertMessage,
     confirmResult,
     showConfirmation,
-    confirmdeleteCar
+    confirmdeleteCar,
+    editCar,
+    carupdate
   };
 });
