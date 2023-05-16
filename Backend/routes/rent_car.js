@@ -6,16 +6,28 @@ router = express.Router();
 
 //search car
 router.post("/search", async function (req, res, next) {
+   const {start_date, end_date} = req.body
     const {brand, price, seat} = req.body
     console.log(brand, price, seat)
     const arrprice = price.split("-")
     const minprice = parseInt(arrprice[0])
     const maxprice = parseInt(arrprice[1])
-    // console.log(arrprice[0], arrprice[1])
+    console.log(arrprice[0], arrprice[1])
     try {
+        //all car can't rent [array Id car]
+        // const [rows1, fields1] = await pool.query('SELECT car_id FROM rental where (r_day_pickup between ? and ?) OR (r_day_return between ? and ?);',
+        // [start_date, end_date, start_date, end_date])
+        // res.send(rows1)
+
       if(brand == 'All'){
-        const [rows1, fields1] = await pool.query('SELECT * FROM car where car_rentprice between ? and ? and car_seat = ?',
-        [minprice, maxprice, seat])
+        const [rows1, fields1] = await pool.query(`SELECT * FROM car where (car_rentprice between ? and ?) and (car_seat = ?) 
+                                                  and car_id not in (
+                                                                    SELECT car_id 
+                                                                    FROM rental 
+                                                                    where (r_day_pickup between ? and ?) 
+                                                                    OR (r_day_return between ? and ?)
+                                                                    )`,
+        [minprice, maxprice, seat, start_date, end_date, start_date, end_date])
         return res.json(rows1)
       }else {
         const [rows, fields] = await pool.query('SELECT * FROM car WHERE car_brand=? and car_rentprice between ? and ? and car_seat = ?',
