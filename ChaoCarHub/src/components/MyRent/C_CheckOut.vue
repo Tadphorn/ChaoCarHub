@@ -78,7 +78,7 @@ defineProps({
 
         <!-- trash -->
         <div class="column is-1">
-            <a @click="myrentStore.showConfirmation(item.car_brand, item.car_model)">
+            <a @click="myrentStore.showConfirmation(item.car_brand, item.car_model, item.r_id)">
               <img src="https://media.discordapp.net/attachments/1072181252964233328/1079348472068702238/delete_1.png"/>
             </a>
           <div v-if="myrentStore.showAlert">
@@ -86,7 +86,7 @@ defineProps({
               <div class="modal-content">
                 <p class="is-size-5">{{ myrentStore.alertMessage }}</p><br>
                   <div class="buttons">
-                    <button class="button is-size-6 has-background-success has-text-white" @click="myrentStore.confirm(true, item.r_id)">Ok</button>
+                    <button class="button is-size-6 has-background-success has-text-white" @click="myrentStore.confirm(true)">Ok</button>
                     <button class="button is-size-6 has-background-danger has-text-white" @click="myrentStore.confirm(false)">Cancel</button>
                   </div>
               </div>

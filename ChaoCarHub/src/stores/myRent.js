@@ -29,25 +29,25 @@ export const UsemyrentStore = defineStore('myrent', () => {
   const showAlert = ref(false);
   const alertMessage = ref('');
   const confirmResult = ref(null);
+  const rentId = ref(0)
 
-    async function showConfirmation(carBrand, carModel) {
+    async function showConfirmation(carBrand, carModel, rId) {
       showAlert.value = true;
       alertMessage.value = `คุณต้องการยกเลิกการจองรถ ${carBrand} ${carModel}` ;
+      rentId.value = rId
+      console.log("rent id ", rentId.value)
     };
 
-    async function confirm(result, rentId) {
+    async function confirm(result) {
       confirmResult.value = result;
       showAlert.value = false;
-
       if (result) {
         // ถ้ากดตกลงก็จะลบ card
         const fetchingData = await axios.post("/myrent/remove", {
-        rentId: parseInt(rentId) 
+        rentId: rentId.value
         })
-        
-        checkoutCar.value = checkoutCar.value.filter((car) => car.r_id !== rentId)
+        checkoutCar.value = checkoutCar.value.filter((car) => car.r_id !== rentId.value)
       } 
-      console.log(rentId)
     }
 
   return {
