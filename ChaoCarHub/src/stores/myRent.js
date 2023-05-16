@@ -33,7 +33,7 @@ export const UsemyrentStore = defineStore('myrent', () => {
 
     async function showConfirmation(carBrand, carModel, rId) {
       showAlert.value = true;
-      alertMessage.value = `คุณต้องการยกเลิกการจองรถ ${carBrand} ${carModel}` ;
+      alertMessage.value = `คุณต้องการยกเลิกการจองรถ ${carBrand} ${carModel} หรือไม่?` ;
       rentId.value = rId
       console.log("rent id ", rentId.value)
     };

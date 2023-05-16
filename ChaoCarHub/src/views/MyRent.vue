@@ -21,13 +21,12 @@ onMounted(async () => {
 //value from status bar
 const receivedValue = ref("checkout");
 provide("sharedValue", receivedValue);
-
 </script>
 
 <template>
   <HeroUser></HeroUser>
   <StatusBar></StatusBar>
-  <p>Received value from child: {{ receivedValue }}</p>
+  <!-- <p>Received value from child: {{ receivedValue }}</p> -->
   <!-- <h1>{{ myrentStore.mycar }}</h1> -->
   <mCheckout v-if="receivedValue == 'checkout'" v-for="item in myrentStore.checkoutCar" :item="item"></mCheckout>
   <mPickupcar v-if="receivedValue == 'pickup'" v-for="item in myrentStore.pickupCar" :item="item"></mPickupcar>

@@ -1,23 +1,32 @@
 <script setup>
 import { inject } from "vue";
+import { computed, ref, reactive, onMounted, provide } from "vue";
 //send click status to myrent
 const sharedValue = inject("sharedValue");
 
 const sendValueToParent = (page) => {
   sharedValue.value = page;
 };
+
+const changeCheckout = ref(true)
+const changePickup = ref(false)
+const changeReturn = ref(false)
+const changeHistory = ref(false)
+
+console.log(changeCheckout)
 </script>
 
 <template>
   <!-- status bar-->
   <section
     class="hero is-small border_td"
-    style="background-color: var(--color-background)"
-  >
+    style="background-color: var(--color-background)">
     <div class="hero-body">
       <div class="columns is-5 has-text-centered">
-        <div class="column is-color-transgreen">
-          <a class="has-text-black" @click="sendValueToParent('checkout')">
+        <!-- Check out -->
+        <div class="column" id="ibar" @click="sendValueToParent('checkout'), changeCheckout = true, changePickup = false, changeReturn = false, changeHistory = false" 
+        :class="{'is-color-transgreen': changeCheckout }">
+          <a class="has-text-black">
             <img
               class="icon"
               src="https://media.discordapp.net/attachments/1072181252964233328/1076845329321824256/wallet.png"
@@ -27,9 +36,10 @@ const sendValueToParent = (page) => {
           </a>
         </div>
 
-        <div class="column" id="ibar">
-          <!-- <router-link to="/pickup">                  -->
-          <a class="has-text-black" @click="sendValueToParent('pickup')">
+        <!-- Pick up car -->
+        <div class="column" id="ibar" @click="sendValueToParent('pickup'), changeCheckout = false, changePickup = true, changeReturn = false, changeHistory = false" 
+        :class="{'is-color-transgreen': changePickup }"> 
+          <a class="has-text-black">
             <img
               class="icon"
               src="https://cdn.discordapp.com/attachments/1072181252964233328/1076845328743022653/car.png"
@@ -37,11 +47,12 @@ const sendValueToParent = (page) => {
             />
             <p>Pick up car</p>
           </a>
-          <!-- </router-link>   -->
         </div>
 
-        <div class="column" id="ibar">
-          <a class="has-text-black" @click="sendValueToParent('return')">
+        <!-- Return car -->
+        <div class="column" id="ibar" @click="sendValueToParent('return'), changeCheckout = false, changePickup = false, changeReturn = true, changeHistory = false"
+        :class="{'is-color-transgreen': changeReturn }">
+          <a class="has-text-black">
             <img
               class="icon"
               src="https://cdn.discordapp.com/attachments/1072181252964233328/1076845328537489458/garage.png"
@@ -50,8 +61,11 @@ const sendValueToParent = (page) => {
             <p>Return car</p>
           </a>
         </div>
-        <div class="column" id="ibar">
-          <a class="has-text-black" @click="sendValueToParent('history')">
+
+        <!-- History -->
+        <div class="column" id="ibar" @click="sendValueToParent('history'), changeCheckout = false, changePickup = false, changeReturn = false, changeHistory = true"
+        :class="{'is-color-transgreen': changeHistory }">
+          <a class="has-text-black">
             <img
               class="icon"
               src="https://cdn.discordapp.com/attachments/1072181252964233328/1076845401061195826/file-document.png"

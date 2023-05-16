@@ -18,7 +18,6 @@ const totalPrice = computed(() => {
 </script>
 
 <template>
-  <h1> {{ registerStore.userProfile.u_id }}</h1>
   <!-- <h1> {{ rentCarStore.rentData }}</h1> -->
   <div class="container is-max-widescreen p-5">
     <div class="p-5">
@@ -91,8 +90,8 @@ const totalPrice = computed(() => {
         <div class="column is-6">
           <p><b>การรับรถ</b></p>
           <p>
-            {{ rentCarStore.rentInfo.dayPickup }} เวลา
-            {{ rentCarStore.rentInfo.timePickup }} น.
+            {{ rentCarStore.rentData.dayPickup }} เวลา
+            {{ rentCarStore.rentData.timePickup }} น.
           </p>
           <p class="is-size-6">
             <b>สถานที่รับรถ</b>
@@ -112,8 +111,8 @@ const totalPrice = computed(() => {
         <div class="column is-6">
           <p><b>การคืนรถ</b></p>
           <p>
-            {{ rentCarStore.rentInfo.dayReturn }} เวลา
-            {{ rentCarStore.rentInfo.timeReturn }} น.
+            {{ rentCarStore.rentData.dayReturn }} เวลา
+            {{ rentCarStore.rentData.timeReturn }} น.
           </p>
           <p class="is-size-6"><b>สถานที่คืนรถ</b></p>
           <div class="select">
@@ -133,14 +132,13 @@ const totalPrice = computed(() => {
 
     <div class="columns">
       <div class="column">
-        <router-link to="/">
+        <router-link to="/showcar">
           <button
             class="button is-fullwidth is-large has-text-white font btn"
-            type="submit "
-          >
+            type="submit ">
             เลือกรถคันอื่น
-          </button></router-link
-        >
+          </button>
+        </router-link>
       </div>
       <div class="column">
         <!-- <router-link to="/myrent"> -->

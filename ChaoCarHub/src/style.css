@@ -370,3 +370,8 @@ table, th, td {
     justify-content: center;
     text-align: center;
   }
+
+  .box {
+    width: 200px;
+    height: 200px;
+  }

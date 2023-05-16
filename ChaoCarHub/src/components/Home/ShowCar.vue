@@ -7,7 +7,7 @@ onMounted(rentCarStore.searchCar);
 </script>
 
 <template>
-<div class="columns is-mobile has-background-primary-light">
+<div class="columns is-mobile p-5">
   <div class="column is-half is-offset-one-quarter">
     <div class="columns">
       <div class="column is-4 has-text-centered pt-6 is-size-1" style="font-family: 'Titan One', cursive;">
