@@ -37,7 +37,7 @@ export default {
       >
     </h1>
     <table style="width: 100%">
-      <tr class="has-background-danger-light">
+      <tr class="has-background-danger-ligh">
         <th>รหัสรถ</th>
         <th>รูปรถ.....</th>
         <th>ชื่อรถ</th>
@@ -52,7 +52,7 @@ export default {
       <tr v-for="item in CarStore.carvalue" :key="item.car_id">
         <td>{{ item.car_code }}</td>
         <td>
-          <div class="card-image px-2 pt-2">
+          <div class="card-image px-3">
             <figure class="image is-4by3">
               <img :src="`http://localhost:3000/${item.car_img}`" alt="" />
             </figure>
@@ -71,19 +71,42 @@ export default {
               <button class="button is-warning">
                 <span>Edit</span>
                 <span class="icon is-small">
-                  <i class="fas fa-edit"></i>
-                </span></button
+                  <img src="https://cdn-icons-png.flaticon.com/512/10516/10516200.png"/>
+                </span>
+              </button
               >&nbsp
-              <button
-                class="button is-danger is-outlined"
-                @click="CarStore.deleteCar(item.car_id)"
-              >
+              <!-- <a @click="myrentStore.showConfirmation(item.car_brand, item.car_model, item.r_id)">
+              <img src="https://media.discordapp.net/attachments/1072181252964233328/1079348472068702238/delete_1.png"/>
+            </a>
+          <div v-if="myrentStore.showAlert">
+            <div class="modal">
+              <div class="modal-content">
+                <p class="is-size-5">{{ myrentStore.alertMessage }}</p><br>
+                  <div class="buttons">
+                    <button class="button is-size-6 has-background-success has-text-white" @click="myrentStore.confirm(true)">Ok</button>
+                    <button class="button is-size-6 has-background-danger has-text-white" @click="myrentStore.confirm(false)">Cancel</button>
+                  </div>
+              </div>
+            </div>
+          </div> -->
+              <button class="button is-danger is-outlined" @click="CarStore.showConfirmation(item.car_brand, item.car_model, item.car_id)">
                 <span>Delete</span>
                 <span class="icon is-small">
-                  <i class="fas fa-times"></i>
+                  <img src="https://cdn-icons-png.flaticon.com/512/8102/8102162.png"/>
                 </span>
               </button>
+              <div v-if="CarStore.showAlert">
+                <div class="modal">
+                  <div class="modal-content">
+                    <p class="is-size-5 has-text-black">{{ CarStore.alertMessage }}</p><br>
+                      <div class="buttons">
+                        <button class="button is-size-6 has-background-success has-text-white" @click="CarStore.confirmdeleteCar(true)">Ok</button>
+                        <button class="button is-size-6 has-background-danger has-text-white" @click="CarStore.confirmdeleteCar(false)">Cancel</button>
+                      </div>
+                  </div>
+              </div>
             </div>
+          </div>
           </div>
         </td>
       </tr>
