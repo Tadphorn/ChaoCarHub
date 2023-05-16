@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import axios from 'axios';
 import { computed, ref, reactive, onMounted } from "vue";
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+
 
 export const UseregisterStore = defineStore('register', () => {
 
@@ -150,7 +152,13 @@ export const UseregisterStore = defineStore('register', () => {
       })
       .catch(error => {
         console.log(error)
-        alert("Incorrect username or password")
+        // alert("Incorrect username or password")
+        const sweet = Swal.fire({
+          icon: 'error',
+          title: 'Incorrect username or password',
+          confirmButtonText: 'Close',
+          confirmButtonColor: '#41BEB1'
+        })
       });
   }
   //get user from db
