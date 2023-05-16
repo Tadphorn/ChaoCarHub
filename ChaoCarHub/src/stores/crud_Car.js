@@ -32,8 +32,6 @@ export const UsecrudCarStore = defineStore("car", () => {
     othercar.value = fetchingData.data;
   };
 
-
-
   function deleteCar(carId) {
     // console.log(carId)
     const result = confirm(`Are you sure you want to delete this car ${carId}`);
