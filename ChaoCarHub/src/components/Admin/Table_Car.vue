@@ -33,7 +33,7 @@ onMounted(CarStore.FetchCar);
       <tr v-for="item in CarStore.carvalue" :key="item.car_id">
         <td>{{ item.car_code }}</td>
         <td>
-          <div class="card-image px-2 pt-2">
+          <div class="card-image px-4">
             <figure class="image is-4by3">
               <!-- <img :src="item.car_img" alt="!!!!" /> -->
               <img :src="`http://localhost:3000/${item.car_img}`" alt="">
