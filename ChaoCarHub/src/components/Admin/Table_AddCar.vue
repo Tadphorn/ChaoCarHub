@@ -147,15 +147,9 @@ export default {
 import { computed, ref, reactive, onMounted } from "vue";
 import Swal from 'sweetalert2'
 import axios from "axios";
-// import { UsecrudCarStore } from "@/stores/crud_Car";
-// const crudCarStore = UsecrudCarStore();
 </script>
 <template>
   <section class="hero p-5 is-size-5">
-    <router-link to="/admin"
-      ><div class="button has-background-info is-size-5 has-text-white">
-        <b>ย้อนกลับ ◀</b>
-      </div></router-link>
     <div>
       <div class="columns is-mobile">
         <div class="column is-half is-offset-one-quarter">

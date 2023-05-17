@@ -93,13 +93,13 @@ export default {
 };
 </script>
 <template>
-  <div class="p-5 is-size-5">
+  <!-- <div class="p-5 is-size-5">
     <router-link to="/admin"
       ><div class="button has-background-info is-size-5 has-text-white">
         <b>ย้อนกลับ ◀</b>
       </div></router-link
     >
-  </div>
+  </div> -->
   <div class="p-5 has-text-centered is-size-5">
     <h1 class="is-size-3 pb-6">
       <b

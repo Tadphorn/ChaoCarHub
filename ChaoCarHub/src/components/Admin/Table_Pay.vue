@@ -7,13 +7,7 @@ onMounted(PaymentStore.FetchPayment);
 </script>
 
 <template>
-  <div class="p-5 is-size-5">
-    <router-link to="/admin"
-      ><div class="button has-background-info is-size-5 has-text-white">
-        <b>ย้อนกลับ ◀</b>
-      </div></router-link
-    >
-
+  <!-- <div class="p-5 is-size-5">
     <div class="columns is-mobile" v-for="item in PaymentStore.paymentvalue" :key="item.pay_id">
       <div class="column is-half is-offset-one-quarter">
         <div class="card p-5" style="letter-spacing: 0.3px; line-height: 33px;">
@@ -32,5 +26,5 @@ onMounted(PaymentStore.FetchPayment);
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
