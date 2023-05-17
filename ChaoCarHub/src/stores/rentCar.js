@@ -3,6 +3,7 @@ import axios from 'axios';
 import { computed, ref, reactive, onMounted } from "vue";
 import { useLocalStorage } from '@vueuse/core'
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
 
 export const UserentCarStore = defineStore('rent', () => {
   const router = useRouter()
@@ -44,10 +45,9 @@ export const UserentCarStore = defineStore('rent', () => {
     return (await axios.get(`http://localhost:3000/detailcar/${id}`)).data[0]
   }
 
-
-
-  //search car
+ 
   const filterCar = ref([])
+ //search car
   async function searchCar() {
     requiredInputCheck()
     validateDateTime()
@@ -126,9 +126,14 @@ export const UserentCarStore = defineStore('rent', () => {
     //update localStorage
     console.log("price ", totalPrice)
     if (rentInfo.placePickup === '' || rentInfo.placeReturn === '') {
-      alert('กรุณากรอกสถานที่รับรถและคืนรถ')
+      const sweet = Swal.fire({
+        icon: 'info',
+        title: 'กรุณาเลือก สถานที่รับรถ/คืนรถ',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#41BEB1'
+      })
+      return;
     }
-    else{
     const fetchingData = await axios.post("http://localhost:3000/rent", {
       totalPrice: totalPrice,
       timePickup: rentData.value.timePickup,
@@ -141,7 +146,24 @@ export const UserentCarStore = defineStore('rent', () => {
       carId: carId,
       userId: userId
     });
-    router.push('/myrent')}
+    //ถูกจองตัดหน้าไปแล้วจ้า
+    if(fetchingData.data.message === 400){
+      console.log("cant rent jaa")
+      const sweet = Swal.fire({
+        title: 'ขออภัย รถคันนี้ถูกจองไปแล้ว กรุณาเลือกรถคันใหม่',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#41BEB1'
+      })
+      router.push('/showcar')
+      return;
+    }
+    const sweet = Swal.fire({
+      icon: "success",
+      title: 'กรุณากดชำระเงิน ในขั้นตอนถัดไป',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#41BEB1'
+    })
+    router.push('/myrent')
   }
   
   async function reserveCar(item) {
