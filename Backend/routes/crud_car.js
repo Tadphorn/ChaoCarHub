@@ -124,4 +124,37 @@ router.post("/test", upload.single("myImageCar"), async function (req, res, next
 
 });
 
+//   update car 
+router.put("/updatecar/:id", upload.single("myImageCar"), async function (req, res, next) {
+  const file = req.file;
+
+  if (!file) {
+    return res.status(400).json({ message: "Please upload a file" });
+  }
+  
+  const { car_code, car_brand, car_model, car_seat, car_bag, car_rentprice } = req.body
+  console.log('ทำไมถึงทำกับฉันได้ ',car_code, car_brand, car_model, car_seat, car_bag, car_rentprice, req.params.id, file.path.substr(6))
+
+  const conn = await pool.getConnection();
+  await conn.beginTransaction();
+
+  
+  try {
+    const results1 = await conn.query(
+      "UPDATE car SET car_code=?, car_brand=?, car_model=?, car_seat=?, car_bag=?, car_rentprice=?, car_img=? WHERE car_id=?",
+      [car_code, car_brand, car_model, car_seat, car_bag, car_rentprice, file.path.substr(6), req.params.id]
+    );
+
+    const results2 = await conn.query("SELECT * FROM car");
+
+    await conn.commit();
+    return res.json(results2);
+  } catch (err) {
+    await conn.rollback();
+    return res.status(400).json(err);
+  } finally {
+    conn.release();
+  }
+});
+
 exports.router = router;

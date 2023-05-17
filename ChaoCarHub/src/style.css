@@ -18,6 +18,8 @@
 body {
     background: var(--color-background);
     font-family: 'Kanit', sans-serif;
+    height: 100%;
+    width: 100%;
 }
 
 .font {
