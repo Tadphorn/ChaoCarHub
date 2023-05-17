@@ -1,6 +1,8 @@
 <script setup>
 import { UsemyrentStore } from "@/stores/myRent"
+import { UsepaymentStore } from "@/stores/payment"
 const myrentStore  = UsemyrentStore()
+const paymentStore = UsepaymentStore()
 defineProps({
   item: Object,
 });
@@ -103,10 +105,12 @@ defineProps({
           <div
             
             class="column is-size-6"
-          ><router-link to="/pay">
-            <button class="button btn has-text-white font" style="width: 100%">
+          >
+          <!-- <router-link to="/pay" > -->
+            <button class="button btn has-text-white font" style="width: 100%" @click="paymentStore.getId(item.r_id)">
               ชำระเงิน
-            </button></router-link>
+            </button>
+          <!-- </router-link> -->
           </div>
           <div v-if="checkoutCar === true" class="column is-size-6">
             <button
