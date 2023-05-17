@@ -1,11 +1,18 @@
 import { defineStore } from 'pinia'
-import axios from 'axios';
+import axios from "@/plugins/axios"
 import { computed, ref, reactive, onMounted } from "vue";
+import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+import { useField } from 'vee-validate';
+import { defineProps } from 'vue';
+
+
 export const UsepaymentStore = defineStore('payment', () => {
+    const router = useRouter()
 
     const paymentvalue = ref([]);
     const FetchPayment = async () => {
-        const fetchingData = await axios.get("http://localhost:3000/userpayment");
+        const fetchingData = await axios.get("/userpayment");
         paymentvalue.value = fetchingData.data;
     };
 
@@ -53,6 +60,12 @@ export const UsepaymentStore = defineStore('payment', () => {
         errorbill.cvc = ''
     }
 
+    const rentId = ref(0)
+    function getId(id) {
+        rentId.value = id
+        console.log("rentId", rentId.value)
+        router.push('/pay')
+    }
     async function submitbill() {
         validateName()
         validateNumbercreditcard()
@@ -63,21 +76,25 @@ export const UsepaymentStore = defineStore('payment', () => {
             alert('กรุณากรอกข้อมูลให้ถูกต้อง')
             return
         }
-
-        axios.post("http://localhost:3000/userpayment", {
+        axios.post("/userpayment", {
             pay_cr_name: name.value,
             pay_cr_num: numbercreditcard.value,
             pay_cr_exp: expirationdate.value,
             pay_cr_cvc: cvc.value,
-            pay_status: "รอตรวจสอบ",
+            r_id: rentId.value
         })
             .then((res) => {
-                // console.log(res)
-                alert("ชำระเงินสำเร็จ");
-                // router.push('/')
-                window.location.href = '/myrent'
+                const sweet = Swal.fire({
+                    icon: "success",
+                    title: 'ชำระเงินสำเร็จ รอการตรวจสอบการชำระเงิน',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#41BEB1'
+                })
+
+                router.push('/myrent')
             })
             .catch((err) => {
+                console.log(err)
                 alert("ชำระเงินไม่สำเร็จ");
             });
     }
@@ -95,5 +112,7 @@ export const UsepaymentStore = defineStore('payment', () => {
         validateExpirationDate,
         validateCvc,
         submitbill,
+        getId,
+        rentId
     }
 })

@@ -1,6 +1,8 @@
 <script setup>
 import { UsemyrentStore } from "@/stores/myRent"
+import { UsepaymentStore } from "@/stores/payment"
 const myrentStore  = UsemyrentStore()
+const paymentStore = UsepaymentStore()
 defineProps({
   item: Object,
 });
@@ -54,12 +56,12 @@ defineProps({
           </div>
           <div class="column is-4">
             <p
-              v-if="checkoutCar === false"
+            v-if="!myrentStore.hadPay.includes(item.r_id)"
               class="has-background-warning is-size-4"
             >
               <b>รอชำระเงิน</b>
             </p>
-            <p v-else class="has-background-warning is-size-5">
+            <p v-if="myrentStore.hadPay.includes(item.r_id)" class="has-background-warning is-size-5">
               <b>กำลังตรวจสอบการชำระเงิน</b>
             </p>
             <div class="column p-5 is-size-6">
@@ -77,7 +79,7 @@ defineProps({
           </div>
 
         <!-- trash -->
-        <div class="column is-1">
+        <div v-if="!myrentStore.hadPay.includes(item.r_id)" class="column is-1">
             <a @click="myrentStore.showConfirmation(item.car_brand, item.car_model, item.r_id)">
               <img src="https://media.discordapp.net/attachments/1072181252964233328/1079348472068702238/delete_1.png"/>
             </a>
@@ -100,15 +102,13 @@ defineProps({
             ราคาสำหรับ {{ item.r_amountdays }} วัน {{ item.r_totalprice }} บาท
           </p>
           <p class="column is-size-6">รวมที่ต้องชำระ : {{ item.r_totalprice }} บาท</p>
-          <div
-            
-            class="column is-size-6"
-          ><router-link to="/pay">
-            <button class="button btn has-text-white font" style="width: 100%">
+
+          <div v-if="!myrentStore.hadPay.includes(item.r_id)" class="column is-size-6">         
+            <button class="button btn has-text-white font" style="width: 100%" @click="paymentStore.getId(item.r_id)">
               ชำระเงิน
-            </button></router-link>
+            </button>     
           </div>
-          <div v-if="checkoutCar === true" class="column is-size-6">
+          <div v-if="myrentStore.hadPay.includes(item.r_id)" class="column is-size-6">
             <button
               class="button btn has-text-white font"
               style="width: 100%; opacity: 40%"

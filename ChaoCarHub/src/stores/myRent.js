@@ -13,7 +13,9 @@ export const UsemyrentStore = defineStore('myrent', () => {
   const pickupCar = ref([])
   const returnCar = ref([])
   const historyCar = ref([])
-  // const checkout = ref([])
+
+  const hadPay = ref([])
+  
   async function myrentCar() {
     const token = localStorage.getItem('token')
     const fetchingData = await axios.get("myrent/car")
@@ -24,6 +26,11 @@ export const UsemyrentStore = defineStore('myrent', () => {
     pickupCar.value = mycar.value.filter((car) => car.r_status === 'pickup')
     returnCar.value = mycar.value.filter((car) => car.r_status === 'return')
     historyCar.value = mycar.value.filter((car) => car.r_status === 'history')
+    //payed Id
+    const fetchingData1 = await axios.get("myrent/pay")
+    hadPay.value = fetchingData1.data
+    hadPay.value = hadPay.value.flatMap(obj => Object.values(obj));
+    console.log("r_id ", hadPay.value)
   }
 
   const showAlert = ref(false);
@@ -62,6 +69,7 @@ export const UsemyrentStore = defineStore('myrent', () => {
     alertMessage,
     confirmResult,
     showConfirmation,
-    confirm
+    confirm,
+    hadPay
   }
 })
