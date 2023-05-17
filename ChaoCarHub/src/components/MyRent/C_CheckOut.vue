@@ -6,7 +6,7 @@ defineProps({
 });
 </script>
 
-<template>
+<template> 
   <!-- <h1> {{ item.car_id }}</h1> -->
   <div class="columns pb-6">
     <div class="column is-half is-8 is-offset-2 pt-6">
