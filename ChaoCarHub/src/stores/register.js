@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import axios from 'axios';
 import { computed, ref, reactive, onMounted } from "vue";
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+
 
 export const UseregisterStore = defineStore('register', () => {
 
@@ -137,20 +139,27 @@ export const UseregisterStore = defineStore('register', () => {
       alert('กรุณากรอกข้อมูลให้ถูกต้อง')
       return
     }
-    const fetchingData = await axios.post("http://localhost:3000/user/signin", {
+    axios.post("http://localhost:3000/user/signin", {
       username: username.value,
       password: passw.value
-    });
-    const token = fetchingData.data.token
-    console.log(token)
-    localStorage.setItem('token', token)
-
-    if (fetchingData.status === 200) {
-      console.log("ล็อกอินสำเร็จ")
-      window.location.href = '/'
-      // router.push('/home')
-      // window.location.reload()
-    }
+    })
+      .then(res => {
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        // this.$router.push({ path: "/" });
+        console.log("ล็อกอินสำเร็จ")
+        window.location.href = '/'
+      })
+      .catch(error => {
+        console.log(error)
+        // alert("Incorrect username or password")
+        const sweet = Swal.fire({
+          icon: 'error',
+          title: 'Incorrect username or password',
+          confirmButtonText: 'Close',
+          confirmButtonColor: '#41BEB1'
+        })
+      });
   }
   //get user from db
   const userProfile = ref({})
@@ -161,13 +170,13 @@ export const UseregisterStore = defineStore('register', () => {
     // console.log(data)
     userProfile.value = data
     //check role
-    if(userProfile.value.role === 'admin'){
+    if (userProfile.value.role === 'admin') {
       localStorage.setItem('isAdmin', true)
       console.log('hi admin')
     }
   }
-  
- 
+
+
   function onAuthChange() {
     const token = localStorage.getItem('token')
     if (token) {
@@ -175,18 +184,18 @@ export const UseregisterStore = defineStore('register', () => {
     }
   }
 
-  function logout(){
+  function logout() {
     console.log('logout')
     localStorage.removeItem('token')
-    if(userProfile.value.role === 'admin'){
+    if (userProfile.value.role === 'admin') {
       localStorage.removeItem('isAdmin')
-    }3
+    } 3
     userProfile.value = null
     window.location.href = '/sign_in'
     // router.push('/sign_in')
-   }
-  
-   const token = localStorage.getItem('token')
+  }
+
+  const token = localStorage.getItem('token')
   return {
     fname,
     lname,

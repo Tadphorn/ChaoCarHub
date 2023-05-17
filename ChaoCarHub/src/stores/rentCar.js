@@ -61,10 +61,13 @@ export const UserentCarStore = defineStore('rent', () => {
     }
     //store rentInfo in localstorage
     rentData.value = rentInfo
+    // console.log(rentData.value.dayPickup)
     const fetchingData = await axios.post("http://localhost:3000/search", {
       brand: filBrand.value,
       price: filPrice.value,
-      seat: filSeat.value
+      seat: filSeat.value,
+      start_date: rentData.value.dayPickup,
+      end_date: rentData.value.dayReturn
     });
     filterCar.value = fetchingData.data;
     // console.log(filterCar.value)

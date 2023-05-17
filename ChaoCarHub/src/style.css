@@ -372,11 +372,9 @@ table, th, td {
     text-align: center;
   }
 
-  .box {
-    width: 200px;
-    height: 200px;
   }
 
   td {
     padding-top: 15px;
   }
+
