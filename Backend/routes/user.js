@@ -3,8 +3,19 @@ const pool = require("../config")
 const bcrypt = require('bcrypt');
 const { generateToken } = require("../utlis/token");
 const { isLoggedIn } = require('../middlewares')
+const Joi = require('joi')
 
 router = express.Router();
+
+const signupSchema = Joi.object({
+    u_email: Joi.string().required().email(),
+    u_phone: Joi.string().required().pattern(/0[0-9]{9}/),
+    u_fname: Joi.string().required().max(150),
+    u_lname: Joi.string().required().max(150),
+    u_pass: Joi.string().required().min(6),
+    confirm_password: Joi.string().required().valid(Joi.ref('password')),
+    u_username: Joi.string().required(),
+})
 
 // // test isLoggedIn
  router.get('/user/me', isLoggedIn, async (req, res, next) => {
@@ -14,6 +25,11 @@ router = express.Router();
      })
 
 router.post('/user/signup', async (req, res, next) => {
+    try {
+        await signupSchema.validateAsync(req.body, { abortEarly: false })
+    } catch (err) {
+        return res.status(400).send(err)
+    }
 
     const conn = await pool.getConnection()
     await conn.beginTransaction()
@@ -48,11 +64,21 @@ router.post('/user/signup', async (req, res, next) => {
     })
 })
 
+const loginSchema = Joi.object({
+    username: Joi.string().required(),
+    password: Joi.string().required()
+})
 
 router.post('/user/signin', async (req, res, next) => {
+    try {
+        await loginSchema.validateAsync(req.body, { abortEarly: false })
+    } catch (err) {
+        return res.status(400).send(err)
+    }
     const { username, password } = req.body
     const conn = await pool.getConnection()
     await conn.beginTransaction()
+
     try {
         const [rows, fields] = await conn.query('SELECT * FROM user WHERE u_username = ?',
             [username])
