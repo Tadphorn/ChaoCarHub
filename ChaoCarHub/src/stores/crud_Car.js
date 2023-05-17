@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { computed, ref, reactive, onMounted } from "vue";
 import axios from "axios";
 import router from "../router";
+import Swal from 'sweetalert2'
 export const UsecrudCarStore = defineStore("car", () => {
   const carvalue = ref([]);
   const FetchCar = async () => {
@@ -56,6 +57,12 @@ export const UsecrudCarStore = defineStore("car", () => {
           carId: carId.value
         })
         carvalue.value = carvalue.value.filter((car) => car.car_id !== carId.value)
+        const sweet = Swal.fire({
+          icon: "success",
+          title: 'ลบรถสำเร็จแล้ว!',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#41BEB1'
+        })
       } catch (error) {
         console.error('เกิดข้อผิดพลาดในการลบข้อมูล', error);
       }

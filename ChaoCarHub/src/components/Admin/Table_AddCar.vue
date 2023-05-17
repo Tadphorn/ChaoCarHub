@@ -11,7 +11,7 @@ export default {
       file: null,
       error: {
         carCode: "",
-        carBrand: "",
+        carBrand: "", 
         carModel: "",
         carSeat: "",
         carBag: "",
@@ -46,7 +46,13 @@ export default {
               'Content-Type': 'multipart/form-data'
               }
           }).then(response => {
-              this.$router.push({path: '/admin'}) // Success! -> redirect to home page
+            const sweet = Swal.fire({
+                    icon: "success",
+                    title: 'เพิ่มรถสำเร็จแล้ว!',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#41BEB1'
+            })
+              // this.$router.push({path: '/admin'}) // Success! -> redirect to home page
           })
           .catch(error => {
               console.log(error.message);
@@ -139,6 +145,7 @@ export default {
 
 <script setup>
 import { computed, ref, reactive, onMounted } from "vue";
+import Swal from 'sweetalert2'
 import axios from "axios";
 // import { UsecrudCarStore } from "@/stores/crud_Car";
 // const crudCarStore = UsecrudCarStore();
