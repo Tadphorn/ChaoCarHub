@@ -135,10 +135,6 @@ export default {
         this.error.carPrice = "";
     },
 
-    // showSelectImage(image) {
-    //   // for preview only
-    //   return URL.createObjectURL(image);
-    // },
   },
 };
 </script>

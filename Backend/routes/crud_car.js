@@ -134,7 +134,7 @@ router.put("/updatecar/:id", upload.single("myImageCar"), async function (req, r
   
   const { car_code, car_brand, car_model, car_seat, car_bag, car_rentprice } = req.body
   console.log('ทำไมถึงทำกับฉันได้ ',car_code, car_brand, car_model, car_seat, car_bag, car_rentprice, req.params.id, file.path.substr(6))
-
+  console.log(req.params.id)
   const conn = await pool.getConnection();
   await conn.beginTransaction();
 

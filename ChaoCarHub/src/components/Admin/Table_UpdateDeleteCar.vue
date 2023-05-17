@@ -4,116 +4,26 @@ import { computed, ref, reactive, onMounted } from "vue";
 import Swal from 'sweetalert2'
 
 const CarStore = UsecrudCarStore();
-const crudCarStore = UsecrudCarStore();
+// const CarStore = UseupdatedeleteCar()
+// const crudCarStore = UsecrudCarStore();
 onMounted(CarStore.FetchCar);
 </script>
 
-<script>
-import axios from "axios";
-export default {
-  data() {
-    return {
-      carId: "",
-      carCode: "",
-      carBrand: "",
-      carModel: "",
-      carSeat: "",
-      carBag: "",
-      carPrice: "",
-      file: null,
-      carImageURL: "",
-      showAlertUpdate: false,
-      confirmResult: ref(null),
-      updateCar: []
-    };
-  },
-  methods: {
-    handleFileUpload(){
-      this.file = this.$refs.file.files[0];
-    },
-    fetchCarEdit(carId) {
-      axios
-        .get(`http://localhost:3000/car/${carId}`)
-        .then((response) => {
-          console.log(response.data[0]);
-          this.carId = response.data[0].car_id;
-          this.carCode = response.data[0].car_code;
-          this.carBrand = response.data[0].car_brand;
-          this.carModel = response.data[0].car_model;
-          this.carSeat = response.data[0].car_seat;
-          this.carBag = response.data[0].car_bag;
-          this.carPrice = response.data[0].car_rentprice;
-          this.carImageURL = response.data[0].car_img;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      this.showAlertUpdate = true;
-    },
-    confirmInsert(result) {
-      this.confirmResult = result;
-      this.showAlertUpdate = false;
-      
-      if (result === true) {
-        // ถ้ากดตกลงก็ insert
-        // console.log(this.carId, "carCode ", this.carCode, " carBrand ", this.carBrand, " carModel ", this.carModel, 
-        // " carSeat ", this.carSeat," carBag ", this.carBag, " carPrice ",  this.carPrice,  " carImageURL ",this.carImageURL, this.file);
-        
-        let formData = new FormData();
-        formData.append("car_code", this.carCode);
-        formData.append("car_brand", this.carBrand);
-        formData.append("car_model", this.carModel);
-        formData.append("car_seat", this.carSeat);
-        formData.append("car_bag", this.carBag);
-        formData.append("car_rentprice", this.carPrice);
-        formData.append("myImageCar", this.file);
-        // console.log("car", this.file)
-
-        axios.put(`http://localhost:3000/updatecar/${this.carId}`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }).then(response => {
-            console.log(response.data[0])
-            // this.updateCar.push(response.data[0]);
-              const sweet = Swal.fire({
-                    icon: "success",
-                    title: 'อัพเดตรถสำเร็จแล้ว!',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#41BEB1'
-            })
-              this.$router.push({path: '/admin'}) 
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      } 
-    },
-  },
-};
-</script>
 <template>
-  <!-- <div class="p-5 is-size-5">
-    <router-link to="/admin"
-      ><div class="button has-background-info is-size-5 has-text-white">
-        <b>ย้อนกลับ ◀</b>
-      </div></router-link
-    >
-  </div> -->
   <div class="p-5 has-text-centered is-size-5">
     <h1 class="is-size-3 pb-6">
       <b
-        >ขณะนี้มีรถอยู่ในระบบทั้งหมด
+        >ขณะนี้มีรถอยู่ในระบบทั้งหมด 
         <b class="has-text-danger is-size-2">{{ CarStore.carvalue.length }} </b>
         คัน</b
       >
     </h1>
-    <div v-if="showAlertUpdate">
+    <div v-if="CarStore.showAlertUpdate">
                 <div class="modal has-text-left">
                   <div class="card has-background-white">
                     <div class="pb-6 px-5 has-text-info">
                       <p class="title pt-5 pb-5 has-text-centered">
-                        Update car
+                        UPDATE
                       </p>
                       <div class="columns">
                         <div class="column is-half">
@@ -122,7 +32,7 @@ export default {
                             <div class="control">
                               <input
                                 style="border-radius: 5px"
-                                v-model="carCode"
+                                v-model="CarStore.carCode"
                                 class="input"
                                 type="text"
                               />
@@ -132,9 +42,13 @@ export default {
                         <div class="column is-half">
                           <div class="field">
                             <label class="label">รูปรถ</label>
+                            <div class="card-image px-3">
+                                  <figure class="image is-4by3">
+                                    <img :src="`http://localhost:3000/${CarStore.carImageURL}`" alt="" />
+                                  </figure>
+                                </div>
                             <div class="file is-info has-name is-normal">
                               <label class="file-label">
-                                {{ carImageURL }}
                                 <input
                                   class="file-input"
                                   type="file"
@@ -143,7 +57,7 @@ export default {
                                   multiple
                                   ref="file"
                                   id="file"
-                                  @change="handleFileUpload()"
+                                  @change="CarStore.previewImage"
                                 />
                                 <span class="file-cta">
                                   <span class="file-icon">
@@ -164,7 +78,7 @@ export default {
                             <div class="control">
                               <input
                                 style="border-radius: 5px"
-                                v-model="carBrand"
+                                v-model="CarStore.carBrand"
                                 class="input"
                                 type="text"
                               />
@@ -177,7 +91,7 @@ export default {
                             <div class="control">
                               <input
                                 style="border-radius: 5px"
-                                v-model="carModel"
+                                v-model="CarStore.carModel"
                                 class="input"
                                 type="text"
                               />
@@ -192,7 +106,7 @@ export default {
                             <div class="control">
                               <input
                                 style="border-radius: 5px"
-                                v-model="carSeat"
+                                v-model="CarStore.carSeat"
                                 class="input"
                                 type="text"
                               />
@@ -205,7 +119,7 @@ export default {
                             <div class="control">
                               <input
                                 style="border-radius: 5px"
-                                v-model="carBag"
+                                v-model="CarStore.carBag"
                                 class="input"
                                 type="text"
                               />
@@ -218,7 +132,7 @@ export default {
                             <div class="control">
                               <input
                                 style="border-radius: 5px"
-                                v-model="carPrice"
+                                v-model="CarStore.carPrice"
                                 class="input"
                                 type="text"
                               />
@@ -230,7 +144,7 @@ export default {
                         <div class="control">
                           <button 
                             class="button is-info"
-                            @click="confirmInsert(true)"
+                            @click="CarStore.confirmInsert(true)"
                           >
                             Submit
                           </button>
@@ -238,7 +152,7 @@ export default {
                         <div class="control">
                           <button
                             class="button is-info is-light"
-                            @click="confirmInsert(false)"
+                            @click="CarStore.confirmInsert(false)"
                           >
                             Cancel
                           </button>
@@ -306,7 +220,7 @@ export default {
             <div class="level-item">
               <button
                 class="button is-warning"
-                @click="this.fetchCarEdit(item.car_id)"
+                @click="CarStore.fetchCarEdit(item.car_id)"
               >
                 <span>Edit</span>
                 <span class="icon is-small">
@@ -315,148 +229,7 @@ export default {
                   />
                 </span>
               </button>
-              <!-- <div v-if="showAlertUpdate">
-                <div class="modal has-text-left">
-                  <div class="card has-background-white">
-                    <div class="pb-6 px-5 has-text-info">
-                      <p class="title pt-5 pb-5 has-text-centered">
-                        Update car {{ item.car_id }}
-                      </p>
-                      <div class="columns">
-                        <div class="column is-half">
-                          <div class="field">
-                            <label class="label">รหัสรถ</label>
-                            <div class="control">
-                              <input
-                                style="border-radius: 5px"
-                                v-model="carCode"
-                                class="input"
-                                type="text"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="column is-half">
-                          <div class="field">
-                            <label class="label">รูปรถ</label>
-                            <div class="file is-info has-name is-normal">
-                              <label class="file-label">
-                                {{ carImageURL }}
-                                <input
-                                  class="file-input"
-                                  type="file"
-                                  name="myImageCar"
-                                  accept="image/png, image/jpeg, image/webp"
-                                  multiple
-                                  ref="file"
-                                  id="file"
-                                  @change="handleFileUpload()"
-                                />
-                                <span class="file-cta">
-                                  <span class="file-icon">
-                                    <i class="fas fa-upload"></i>
-                                  </span>
-                                  <span class="file-label"> Image file… </span>
-                                </span>
-                                <span class="file-name"> .jpg .png </span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="columns">
-                        <div class="column is-half">
-                          <div class="field">
-                            <label class="label">ยี่ห้อรถ</label>
-                            <div class="control">
-                              <input
-                                style="border-radius: 5px"
-                                v-model="carBrand"
-                                class="input"
-                                type="text"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="column is-half">
-                          <div class="field">
-                            <label class="label">รุ่นรถ</label>
-                            <div class="control">
-                              <input
-                                style="border-radius: 5px"
-                                v-model="carModel"
-                                class="input"
-                                type="text"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="columns">
-                        <div class="column is-4">
-                          <div class="field">
-                            <label class="label">จำนวนที่นั่ง</label>
-                            <div class="control">
-                              <input
-                                style="border-radius: 5px"
-                                v-model="carSeat"
-                                class="input"
-                                type="text"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="column is-4">
-                          <div class="field">
-                            <label class="label">จำนวนที่ใส่กระเป๋า</label>
-                            <div class="control">
-                              <input
-                                style="border-radius: 5px"
-                                v-model="carBag"
-                                class="input"
-                                type="text"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="column is-4">
-                          <div class="field">
-                            <label class="label">ราคารถ</label>
-                            <div class="control">
-                              <input
-                                style="border-radius: 5px"
-                                v-model="carPrice"
-                                class="input"
-                                type="text"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="field is-grouped" style="float: right">
-                        <div class="control">
-                          <button
-                            class="button is-info"
-                            @click="confirmInsert(true, item.car_id)"
-                          >
-                            Submit
-                          </button>
-                        </div>
-                        <div class="control">
-                          <button
-                            class="button is-info is-light"
-                            @click="confirmInsert(false)"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
               &nbsp
-
               <button
                 class="button is-danger is-outlined"
                 @click="
@@ -474,30 +247,6 @@ export default {
                   />
                 </span>
               </button>
-              <!-- <div v-if="CarStore.showAlertDelete">
-                <div class="modal">
-                  <div class="modal-content">
-                    <p class="is-size-5 has-text-black">
-                      {{ CarStore.alertMessage }}
-                    </p>
-                    <br />
-                    <div class="buttons">
-                      <button
-                        class="button is-size-6 has-background-success has-text-white"
-                        @click="CarStore.confirmdeleteCar(true)"
-                      >
-                        Ok
-                      </button>
-                      <button
-                        class="button is-size-6 has-background-danger has-text-white"
-                        @click="CarStore.confirmdeleteCar(false)"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
             </div>
           </div>
         </td>
