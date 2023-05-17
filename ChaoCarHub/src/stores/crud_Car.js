@@ -174,7 +174,8 @@ export const UsecrudCarStore = defineStore("car", () => {
                         },
                     }
                 );
-
+                carvalue.value = response.data[0]
+                console.log(response.data[0])
                 const sweet = Swal.fire({
                     icon: 'success',
                     title: 'อัพเดตรถสำเร็จแล้ว!',

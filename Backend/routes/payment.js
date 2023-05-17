@@ -7,7 +7,10 @@ router = express.Router();
 
 router.get("/userpayment", async function (req, res, next) {
   try {
-    const [rows, fields] = await pool.query('SELECT * FROM payment')
+    const [rows, fields] = await pool.query(`SELECT * FROM payment 
+                                              left outer join rental using(r_id) 
+                                              left outer join car using(car_id) 
+                                              where pay_status = "รอตรวจสอบ"`)
     return res.json(rows)
   } catch (err) {
     return res.status(500).json(err)

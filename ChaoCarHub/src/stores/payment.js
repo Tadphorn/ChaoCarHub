@@ -10,6 +10,7 @@ import { defineProps } from 'vue';
 export const UsepaymentStore = defineStore('payment', () => {
     const router = useRouter()
 
+    //all payment from user
     const paymentvalue = ref([]);
     const FetchPayment = async () => {
         const fetchingData = await axios.get("/userpayment");

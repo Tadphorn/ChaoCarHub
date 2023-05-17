@@ -10,6 +10,7 @@ onMounted(CarStore.FetchCar);
 </script>
 
 <template>
+  <!-- <h1> {{ CarStore.carvalue[18] }}</h1> -->
   <div class="p-5 has-text-centered is-size-5">
     <h1 class="is-size-3 pb-6">
       <b
