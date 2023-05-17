@@ -16,6 +16,17 @@ router.get("/myrent/car", isLoggedIn, async function (req, res, next) {
     
   });
 
+  //is pay?
+  router.get("/myrent/pay", async function (req, res, next) {
+    try {
+      const [rows, fields] = await pool.query('SELECT r_id FROM payment')
+      return res.json(rows)
+    } catch (err) {
+      return res.status(500).json(err)
+    }
+  
+  });
+
   router.post("/myrent/remove", async function (req, res, next) {
     const {rentId} = req.body
     // console.log(req.body)
