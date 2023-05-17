@@ -348,14 +348,13 @@ table, th, td {
     border-collapse: collapse;
   }
   
-.modal {
+  .modal{
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('https://media.discordapp.net/attachments/1072181252964233328/1108140490097967174/Fotoram.io_1.jpg?width=1372&height=662');
-    background-size: cover;
+    background-color: hsl(0, 0%, 50%, 30%);
     display: grid;
     place-items: center;
   }
