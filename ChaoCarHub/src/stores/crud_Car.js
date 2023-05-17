@@ -48,6 +48,7 @@ export const UsecrudCarStore = defineStore("car", () => {
   async function confirmdeleteCar(result) {
     confirmResult.value = result;
     showAlertDelete.value = false;
+
     if (result) {
       // ถ้ากดตกลงก็จะลบ card
       try {

@@ -71,7 +71,7 @@ export default {
         <th>ยี่ห้อรถ</th>
         <th>รุ่นรถ</th>
         <th>จำนวนที่นั่ง</th>
-        <th>จำนวนใส่กระเป๋า</th>
+        <th>จำนวนที่วางกระเป๋า</th>
         <th>ราคา</th>
         <th>สถานะรถ</th>
         <th>Update && Delete</th>
