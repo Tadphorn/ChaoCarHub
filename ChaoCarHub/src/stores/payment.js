@@ -76,7 +76,7 @@ export const UsepaymentStore = defineStore('payment', () => {
         if (errorbill.name !== '' || errorbill.numbercreditcard !== '' || errorbill.expirationdate !== '' || errorbill.cvc != '') {
             alert('กรุณากรอกข้อมูลให้ถูกต้อง')
             return
-        }
+        } 
         axios.post("/userpayment", {
             pay_cr_name: name.value,
             pay_cr_num: numbercreditcard.value,
@@ -100,6 +100,40 @@ export const UsepaymentStore = defineStore('payment', () => {
             });
     }
 
+    const showAlertChecked = ref(false);
+    const alertMessage = ref('');
+    const confirmResult = ref(null);
+
+    async function showConfirmation(name) {
+        showAlertChecked.value = true;
+        alertMessage.value = `คุณต้องการยืนยันการชำระเงินของคุณ ${name} หรือไม่?`;
+    };
+
+    async function confirmChecked(result) {
+        confirmResult.value = result;
+        showAlertChecked.value = false;
+    
+        if (result) {
+          try {
+            // let formData = new FormData();
+            //     formData.append('pay_status', "ชำระเงินเรียบร้อยแล้ว");
+
+            //     const response = await axios.put(
+            //         `http://localhost:3000/updatepayment/${pid}`,formData,
+            //     );
+
+            const sweet = Swal.fire({
+              icon: "success",
+              title: 'ยืนยันการชำระเงินสำเร็จแล้ว!', 
+              confirmButtonText: 'OK',
+              confirmButtonColor: '#41BEB1'
+            })
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      }
+
     return {
         paymentvalue,
         FetchPayment,
@@ -114,6 +148,11 @@ export const UsepaymentStore = defineStore('payment', () => {
         validateCvc,
         submitbill,
         getId,
-        rentId
+        rentId,
+        showConfirmation,
+        showAlertChecked,
+        alertMessage,
+        confirmResult,
+        confirmChecked
     }
 })

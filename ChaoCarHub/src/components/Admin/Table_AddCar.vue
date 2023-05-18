@@ -46,6 +46,7 @@ export default {
               'Content-Type': 'multipart/form-data'
               }
           }).then(response => {
+            
             const sweet = Swal.fire({
                     icon: "success",
                     title: 'เพิ่มรถสำเร็จแล้ว!',
@@ -147,6 +148,10 @@ import axios from "axios";
 <template>
   <section class="hero p-5 is-size-5">
     <div>
+      <h1 class="is-size-4 p-5 has-text-centered">
+      <b class="has-background-info has-text-white" 
+        >เพิ่มรถใหม่ในระบบ</b>
+      </h1>
       <div class="columns is-mobile">
         <div class="column is-half is-offset-one-quarter">
           <div class="card pb-6 px-5 has-text-info">

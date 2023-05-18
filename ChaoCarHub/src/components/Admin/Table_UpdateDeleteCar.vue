@@ -12,9 +12,12 @@ onMounted(CarStore.FetchCar);
 <template>
   <!-- <h1> {{ CarStore.carvalue[18] }}</h1> -->
   <div class="p-5 has-text-centered is-size-5">
-    <h1 class="is-size-3 pb-6">
+    <h1 class="is-size-4 p-5">
+      <b class="has-background-danger has-text-white"
+        >ตารางแสดงรายละเอียดสำหรับอัพเดตและลบรถในระบบ</b
+      ><br />
       <b
-        >ขณะนี้มีรถอยู่ในระบบทั้งหมด 
+        >ขณะนี้มีรถอยู่ในระบบทั้งหมด
         <b class="has-text-danger is-size-2">{{ CarStore.carvalue.length }} </b>
         คัน</b
       >
@@ -188,7 +191,7 @@ onMounted(CarStore.FetchCar);
                 </div>
               </div>
     <table style="width: 100%">
-      <tr class="has-background-danger-ligh">
+      <tr class="has-background-danger-light">
         <th>รหัสรถ</th>
         <th>รูปรถ.....</th>
         <th>ชื่อรถ</th>

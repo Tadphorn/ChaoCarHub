@@ -3,11 +3,12 @@ const pool = require('../config.js')
 const { isLoggedIn } = require('../middlewares')
 const Joi = require('joi')
 
-router = express.Router();
+router = express.Router(); 
 
 router.get("/userpayment", async function (req, res, next) {
   try {
-    const [rows, fields] = await pool.query(`SELECT * FROM payment 
+    const [rows, fields] = await pool.query(`SELECT * ,DATE_FORMAT(r_day_pickup, '%Y-%m-%d') AS r_day_pickup
+    ,DATE_FORMAT(r_day_return, '%Y-%m-%d') AS r_day_return FROM payment 
                                               left outer join rental using(r_id) 
                                               left outer join car using(car_id) 
                                               where pay_status = "รอตรวจสอบ"`)
@@ -50,6 +51,30 @@ router.post("/userpayment", isLoggedIn, async function (req, res, next) {
 
     await conn.commit();
     return res.json({ message: "success" });
+  } catch (err) {
+    await conn.rollback();
+    return res.status(400).json(err);
+  } finally {
+    conn.release();
+  }
+});
+
+router.put("/updatepayment/:pid" , async function (req, res, next) {
+
+  const pay_status = req.body
+
+  const conn = await pool.getConnection();
+  await conn.beginTransaction();
+
+  
+  try {
+    const results1 = await conn.query(
+      "UPDATE payment SET pay_status WHERE pay_id=?",
+      [pay_status, req.params.pid]
+    );
+
+    await conn.commit();
+    return res.json("อัพเดตสถานะการชำระเงินสำเร็จ");
   } catch (err) {
     await conn.rollback();
     return res.status(400).json(err);
