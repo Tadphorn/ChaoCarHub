@@ -61,16 +61,14 @@ router.post("/userpayment", isLoggedIn, async function (req, res, next) {
 
 router.put("/updatepayment/:pid" , async function (req, res, next) {
 
-  const pay_status = req.body
-
   const conn = await pool.getConnection();
   await conn.beginTransaction();
 
   
   try {
     const results1 = await conn.query(
-      "UPDATE payment SET pay_status WHERE pay_id=?",
-      [pay_status, req.params.pid]
+      "UPDATE payment SET pay_status=? WHERE pay_id=?",
+      ["ชำระเงินแล้ว", req.params.pid]
     );
 
     await conn.commit();
@@ -83,4 +81,13 @@ router.put("/updatepayment/:pid" , async function (req, res, next) {
   }
 });
 
+router.get("/payment/:id", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query('SELECT * FROM payment WHERE pay_id=?', [req.params.id])
+    return res.json(rows)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+
+});
 exports.router = router;

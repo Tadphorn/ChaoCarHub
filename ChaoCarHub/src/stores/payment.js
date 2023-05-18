@@ -15,6 +15,7 @@ export const UsepaymentStore = defineStore('payment', () => {
     const FetchPayment = async () => {
         const fetchingData = await axios.get("/userpayment");
         paymentvalue.value = fetchingData.data;
+        console.log(paymentvalue.value)
     };
 
     const name = ref("ทัตพร ต้นนารัตน์")
@@ -54,7 +55,7 @@ export const UsepaymentStore = defineStore('payment', () => {
 
     function validateCvc() {
         if (cvc === '') {
-            errorbill.cvc = 'กรุณากรอก CVC '
+            errorbill.cvc = 'กรุณากรอก CVC'
             return
         }
 
@@ -112,15 +113,10 @@ export const UsepaymentStore = defineStore('payment', () => {
     async function confirmChecked(result) {
         confirmResult.value = result;
         showAlertChecked.value = false;
-    
         if (result) {
           try {
-            // let formData = new FormData();
-            //     formData.append('pay_status', "ชำระเงินเรียบร้อยแล้ว");
-
-            //     const response = await axios.put(
-            //         `http://localhost:3000/updatepayment/${pid}`,formData,
-            //     );
+            //เหลือเอา pay_id ออกมา
+                const response = await axios.put(`/updatepayment/17`);
 
             const sweet = Swal.fire({
               icon: "success",
@@ -153,6 +149,6 @@ export const UsepaymentStore = defineStore('payment', () => {
         showAlertChecked,
         alertMessage,
         confirmResult,
-        confirmChecked
+        confirmChecked,
     }
 })
