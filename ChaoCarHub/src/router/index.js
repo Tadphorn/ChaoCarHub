@@ -9,7 +9,8 @@ const routes = [
     {
         path: '/myrent',
         name: 'myrent',
-        meta: { login: true },
+        meta: { login: true,
+                user: true},
         component: () => import('../views/MyRent.vue')
     },
     {
@@ -29,12 +30,14 @@ const routes = [
     {
         path: '/pay',
         name: 'pay',
+        meta: { user: true },
         component: () =>
             import('../views/Pay.vue')
     },
     {
         path: '/detailcar/:id',
         name: 'detailcar',
+        meta: { user: true },
         component: () =>
             import('../views/DetailCar.vue')
     },
@@ -51,15 +54,6 @@ const routes = [
         component: () =>
             import('../components/Home/ShowCar.vue')
     }
-    ,
-    {
-        path: '/tableud',
-        name: 'tableud',
-        meta: { admin: true },
-        component: () =>
-            import('../components/Admin/Table_UpdateDeleteCar.vue')
-    }
-    ,
 ];
 
 const router = createRouter({
@@ -70,23 +64,30 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const isLoggedIn = !!localStorage.getItem('token');
     const isAdmin = !!localStorage.getItem('isAdmin')
+    // const isUser = !!localStorage.getItem('isAdmin')
     // if not login
     if (to.meta.login && !isLoggedIn) {
         alert('Please login first!');
         next({ path: '/sign_in' });
     }
     // check if user is not logged in or not an admin
-    if (to.meta.admin && (!isLoggedIn || !isAdmin)) { 
+    if (to.meta.admin && (!isLoggedIn || !isAdmin)) {
         alert('You are not authorized to access this page!');
-        next({ path: '/' });}
+        next({ path: '/' });
+    }
+
+    if (to.meta.user && (!isLoggedIn || isAdmin)) {
+        alert('You are not authorized to access this page!');
+        next({ path: '/' });
+    }
 
     if (to.meta.guess && isLoggedIn) {
         alert("You've already logged in");
         next({ path: '/myrent' });
     }
- 
-     next();
-   });
+
+    next();
+});
 
 
 
