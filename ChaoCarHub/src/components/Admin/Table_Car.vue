@@ -28,7 +28,6 @@ onMounted(CarStore.FetchCar);
         <th>จำนวนที่นั่ง</th>
         <th>จำนวนใส่กระเป๋า</th>
         <th>ราคา</th>
-        <th>สถานะรถ</th>
       </tr>
       <tr v-for="item in CarStore.carvalue" :key="item.car_id">
         <td>{{ item.car_code }}</td>
@@ -46,7 +45,6 @@ onMounted(CarStore.FetchCar);
         <td>{{ item.car_seat }}</td>
         <td>{{ item.car_bag }}</td>
         <td>{{ item.car_rentprice }}</td>
-        <td>ว่าง</td>
       </tr>
     </table>
   </div>

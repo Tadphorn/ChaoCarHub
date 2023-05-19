@@ -170,7 +170,6 @@ export const UsecrudCarStore = defineStore("car", () => {
 
         if (result === true) {
             try {
-                console.log('v',fileImg.value)
                 let formData = new FormData();
                 formData.append('car_code', carCode.value);
                 formData.append('car_brand', carBrand.value);
@@ -200,6 +199,12 @@ export const UsecrudCarStore = defineStore("car", () => {
 
                 router.push('/admin' );
             } catch (error) {
+                const sweet = Swal.fire({
+                  icon: 'error',
+                  title: 'แก้ไขรถไม่สำเร็จ กรุณาตรวจสอบว่ากรอกข้อมูลถูกต้องและครบถ้วนหรือไม่!',
+                  confirmButtonText: 'OK',
+                  confirmButtonColor: '#41BEB1',
+                });
                 console.log(error.message);
             }
         }
@@ -293,6 +298,12 @@ export const UsecrudCarStore = defineStore("car", () => {
         });
       } catch (error) {
         console.log(error.message);
+        const sweet = Swal.fire({
+          icon: 'error',
+          title: 'เพิ่มรถสำเร็จไม่สำเร็จ กรุณาตรวจสอบว่ากรอกข้อมูลถูกต้องและครบถ้วนหรือไม่!',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#41BEB1',
+        });
       }
     };
   return {
