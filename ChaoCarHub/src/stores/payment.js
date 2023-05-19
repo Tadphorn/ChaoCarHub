@@ -118,13 +118,13 @@ export const UsepaymentStore = defineStore('payment', () => {
           try {
             // console.log('payid', pid.value)
             const response = await axios.put(`/updatepayment/${pid.value}`);
-
             const sweet = Swal.fire({
               icon: "success",
               title: 'ยืนยันการชำระเงินสำเร็จแล้ว!', 
               confirmButtonText: 'OK',
               confirmButtonColor: '#41BEB1'
             })
+            paymentvalue.value = paymentvalue.value.filter((pay) => pay.pay_id !== pid.value)
           } catch (error) {
             console.error(error);
           }

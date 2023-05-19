@@ -66,9 +66,20 @@ router.put("/updatepayment/:pid" , async function (req, res, next) {
 
   
   try {
+    //change payment status
     const results1 = await conn.query(
       "UPDATE payment SET pay_status=? WHERE pay_id=?",
       ["ชำระเงินแล้ว", req.params.pid]
+    );
+    const getId = await conn.query(
+      "SELECT r_id FROM payment WHERE pay_id=?",
+      [req.params.pid]
+    );
+    // console.log(getId[0][0].r_id)
+    //change rental status
+    const results2 = await conn.query(
+      "UPDATE rental SET r_status=? WHERE r_id=?",
+      ["pickup", getId[0][0].r_id]
     );
 
     await conn.commit();
