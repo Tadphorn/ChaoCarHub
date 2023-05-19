@@ -3,6 +3,7 @@ import { computed, ref, reactive, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
+
 export const UsecrudCarStore = defineStore("car", () => {
   const router = useRouter()
 
@@ -93,7 +94,14 @@ export const UsecrudCarStore = defineStore("car", () => {
     const fileImg = ref(null);
     const imageURL = ref(null);
 
-   
+    const error = {
+      carCode: ref(''),
+      carBrand: ref(''),
+      carModel: ref(''),
+      carSeat: ref(''),
+      carBag: ref(''),
+      carPrice: ref(''),
+    };
     
       async function previewImage(event) {
         const file = event.target.files[0];
@@ -153,6 +161,13 @@ export const UsecrudCarStore = defineStore("car", () => {
         confirmResult.value = result;
         showAlertUpdate.value = false;
 
+        validateCarCode();
+        validateCarBrand();
+        validateCarModel();
+        validateCarSeat();
+        validateCarBag();
+        validateCarPrice();
+
         if (result === true) {
             try {
                 console.log('v',fileImg.value)
@@ -174,7 +189,7 @@ export const UsecrudCarStore = defineStore("car", () => {
                         },
                     }
                 );
-                carvalue.value = response.data[0]
+                carvalue.value = response.data[0] 
                 console.log(response.data[0])
                 const sweet = Swal.fire({
                     icon: 'success',
@@ -189,9 +204,103 @@ export const UsecrudCarStore = defineStore("car", () => {
             }
         }
     }
+    // add car
+
+    const validateCarCode = () => {
+      if (carCode.value === '') {
+        error.carCode.value = 'กรุณากรอกรหัสรถ';
+      } else {
+        error.carCode.value = '';
+      }
+    };
+
+    const validateCarBrand = () => {
+      if (carBrand.value === '') {
+        error.carBrand.value = 'กรุณากรอกยี่ห้อรถ';
+      } else {
+        error.carBrand.value = '';
+      }
+    };
+
+    const validateCarModel = () => {
+      if (carModel.value === '') {
+        error.carModel.value = 'กรุณากรอกรุ่นรถ';
+      } else {
+        error.carModel.value = '';
+      }
+    };
+
+    const validateCarSeat = () => {
+      if (carSeat.value === '') {
+        error.carSeat.value = 'กรุณากรอกจำนวนที่นั่งรถ';
+      } else if (isNaN(carSeat.value)) {
+        error.carSeat.value = 'กรุณากรอกจำนวนที่นั่งรถเป็นตัวเลข';
+      } else {
+        error.carSeat.value = '';
+      }
+    };
+
+    const validateCarBag = () => {
+      if (carBag.value === '') {
+        error.carBag.value = 'กรุณากรอกจำนวนที่วางกระเป๋า';
+      } else if (isNaN(carBag.value)) {
+        error.carBag.value = 'กรุณากรอกจำนวนที่วางกระเป๋าเป็นตัวเลข';
+      } else {
+        error.carBag.value = '';
+      }
+    };
+
+    const validateCarPrice = () => {
+      if(carPrice.value === '') {
+        error.carPrice.value = "กรุณากรอกราคารถ";
+      }
+      else if (isNaN(carPrice.value)) {
+        error.carPrice.value = "กรุณากรอกราคารถเป็นตัวเลข";
+      } else {
+        error.carPrice.value = "";
+      }
+    };
+
+    async function addCar() {
+      validateCarCode();
+      validateCarBrand();
+      validateCarModel();
+      validateCarSeat();
+      validateCarBag();
+      validateCarPrice();
+
+      let formData = new FormData();
+      formData.append('car_code', carCode.value);
+      formData.append('car_brand', carBrand.value);
+      formData.append('car_model', carModel.value);
+      formData.append('car_seat', carSeat.value);
+      formData.append('car_bag', carBag.value);
+      formData.append('car_rentprice', carPrice.value);
+      formData.append('myImageCar', fileImg.value);
+
+      try {
+        const response = await axios.post('http://localhost:3000/car', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        const sweet = Swal.fire({
+          icon: 'success',
+          title: 'เพิ่มรถสำเร็จแล้ว!',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#41BEB1',
+        });
+
+        // this.$router.push({ path: '/admin' });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
   return {
     FetchCar,
-    carvalue,
+    carvalue, 
     FetchCarToyota,
     toyotacar,
     FetchCarNissan,
@@ -219,6 +328,14 @@ export const UsecrudCarStore = defineStore("car", () => {
     confirmResult,
     fetchCarEdit,
     confirmInsert,
-    previewImage
+    previewImage,
+    addCar,
+    validateCarCode,
+    validateCarBrand,
+    validateCarModel,
+    validateCarSeat,
+    validateCarBag,
+    validateCarPrice,
+    error
   };
 });

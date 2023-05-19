@@ -39,7 +39,9 @@ onMounted(CarStore.FetchCar);
                                 v-model="CarStore.carCode"
                                 class="input"
                                 type="text"
-                              />
+                                :class="{'is-danger': CarStore.error.carCode}" @input="CarStore.validateCarCode()"
+                                />
+                              <span class="has-text-danger ertext ml-3">{{CarStore.error.carCode}}</span>
                             </div>
                           </div>
                         </div>
@@ -85,7 +87,9 @@ onMounted(CarStore.FetchCar);
                                 v-model="CarStore.carBrand"
                                 class="input"
                                 type="text"
-                              />
+                                :class="{'is-danger': CarStore.error.carBrand}" @input="CarStore.validateCarBrand()"
+                                />
+                                <span class="has-text-danger ertext ml-3">{{CarStore.error.carBrand}}</span>
                             </div>
                           </div>
                         </div>
@@ -98,7 +102,9 @@ onMounted(CarStore.FetchCar);
                                 v-model="CarStore.carModel"
                                 class="input"
                                 type="text"
-                              />
+                                :class="{'is-danger': CarStore.error.carModel}" @input="CarStore.validateCarModel()"
+                                />
+                                <span class="has-text-danger ertext ml-3">{{CarStore.error.carModel}}</span>
                             </div>
                           </div>
                         </div>
@@ -113,7 +119,9 @@ onMounted(CarStore.FetchCar);
                                 v-model="CarStore.carSeat"
                                 class="input"
                                 type="text"
-                              />
+                                :class="{'is-danger': CarStore.error.carSeat}" @input="CarStore.validateCarSeat()"
+                                />
+                              <span class="has-text-danger ertext ml-3">{{CarStore.error.carSeat}}</span>
                             </div>
                           </div>
                         </div>
@@ -126,7 +134,9 @@ onMounted(CarStore.FetchCar);
                                 v-model="CarStore.carBag"
                                 class="input"
                                 type="text"
-                              />
+                                :class="{'is-danger': CarStore.error.carBag}" @input="CarStore.validateCarBag()"
+                                />
+                                <span class="has-text-danger ertext ml-3">{{CarStore.error.carBag}}</span>
                             </div>
                           </div>
                         </div>
@@ -139,7 +149,9 @@ onMounted(CarStore.FetchCar);
                                 v-model="CarStore.carPrice"
                                 class="input"
                                 type="text"
-                              />
+                                :class="{'is-danger': CarStore.error.carPrice}" @input="CarStore.validateCarPrice()"
+                                />
+                                <span class="has-text-danger ertext ml-3">{{CarStore.error.carPrice}}</span>
                             </div>
                           </div>
                         </div>

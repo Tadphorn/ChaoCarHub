@@ -11,7 +11,7 @@ router.get("/userpayment", async function (req, res, next) {
     ,DATE_FORMAT(r_day_return, '%Y-%m-%d') AS r_day_return FROM payment 
                                               left outer join rental using(r_id) 
                                               left outer join car using(car_id) 
-                                              where pay_status = "รอตรวจสอบ"`)
+                                              where pay_status = "รอตรวจสอบการชำระเงิน"`)
     return res.json(rows)
   } catch (err) {
     return res.status(500).json(err)

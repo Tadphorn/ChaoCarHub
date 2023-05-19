@@ -15,9 +15,8 @@ export const UsepaymentStore = defineStore('payment', () => {
     const FetchPayment = async () => {
         const fetchingData = await axios.get("/userpayment");
         paymentvalue.value = fetchingData.data;
-        console.log(paymentvalue.value)
     };
-
+    
     const name = ref("ทัตพร ต้นนารัตน์")
     const numbercreditcard = ref("0123456789123")
     const expirationdate = ref("2026-01-12")
@@ -105,8 +104,10 @@ export const UsepaymentStore = defineStore('payment', () => {
     const alertMessage = ref('');
     const confirmResult = ref(null);
 
-    async function showConfirmation(name) {
+    const pid = ref('')
+    async function showConfirmation(name, payId) {
         showAlertChecked.value = true;
+        pid.value = payId
         alertMessage.value = `คุณต้องการยืนยันการชำระเงินของคุณ ${name} หรือไม่?`;
     };
 
@@ -115,8 +116,8 @@ export const UsepaymentStore = defineStore('payment', () => {
         showAlertChecked.value = false;
         if (result) {
           try {
-            //เหลือเอา pay_id ออกมา
-                const response = await axios.put(`/updatepayment/17`);
+            // console.log('payid', pid.value)
+            const response = await axios.put(`/updatepayment/${pid.value}`);
 
             const sweet = Swal.fire({
               icon: "success",

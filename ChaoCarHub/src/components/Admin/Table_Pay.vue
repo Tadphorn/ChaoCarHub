@@ -65,7 +65,7 @@ onMounted(PaymentStore.FetchPayment);
         <td class="has-text-danger">
           <div class="control">
             <div class="level-item">
-              <button class="button is-warning" @click="PaymentStore.showConfirmation(item.pay_cr_name)">
+              <button class="button is-warning" @click="PaymentStore.showConfirmation(item.pay_cr_name, item.pay_id)">
                 <span>Checked</span>
                 <span class="icon is-small">
                   <img
