@@ -15,7 +15,6 @@ provide("sharedValue", receivedValue);
 <template>
     <HeroAdmin></HeroAdmin>
     <AccessBar></AccessBar>
-    <p>Received value from child: {{ receivedValue }}</p>
     <Table_Car v-if="receivedValue == 'home'"></Table_Car>
     <Table_AddCar v-if="receivedValue == 'create'"></Table_AddCar>
     <Table_UpdateDeleteCar v-if="receivedValue == 'updatedelete'"></Table_UpdateDeleteCar>

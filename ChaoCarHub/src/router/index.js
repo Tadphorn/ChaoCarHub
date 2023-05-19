@@ -46,25 +46,10 @@ const routes = [
             import('../views/Admin.vue')
     },
     {
-        path: '/crudcar',
-        name: 'crudcar',
-        meta: { admin: true },
-        component: () =>
-            import('../views/CRUD_Car.vue')
-    },
-    {
         path: '/showcar',
         name: 'showcar',
         component: () =>
             import('../components/Home/ShowCar.vue')
-    }
-    ,
-    {
-        path: '/tablecar',
-        name: 'tablecar',
-        meta: { admin: true },
-        component: () =>
-            import('../components/Admin/Table_Car.vue')
     }
     ,
     {
@@ -75,18 +60,6 @@ const routes = [
             import('../components/Admin/Table_UpdateDeleteCar.vue')
     }
     ,
-    {
-        path: '/tablepayment',
-        name: 'tablepayment',
-        component: () =>
-            import('../components/Admin/Table_Pay.vue')
-    },
-    {
-        path: '/tableupdatecar',
-        name: 'tableupdatecar',
-        component: () =>
-            import('../components/Admin/Table_UpdateCar.vue')
-    },
 ];
 
 const router = createRouter({

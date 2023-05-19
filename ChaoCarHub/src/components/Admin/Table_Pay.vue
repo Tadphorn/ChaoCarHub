@@ -7,24 +7,77 @@ onMounted(PaymentStore.FetchPayment);
 </script>
 
 <template>
-  <!-- <div class="p-5 is-size-5">
-    <div class="columns is-mobile" v-for="item in PaymentStore.paymentvalue" :key="item.pay_id">
-      <div class="column is-half is-offset-one-quarter">
-        <div class="card p-5" style="letter-spacing: 0.3px; line-height: 33px;">
-            <div class="columns">
-            <div class="column">
-                <p><b>คุณ</b></p>
-                <p><b>ชำระเงินผ่าน:</b>   บัตรเคดิต</p>
-                <p><b>หมายเลขบัตร:</b>   {{ item.pay_cr_num }} </p>
+  <div class="p-5 is-size-5 has-text-centered" >
+      <div >
+        <h1 class="is-size-4 p-5 has-text-centered">
+      <b class="has-background-warning"
+        >ตารางแสดงรายละเอียดการชำระเงินของลูกค้า</b
+      ><br />
+      <b
+        >ขณะนี้มีลูกค้ารอตรวจสอบการชำระเงินทั้งหมด
+        <b class="has-text-warning is-size-2"> {{ PaymentStore.paymentvalue.length }} </b>
+        คน</b
+      >
+    </h1>
+    <div v-if="PaymentStore.showAlertChecked">
+                <div class="modal">
+                  <div class="modal-content">
+                    <p class="is-size-5 has-text-black">
+                      {{ PaymentStore.alertMessage }}
+                    </p>
+                    <br />
+                    <div class="buttons">
+                      <button @click="PaymentStore.confirmChecked(true)"
+                        class="button is-size-6 has-background-success has-text-white"
+                      >
+                        Ok
+                      </button>
+                      <button @click="PaymentStore.confirmChecked(false)"
+                        class="button is-size-6 has-background-danger has-text-white"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+          </div>
+    <table style="width: 100%" >
+      <tr class="has-background-warning-light">
+        <th>รหัสผู้ใช้</th>
+        <th>ชำระเงินผ่าน</th>
+        <th>หมายเลขบัตร</th>
+        <th>ชื่อบนบัตรเครดิต</th>
+        <th>วันเวลาที่ชำระ</th>
+        <th>รถที่จอง</th>
+        <th>สถานที่ <br>วันและเวลารับรถ</th>
+        <th>วันและเวลาคืนรถ</th>
+        <th>ตรวจสอบการชำระเงิน</th>
+      </tr>
+      <tr v-for="item in PaymentStore.paymentvalue" :key="item.pay_id">
+        <td>{{ item.u_id }}</td>
+        <td> บัตรเคดิต </td>
+        <td>{{ item.pay_cr_num }}</td>
+        <td>{{ item.pay_cr_name }}</td>
+        <td>{{ item.pay_time }}</td>
+        <td>{{ item.car_code }} <br> {{ item.car_brand }} {{ item.car_model }}</td>
+        <td>{{ item.r_place_pickup }} <br> {{ item.r_day_pickup}} {{ item.r_time_pickup}}</td>
+        <td>{{ item.r_place_pickup }} <br> {{ item.r_day_return}} {{ item.r_time_return}}</td>
+        <td class="has-text-danger">
+          <div class="control">
+            <div class="level-item">
+              <button class="button is-warning" @click="PaymentStore.showConfirmation(item.pay_cr_name, item.pay_id)">
+                <span>Checked</span>
+                <span class="icon is-small">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/9710/9710799.png"
+                  />
+                </span>
+              </button>
             </div>
-            <div class="column">
-                <p><b>ชื่อรถที่จอง:</b> Toyota Alphard (T004)</p>
-                <p><b>ชื่อบนบัตรเครดิต:</b>   {{ item.pay_cr_name }}</p>
-                <p><b>วันเวลาที่ชำระ</b>   {{ item.pay_time }}</p>
-            </div>
-        </div>
-        </div>
+          </div>
+        </td>   
+      </tr>
+    </table>
       </div>
     </div>
-  </div> -->
 </template>

@@ -2,8 +2,19 @@ const express = require('express');
 const path = require("path");
 const pool = require('../config.js')
 const multer = require("multer");
+const Joi = require('joi');
 
 router = express.Router();
+
+// Validate
+// const carSchema = Joi.object({
+//   car_code: Joi.string().required(), 
+//   car_brand: Joi.string().required(), 
+//   car_model: Joi.string().required(), 
+//   car_seat: Joi.string().required().pattern(/0[0-9]{2}/), 
+//   car_bag: Joi.string().required().pattern(/0[0-9]{2}/), 
+//   car_rentprice: Joi.string().required().pattern(/0[0-9]{10}/),
+// })
 
 // SET STORAGE 
 const storage = multer.diskStorage({
@@ -81,6 +92,12 @@ const upload = multer({ storage: storage });
 
 //   add car 
 router.post("/car", upload.single("myImageCar"), async function (req, res, next) {
+  //   try {
+  //   await carSchema.validateAsync(req.body, { abortEarly: false })
+  // } catch (err) {
+  //   return res.status(400).send(err)
+  // }
+
   const file = req.file;
 
   if (!file) {
@@ -134,7 +151,7 @@ router.put("/updatecar/:id", upload.single("myImageCar"), async function (req, r
   
   const { car_code, car_brand, car_model, car_seat, car_bag, car_rentprice } = req.body
   console.log('ทำไมถึงทำกับฉันได้ ',car_code, car_brand, car_model, car_seat, car_bag, car_rentprice, req.params.id, file.path.substr(6))
-
+  console.log(req.params.id)
   const conn = await pool.getConnection();
   await conn.beginTransaction();
 

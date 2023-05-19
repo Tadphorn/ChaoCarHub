@@ -1,156 +1,20 @@
-<script>
-export default {
-  data() {
-    return {
-      carCode: "TEST001",
-      carBrand: "Toyota",
-      carModel: "Yaris",
-      carSeat: 5,
-      carBag: 1,
-      carPrice: 1200,
-      file: null,
-      error: {
-        carCode: "",
-        carBrand: "", 
-        carModel: "",
-        carSeat: "",
-        carBag: "",
-        carPrice: "",
-        file: "",
-      }
-    };
-  },
-  methods: {
-    handleFileUpload(){
-      this.file = this.$refs.file.files[0];
-    },
-    addCar() {
-      this.validateCarCode()
-      this.validateCarBrand()
-      this.validateCarModel()
-      this.validateCarSeat()
-      this.validateCarBag()
-      this.validateuploadFile()
-
-      let formData = new FormData();
-      formData.append("car_code", this.carCode);
-      formData.append("car_brand", this.carBrand);
-      formData.append("car_model", this.carModel);
-      formData.append("car_seat", this.carSeat);
-      formData.append("car_bag", this.carBag);
-      formData.append("car_rentprice", this.carPrice);
-      formData.append("myImageCar", this.file);
-
-      axios.post('http://localhost:3000/car', formData, {
-              headers: {
-              'Content-Type': 'multipart/form-data'
-              }
-          }).then(response => {
-            const sweet = Swal.fire({
-                    icon: "success",
-                    title: 'เพิ่มรถสำเร็จแล้ว!',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#41BEB1'
-            })
-              // this.$router.push({path: '/admin'}) // Success! -> redirect to home page
-          })
-          .catch(error => {
-              console.log(error.message);
-          });
-    },
-    selectImages(event) {
-      this.images = event.target.files;
-    },
-
-    validateCarCode() {
-      if(this.carCode === '') {
-        this.error.carCode = "กรุณากรอกรหัสรถ";
-        return;
-      }
-        this.error.carCode = "";
-    },
-
-    validateuploadFile() {
-    const fileInput = document.getElementById('file');
-    const file = fileInput.files[0];
-
-    if (file) {
-      // ดำเนินการอัปโหลดไฟล์ที่ถูกเลือก
-      console.log('อัปโหลดไฟล์: ' + file.name);
-    } else {
-      this.error.file = "กรุณาเลือกไฟล์รูป";
-      return;
-    }
-    this.error.file = "";
-    },
-    validateCarBrand() {
-      if(this.carBrand === '') {
-        this.error.carBrand = "กรุณากรอกยี่ห้อรถ";
-        return;
-      }
-        this.error.carBrand = "";
-    },
-
-    validateCarModel() {
-      if(this.carModel === '') {
-        this.error.carModel = "กรุณากรอกรุ่นรถ";
-        return;
-      }
-        this.error.carModel = "";
-    },
-    
-    validateCarSeat() {
-      if(this.carSeat === '') {
-        this.error.carSeat = "กรุณากรอกจำนวนที่นั่งรถ";
-        return;
-      }
-      if(isNaN(this.carSeat)) {
-        this.error.carSeat = "กรุณากรอกจำนวนที่นั่งรถเป็นตัวเลข";
-        return;
-      }
-        this.error.carSeat = "";
-    },
-
-    validateCarBag() {
-      if(this.carBag === '') {
-        this.error.carBag = "กรุณากรอกจำนวนที่วางกระเป๋า";
-        return;
-      }
-      if(isNaN(this.carBag)) {
-        this.error.carBag = "กรุณากรอกจำนวนที่วางกระเป๋าเป็นตัวเลข";
-        return;
-      }
-        this.error.carBag = "";
-    },
-
-    validateCarPrice() {
-      if(this.carPrice === '') {
-        this.error.carPrice = "กรุณากรอกราคารถ";
-        return;
-      }
-      if(isNaN(this.carPrice)) {
-        this.error.carPrice = "กรุณากรอกราคารถเป็นตัวเลข";
-        return;
-      }
-        this.error.carPrice = "";
-    },
-
-    // showSelectImage(image) {
-    //   // for preview only
-    //   return URL.createObjectURL(image);
-    // },
-  },
-};
-</script>
-
 <script setup>
-import { computed, ref, reactive, onMounted } from "vue";
-import Swal from 'sweetalert2'
+// import { computed, ref, reactive, onMounted } from "vue";
+// import Swal from 'sweetalert2'
 import axios from "axios";
+import { UsecrudCarStore } from "@/stores/crud_Car";
+import { computed, ref, reactive, onMounted } from "vue";
+
+const CarStore = UsecrudCarStore();
+onMounted(CarStore.FetchCar);
 </script>
 <template>
   <section class="hero p-5 is-size-5">
     <div>
+      <h1 class="is-size-4 p-5 has-text-centered">
+      <b class="has-background-info has-text-white" 
+        >เพิ่มรถใหม่ในระบบ</b>
+      </h1>
       <div class="columns is-mobile">
         <div class="column is-half is-offset-one-quarter">
           <div class="card pb-6 px-5 has-text-info">
@@ -162,13 +26,13 @@ import axios from "axios";
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carCode"
+                      v-model="CarStore.carCode"
                       class="input"
                       type="text"
                       placeholder="T001"
-                      :class="{'is-danger': error.carCode}" @input="validateCarCode()"
+                      :class="{'is-danger': CarStore.error.carCode}" @input="CarStore.validateCarCode()"
                     />
-                    <span class="has-text-danger ertext ml-3">{{error.carCode}}</span>
+                    <span class="has-text-danger ertext ml-3">{{CarStore.error.carCode}}</span>
                   </div>
                 </div>
               </div>
@@ -177,6 +41,7 @@ import axios from "axios";
                   <label class="label">รูปรถ</label>
                   <div class="file is-info has-name is-normal">
                     <label class="file-label">
+                      <img id="imgg" alt="image" width="100" height="100" />
                       <input
                         class="file-input"
                         type="file"
@@ -185,9 +50,8 @@ import axios from "axios";
                         multiple
                         ref="file"
                         id="file"
-                        @change="handleFileUpload()"
-                        :class="{'is-danger': error.carCode}"
-                        @click="validateuploadFile()"
+                        @change="CarStore.previewImage"
+                        onchange="document.getElementById('imgg').src = window.URL.createObjectURL(this.files[0])"
                       />
                       <span class="file-cta">
                         <span class="file-icon">
@@ -197,7 +61,6 @@ import axios from "axios";
                       </span>
                       <span class="file-name"> .jpg .png </span>
                     </label>
-                    <span class="has-text-danger ertext ml-3">{{error.file}}</span>
                   </div>
                 </div>
               </div>
@@ -209,13 +72,13 @@ import axios from "axios";
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carBrand"
+                      v-model="CarStore.carBrand"
                       class="input"
                       type="text"
                       placeholder="Toyota"
-                      :class="{'is-danger': error.carBrand}" @input="validateCarBrand()"
+                      :class="{'is-danger': CarStore.error.carBrand}" @input="CarStore.validateCarBrand()"
                     />
-                    <span class="has-text-danger ertext ml-3">{{error.carBrand}}</span>
+                    <span class="has-text-danger ertext ml-3">{{CarStore.error.carBrand}}</span>
                   </div>
                 </div>
               </div>
@@ -225,13 +88,13 @@ import axios from "axios";
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carModel"
+                      v-model="CarStore.carModel"
                       class="input"
                       type="text"
                       placeholder="Yaris"
-                      :class="{'is-danger': error.carModel}" @input="validateCarModel()"
+                      :class="{'is-danger': CarStore.error.carModel}" @input="CarStore.validateCarModel()"
                     />
-                    <span class="has-text-danger ertext ml-3">{{error.carModel}}</span>
+                    <span class="has-text-danger ertext ml-3">{{CarStore.error.carModel}}</span>
                   </div>
                 </div>
               </div>
@@ -243,13 +106,13 @@ import axios from "axios";
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carSeat"
+                      v-model="CarStore.carSeat"
                       class="input"
                       type="text"
                       placeholder="4"
-                      :class="{'is-danger': error.carSeat}" @input="validateCarSeat()"
+                      :class="{'is-danger': CarStore.error.carSeat}" @input="CarStore.validateCarSeat()"
                     />
-                    <span class="has-text-danger ertext ml-3">{{error.carSeat}}</span>
+                    <span class="has-text-danger ertext ml-3">{{CarStore.error.carSeat}}</span>
                   </div>
                 </div>
               </div>
@@ -259,13 +122,13 @@ import axios from "axios";
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carBag"
+                      v-model="CarStore.carBag"
                       class="input"
                       type="text"
                       placeholder="2"
-                      :class="{'is-danger': error.carBag}" @input="validateCarBag()"
+                      :class="{'is-danger': CarStore.error.carBag}" @input="CarStore.validateCarBag()"
                     />
-                    <span class="has-text-danger ertext ml-3">{{error.carBag}}</span>
+                    <span class="has-text-danger ertext ml-3">{{CarStore.error.carBag}}</span>
                   </div>
                 </div>
               </div>
@@ -275,20 +138,20 @@ import axios from "axios";
                   <div class="control">
                     <input
                       style="border-radius: 5px"
-                      v-model="carPrice"
+                      v-model="CarStore.carPrice"
                       class="input"
                       type="text"
                       placeholder="1190"
-                      :class="{'is-danger': error.carPrice}" @input="validateCarPrice()"
+                      :class="{'is-danger': CarStore.error.carPrice}" @input="CarStore.validateCarPrice()"
                     />
-                    <span class="has-text-danger ertext ml-3">{{error.carPrice}}</span>
+                    <span class="has-text-danger ertext ml-3">{{CarStore.error.carPrice}}</span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="field is-grouped" style="float: right">
               <div class="control">
-                <button class="button is-info" @click="addCar">Submit</button>
+                <button class="button is-info" @click="CarStore.addCar">Submit</button>
               </div>
               <div class="control">
                 <router-link to="/admin">
@@ -304,3 +167,14 @@ import axios from "axios";
     </div>
   </section>
 </template>
+
+
+<!-- <script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script> -->
