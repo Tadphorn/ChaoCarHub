@@ -41,6 +41,7 @@ onMounted(CarStore.FetchCar);
                   <label class="label">รูปรถ</label>
                   <div class="file is-info has-name is-normal">
                     <label class="file-label">
+                      <img id="imgg" alt="image" width="100" height="100" />
                       <input
                         class="file-input"
                         type="file"
@@ -50,6 +51,7 @@ onMounted(CarStore.FetchCar);
                         ref="file"
                         id="file"
                         @change="CarStore.previewImage"
+                        onchange="document.getElementById('imgg').src = window.URL.createObjectURL(this.files[0])"
                       />
                       <span class="file-cta">
                         <span class="file-icon">
@@ -59,7 +61,6 @@ onMounted(CarStore.FetchCar);
                       </span>
                       <span class="file-name"> .jpg .png </span>
                     </label>
-                    <!-- <span class="has-text-danger ertext ml-3">{{CarStore.error.file}}</span> -->
                   </div>
                 </div>
               </div>
@@ -166,3 +167,14 @@ onMounted(CarStore.FetchCar);
     </div>
   </section>
 </template>
+
+
+<!-- <script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script> -->

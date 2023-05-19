@@ -291,13 +291,10 @@ export const UsecrudCarStore = defineStore("car", () => {
           confirmButtonText: 'OK',
           confirmButtonColor: '#41BEB1',
         });
-
-        // this.$router.push({ path: '/admin' });
       } catch (error) {
         console.log(error.message);
       }
     };
-
   return {
     FetchCar,
     carvalue, 
@@ -336,6 +333,6 @@ export const UsecrudCarStore = defineStore("car", () => {
     validateCarSeat,
     validateCarBag,
     validateCarPrice,
-    error
+    error,
   };
 });
