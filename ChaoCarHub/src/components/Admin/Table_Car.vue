@@ -20,7 +20,7 @@ onMounted(CarStore.FetchCar);
     </h1>
     <table style="width: 100%">
       <tr class="has-background-primary-light">
-        <th>รหัสรถ</th>
+        <th>หมายเลขรถ</th>
         <th>รูปรถ.....</th>
         <th>ชื่อรถ</th>
         <th>ยี่ห้อรถ</th>

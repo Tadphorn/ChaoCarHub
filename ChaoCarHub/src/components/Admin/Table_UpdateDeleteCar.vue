@@ -26,16 +26,21 @@ onMounted(CarStore.FetchCar);
                 <div class="modal has-text-left">
                   <div class="card has-background-white">
                     <div class="pb-6 px-5 has-text-info">
-                      <p class="title pt-5 pb-5 has-text-centered">
+                      <p class="title pt-5 pb-5">
                         UPDATE
                       </p>
-                      <div class="card-image px-4">
-                          <center><img id="imgg" src="https://bulma.io/images/placeholders/640x360.png" width="250" height="200" /></center>
+                      <div class="columns">
+                          <div class="column is-half is-offset-one-quarter">
+                            <div class="card-image px-4">
+                              <img id="imgg" src="https://bulma.io/images/placeholders/640x360.png" width="250" height="200" />
+                            </div>
+                          </div>
                       </div>
+                      
                       <div class="columns">
                         <div class="column is-half">
                           <div class="field">
-                            <label class="label">รหัสรถ</label>
+                            <label class="label">หมายเลขรถ</label>
                             <div class="control">
                               <input
                                 style="border-radius: 5px"
@@ -203,7 +208,7 @@ onMounted(CarStore.FetchCar);
               </div>
     <table style="width: 100%">
       <tr class="has-background-danger-light">
-        <th>รหัสรถ</th>
+        <th>หมายเลขรถ</th>
         <th>รูปรถ.....</th>
         <th>ชื่อรถ</th>
         <th>ยี่ห้อรถ</th>

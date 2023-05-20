@@ -49,8 +49,8 @@ onMounted(PaymentStore.FetchPayment);
         <th>ชื่อบนบัตรเครดิต</th>
         <th>วันเวลาที่ชำระ</th>
         <th>รถที่จอง</th>
-        <th>สถานที่ <br>วันและเวลารับรถ</th>
-        <th>วันและเวลาคืนรถ</th>
+        <th>สถานที่ <br> วันและเวลารับรถ</th>
+        <th>สถานที่ <br> วันและเวลาคืนรถ</th>
         <th>ตรวจสอบการชำระเงิน</th>
       </tr>
       <tr v-for="item in PaymentStore.paymentvalue" :key="item.pay_id">
