@@ -44,7 +44,7 @@ router.post("/userpayment", isLoggedIn, async function (req, res, next) {
   try {
     const results = await conn.query(
       `INSERT INTO payment(pay_cr_name, pay_cr_num, pay_cr_exp, pay_cr_cvc, pay_status, r_id, u_id, pay_time) 
-        VALUES( ?, ?, ?, ?, 'รอตรวจสอบ', ?, ?, CURRENT_TIMESTAMP)`,
+        VALUES( ?, ?, ?, ?, 'รอตรวจสอบการชำระเงิน', ?, ?, CURRENT_TIMESTAMP)`,
       [pay_cr_name, pay_cr_num, pay_cr_exp,  pay_cr_cvc, r_id, req.user.u_id]
     );
 

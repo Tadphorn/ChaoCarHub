@@ -4,6 +4,7 @@ import axios from "@/plugins/axios"
 import { computed, ref, reactive, onMounted } from "vue";
 import { useLocalStorage } from '@vueuse/core'
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
 
 export const UsemyrentStore = defineStore('myrent', () => {
   const router = useRouter()
@@ -15,7 +16,7 @@ export const UsemyrentStore = defineStore('myrent', () => {
   const historyCar = ref([])
 
   const hadPay = ref([])
-  
+  const hadReturn = ref([])
   async function myrentCar() {
     // const token = localStorage.getItem('token')
     const fetchingData = await axios.get("myrent/car")
@@ -26,42 +27,70 @@ export const UsemyrentStore = defineStore('myrent', () => {
     pickupCar.value = mycar.value.filter((car) => car.r_status === 'pickup')
     returnCar.value = mycar.value.filter((car) => car.r_status === 'return')
     historyCar.value = mycar.value.filter((car) => car.r_status === 'history')
-    //payed Id
+    //get payed Id
     const fetchingData1 = await axios.get("myrent/pay")
     hadPay.value = fetchingData1.data
     hadPay.value = hadPay.value.flatMap(obj => Object.values(obj));
-    console.log("r_id ", hadPay.value)
+    // console.log("pay ", hadReturn.value)
+    //get return Id
+    const fetchingData2 = await axios.get("myrent/return")
+    hadReturn.value = fetchingData2.data
+    hadReturn.value = hadReturn.value.flatMap(obj => Object.values(obj));
+    // console.log("return ", hadReturn.value)
   }
+
 
   const showAlert = ref(false);
   const alertMessage = ref('');
   const confirmResult = ref(null);
   const rentId = ref(0)
 
-    async function showConfirmation(carBrand, carModel, rId) {
-      showAlert.value = true;
-      alertMessage.value = `คุณต้องการยกเลิกการจองรถ ${carBrand} ${carModel} หรือไม่?` ;
-      rentId.value = rId
-      console.log("rent id ", rentId.value)
-    };
+  async function showConfirmation(carBrand, carModel, rId) {
+    showAlert.value = true;
+    alertMessage.value = `คุณต้องการยกเลิกการจองรถ ${carBrand} ${carModel} หรือไม่?`;
+    rentId.value = rId
+    console.log("rent id ", rentId.value)
+  };
 
-    async function confirm(result) {
-      confirmResult.value = result;
-      showAlert.value = false;
-      if (result) {
-        // ถ้ากดตกลงก็จะลบ card
-        const fetchingData = await axios.post("/myrent/remove", {
+  async function confirm(result) {
+    confirmResult.value = result;
+    showAlert.value = false;
+    if (result) {
+      // ถ้ากดตกลงก็จะลบ card
+      const fetchingData = await axios.post("/myrent/remove", {
         rentId: rentId.value
-        })
-        checkoutCar.value = checkoutCar.value.filter((car) => car.r_id !== rentId.value)
-      } 
+      })
+      checkoutCar.value = checkoutCar.value.filter((car) => car.r_id !== rentId.value)
     }
+  }
 
-    async function btnPickup(rId){
-      console.log("id ", rId)
-      const fetchingData = await axios.put(`/myrent/pickup/${rId}`)
-      pickupCar.value = pickupCar.value.filter((car) => car.r_id !== rId)
+  async function btnPickup(rId) {
+    console.log("id ", rId)
+    const fetchingData = await axios.put(`/myrent/pickup/${rId}`)
+    pickupCar.value = pickupCar.value.filter((car) => car.r_id !== rId)
+  }
+
+
+  async function btnReturn(rId) {
+    console.log("id ", rId)
+    try {
+      const fetchingData = await axios.post(`/myrent/return/${rId}`)
+      const sweet = Swal.fire({
+        icon: "success",
+        title: 'รอการตรวจสอบการคืนรถ',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#41BEB1'
+      })
+    } catch (error) {
+      const sweet = Swal.fire({
+        icon: "error",
+        title: 'ขออภัย เกิดข้อผิดพลาดบางอย่าง',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#41BEB1'
+      })
+
     }
+  }
 
   return {
     myrentCar,
@@ -77,6 +106,8 @@ export const UsemyrentStore = defineStore('myrent', () => {
     showConfirmation,
     confirm,
     hadPay,
-    btnPickup
+    btnPickup,
+    btnReturn,
+    hadReturn
   }
 })
