@@ -18,7 +18,10 @@ onMounted(CarStore.FetchCar);
       <div class="columns is-mobile">
         <div class="column is-half is-offset-one-quarter">
           <div class="card pb-6 px-5 has-text-info">
-            <p class="title pt-5">Create new car</p>
+            <p class="title pt-4">Create new car</p>
+            <div class="card-image px-4">
+              <center><img id="imgg" src="https://bulma.io/images/placeholders/640x360.png" width="250" height="200" /></center>
+           </div>
             <div class="columns">
               <div class="column is-half">
                 <div class="field">
@@ -41,7 +44,6 @@ onMounted(CarStore.FetchCar);
                   <label class="label">รูปรถ</label>
                   <div class="file is-info has-name is-normal">
                     <label class="file-label">
-                      <img id="imgg" alt="image" width="100" height="100" />
                       <input
                         class="file-input"
                         type="file"

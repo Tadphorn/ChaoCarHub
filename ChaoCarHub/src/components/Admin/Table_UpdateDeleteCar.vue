@@ -29,6 +29,9 @@ onMounted(CarStore.FetchCar);
                       <p class="title pt-5 pb-5 has-text-centered">
                         UPDATE
                       </p>
+                      <div class="card-image px-4">
+                          <center><img id="imgg" src="https://bulma.io/images/placeholders/640x360.png" width="250" height="200" /></center>
+                      </div>
                       <div class="columns">
                         <div class="column is-half">
                           <div class="field">
@@ -48,11 +51,6 @@ onMounted(CarStore.FetchCar);
                         <div class="column is-half">
                           <div class="field">
                             <label class="label">รูปรถ</label>
-                            <div class="card-image px-3">
-                                  <figure class="image is-4by3">
-                                    <img :src="`http://localhost:3000/${CarStore.carImageURL}`" alt="" />
-                                  </figure>
-                                </div>
                             <div class="file is-info has-name is-normal">
                               <label class="file-label">
                                 <input
@@ -64,6 +62,7 @@ onMounted(CarStore.FetchCar);
                                   ref="file"
                                   id="file"
                                   @change="CarStore.previewImage"
+                                  onchange="document.getElementById('imgg').src = window.URL.createObjectURL(this.files[0])"
                                 />
                                 <span class="file-cta">
                                   <span class="file-icon">
@@ -212,7 +211,6 @@ onMounted(CarStore.FetchCar);
         <th>จำนวนที่นั่ง</th>
         <th>จำนวนที่วางกระเป๋า</th>
         <th>ราคา</th>
-        <th>สถานะรถ</th>
         <th>Update && Delete</th>
       </tr>
       <tr v-for="item in CarStore.carvalue" :key="item.car_id">
@@ -230,7 +228,6 @@ onMounted(CarStore.FetchCar);
         <td>{{ item.car_seat }}</td>
         <td>{{ item.car_bag }}</td>
         <td>{{ item.car_rentprice }}</td>
-        <td>ว่าง</td>
         <td class="has-text-danger">
           <div class="control">
             <div class="level-item">
