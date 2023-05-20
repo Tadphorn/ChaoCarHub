@@ -84,8 +84,8 @@ defineProps({
               /><span class="pl-2"> ชำระเงินสำเร็จแล้ว</span>
             </p>
           </div>
-          <a href="me_returncar.html" class="column is-size-6">
-            <button class="button btn has-text-white font" style="width: 100%">
+          <a class="column is-size-6">
+            <button class="button btn has-text-white font" style="width: 100%" @click="myrentStore.btnPickup(item.r_id)">
               รับรถสำเร็จ
             </button>
           </a>

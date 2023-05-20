@@ -1,9 +1,12 @@
 <script setup>
+import { computed, ref, onMounted } from "vue";
 import { UsemyrentStore } from "@/stores/myRent"
 const myrentStore  = UsemyrentStore()
 defineProps({
   item: Object,
 });
+const isReturn = ref(false)
+
 </script>
 
 <template>
@@ -53,13 +56,15 @@ defineProps({
           </div>
           <div class="column is-4">
             <p
-              v-if="returnCar == false"
+              v-if="!myrentStore.hadReturn.includes(item.r_id) && !isReturn"
               class="is-size-4"
               style="background-color: #99e2f2"
             >
               <b>คืนรถ</b>
             </p>
-            <p v-else class="is-size-4" style="background-color: #99e2f2">
+            <p
+            v-if="myrentStore.hadReturn.includes(item.r_id) || isReturn"
+             class="is-size-4" style="background-color: #99e2f2">
               <b>กำลังดำเนินการ</b>
             </p>
             <div class="column p-5 is-size-6">
@@ -90,16 +95,17 @@ defineProps({
               /><span class="pl-2"> ชำระเงินสำเร็จแล้ว</span>
             </p>
           </div>
-          <a v-if="returnCar == false" class="column is-size-6">
-            <button
-              @click="returnCar = true"
+          <!-- <h1> {{ isReturn }}</h1> -->
+          <a  class="column is-size-6" v-if="!myrentStore.hadReturn.includes(item.r_id) && isReturn == false">
+            <button 
+              @click="myrentStore.btnReturn(item.r_id), isReturn = true"
               class="button btn has-text-white font"
               style="width: 100%"
             >
               คืนรถ
             </button>
           </a>
-          <a v-else class="column is-size-6">
+          <a  class="column is-size-6" v-if="myrentStore.hadReturn.includes(item.r_id) || isReturn">
             <button
               class="button btn has-text-white font"
               style="width: 100%; opacity: 40%"
