@@ -27,6 +27,17 @@ router.get("/myrent/car", isLoggedIn, async function (req, res, next) {
   
   });
 
+  router.put("/myrent/pickup/:id", async function (req, res, next) {
+    try {
+      const [rows, fields] = await pool.query('UPDATE rental SET r_status=? WHERE r_id=?', 
+      ["return", req.params.id])
+      return res.json(rows)
+    } catch (err) {
+      return res.status(500).json(err)
+    }
+  
+  });
+
   router.post("/myrent/remove", async function (req, res, next) {
     const {rentId} = req.body
     // console.log(req.body)

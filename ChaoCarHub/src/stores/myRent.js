@@ -17,7 +17,7 @@ export const UsemyrentStore = defineStore('myrent', () => {
   const hadPay = ref([])
   
   async function myrentCar() {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const fetchingData = await axios.get("myrent/car")
     mycar.value = fetchingData.data
     // console.log(mycar.value.length)
@@ -57,6 +57,12 @@ export const UsemyrentStore = defineStore('myrent', () => {
       } 
     }
 
+    async function btnPickup(rId){
+      console.log("id ", rId)
+      const fetchingData = await axios.put(`/myrent/pickup/${rId}`)
+      pickupCar.value = pickupCar.value.filter((car) => car.r_id !== rId)
+    }
+
   return {
     myrentCar,
     mycar,
@@ -70,6 +76,7 @@ export const UsemyrentStore = defineStore('myrent', () => {
     confirmResult,
     showConfirmation,
     confirm,
-    hadPay
+    hadPay,
+    btnPickup
   }
 })

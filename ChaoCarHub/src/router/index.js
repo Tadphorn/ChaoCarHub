@@ -64,7 +64,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const isLoggedIn = !!localStorage.getItem('token');
     const isAdmin = !!localStorage.getItem('isAdmin')
-    // const isUser = !!localStorage.getItem('isAdmin')
     // if not login
     if (to.meta.login && !isLoggedIn) {
         alert('Please login first!');
