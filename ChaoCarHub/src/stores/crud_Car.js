@@ -289,7 +289,15 @@ export const UsecrudCarStore = defineStore("car", () => {
             'Content-Type': 'multipart/form-data',
           },
         });
-
+        if (response.data.check === false) {
+          const sweet = Swal.fire({
+            icon: 'error',
+            title: 'หมายเลขรถ เคยถูกเพิ่มไปแล้ว',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#41BEB1',
+          });
+          return
+        }
         const sweet = Swal.fire({
           icon: 'success',
           title: 'เพิ่มรถสำเร็จแล้ว!',
