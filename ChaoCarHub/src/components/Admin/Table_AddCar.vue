@@ -19,13 +19,16 @@ onMounted(CarStore.FetchCar);
         <div class="column is-half is-offset-one-quarter">
           <div class="card pb-6 px-5 has-text-info">
             <p class="title pt-4">Create new car</p>
-            <div class="card-image px-4">
-              <center><img id="imgg" src="https://bulma.io/images/placeholders/640x360.png" width="250" height="200" /></center>
+            <div class="columns">
+              <div class="column is-half is-offset-one-quarter"><div class="card-image px-4">
+              <img id="imgg" src="https://bulma.io/images/placeholders/640x360.png" width="250" height="200" />
            </div>
+          </div> 
+            </div>
             <div class="columns">
               <div class="column is-half">
                 <div class="field">
-                  <label class="label">รหัสรถ</label>
+                  <label class="label">หมายเลขรถ</label>
                   <div class="control">
                     <input
                       style="border-radius: 5px"

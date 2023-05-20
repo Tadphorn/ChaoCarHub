@@ -12,14 +12,14 @@ const home = ref(true)
 const create = ref(false)
 const updatedelete = ref(false)
 const payment = ref(false)
-const retruncar = ref(false)
+const returncar = ref(false)
 </script>
 
 <template>
     <section>
         <div class="columns p-5  has-background-primary-light border_td">
             
-            <div class="column" id="ibar" @click="sendValueToParent('home'), home = true, create = false, updatedelete = false, payment = false, retruncar = false" 
+            <div class="column" id="ibar" @click="sendValueToParent('home'), home = true, create = false, updatedelete = false, payment = false, returncar = false" 
               :class="{'is-color-transgreen': home }">
                   <div class="card-image has-text-centered" >
                             <img src="https://cdn-icons-png.flaticon.com/512/747/747589.png" alt="Placeholder image" width="50" height="50">
@@ -27,7 +27,7 @@ const retruncar = ref(false)
                   </div>
               </div>
 
-                <div class="column" id="ibar" @click="sendValueToParent('create'), home = false, create = true, updatedelete = false, payment = false, retruncar = false" 
+                <div class="column" id="ibar" @click="sendValueToParent('create'), home = false, create = true, updatedelete = false, payment = false, returncar = false" 
                   :class="{'is-color-transgreen': create }">
                   <div class="card-image has-text-centered" >
                             <img src="https://cdn-icons-png.flaticon.com/512/3133/3133900.png" alt="Placeholder image" width="50" height="50">
@@ -36,7 +36,7 @@ const retruncar = ref(false)
                   </div>
               </div>
 
-                <div class="column" id="ibar" @click="sendValueToParent('updatedelete'), home = false, create = false, updatedelete = true, payment = false, retruncar = false" 
+                <div class="column" id="ibar" @click="sendValueToParent('updatedelete'), home = false, create = false, updatedelete = true, payment = false, returncar = false" 
                   :class="{'is-color-transgreen': updatedelete }">
                   <div class="card-image has-text-centered">
                             <img class="mr-5 mt-2" src="https://cdn-icons-png.flaticon.com/512/4737/4737247.png" alt="Placeholder image" width="40" height="40">
@@ -45,7 +45,7 @@ const retruncar = ref(false)
                   </div>
                 </div>
 
-                <div class="column" id="ibar" @click="sendValueToParent('payment'), home = false, create = false, updatedelete = false, payment = true, retruncar = false" 
+                <div class="column" id="ibar" @click="sendValueToParent('payment'), home = false, create = false, updatedelete = false, payment = true, returncar = false" 
                   :class="{'is-color-transgreen': payment }">
                   <div class="card-image has-text-centered">
                             <img src="https://cdn-icons-png.flaticon.com/512/5688/5688249.png" alt="Placeholder image" width="50" height="50">
@@ -53,8 +53,8 @@ const retruncar = ref(false)
                   </div>
                 </div>
 
-                <div class="column" id="ibar" @click="sendValueToParent('retruncar'), home = false, create = false, updatedelete = false, payment = false, retruncar = true" 
-                  :class="{'is-color-transgreen': retruncar }">
+                <div class="column" id="ibar" @click="sendValueToParent('returncar'), home = false, create = false, updatedelete = false, payment = false, returncar = true" 
+                  :class="{'is-color-transgreen': returncar }">
                   <div class="card-image has-text-centered">
                             <img class="" src="https://cdn-icons-png.flaticon.com/512/4422/4422557.png" alt="Placeholder image" width="50" height="50">
                             <br><b>ตรวจสอบการคืนรถ</b>

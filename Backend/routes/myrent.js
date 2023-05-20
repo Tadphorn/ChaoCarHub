@@ -61,15 +61,51 @@ router.get("/myrent/car", isLoggedIn, async function (req, res, next) {
     }
   });
 
-  //for admin
+  //get info for admin
   router.get("/admin/return", async function (req, res, next) {
     try {
-      const [rows, fields] = await pool.query('SELECT * FROM return_car WHERE re_status = "รอตรวจสอบการคืนรถ"')
+      const [rows, fields] = await pool.query(`
+      SELECT *,DATE_FORMAT(r_day_return, '%Y-%m-%d') as r_day_return FROM return_car 
+      join rental using(r_id)
+      join car using(car_id)
+      join user using(u_id)
+      WHERE re_status = "รอตรวจสอบการคืนรถ"`)
       return res.json(rows)
     } catch (err) {
       return res.status(500).json(err)
     }
   
+  });
+
+  //admin return car check
+  router.put("/admin/return/:id" , async function (req, res, next) {
+    const conn = await pool.getConnection();
+    await conn.beginTransaction();
+    try {
+      //change return_car status
+      const results1 = await conn.query(
+        "UPDATE return_car SET re_status=? WHERE re_id=?",
+        ["คืนรถสำเร็จ", req.params.id]
+      );
+      const getId = await conn.query(
+        "SELECT r_id FROM return_car WHERE re_id=?",
+        [req.params.id]
+      );
+      // console.log(getId[0][0].r_id)
+      //change rental status
+      const results2 = await conn.query(
+        "UPDATE rental SET r_status=? WHERE r_id=?",
+        ["history", getId[0][0].r_id]
+      );
+  
+      await conn.commit();
+      return res.json("อัพเดตสถานะการคืนรถสำเร็จ");
+    } catch (err) {
+      await conn.rollback();
+      return res.status(400).json(err);
+    } finally {
+      conn.release();
+    }
   });
 
   router.post("/myrent/remove", async function (req, res, next) {

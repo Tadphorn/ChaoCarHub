@@ -92,6 +92,49 @@ export const UsemyrentStore = defineStore('myrent', () => {
     }
   }
 
+  const returnCarId = ref("")
+  const showAlertVerified = ref(false)
+  async function showConfirmReturnCar(carBrand, carModel, uName, reId) {
+    showAlertVerified.value = true;
+    alertMessage.value = `คุณต้องการยืนยันการคืนรถ ${carBrand} ${carModel} ของคุณ ${uName} หรือไม่?`;
+    returnCarId.value = reId
+    console.log("reid ", returnCarId.value)
+  };
+
+  //get info for admin return page
+  const allReturncar = ref([]);
+  const FetchReturncar = async () => {
+      const fetchingData = await axios.get("/admin/return");
+      allReturncar.value = fetchingData.data;
+      // console.log(fetchingData)
+  };
+  
+  async function confirmVerified(result) {
+    confirmResult.value = result;
+    showAlertVerified.value = false;
+    if (result) {
+      try {
+        const response = await axios.put(`/admin/return/${returnCarId.value}`);
+        const sweet = Swal.fire({
+          icon: "success",
+          title: 'ยืนยันการคืนรถสำเร็จแล้ว!', 
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#41BEB1'
+        })
+        allReturncar.value = allReturncar.value.filter((car) => car.re_id !== returnCarId.value)
+      } catch (error) {
+        console.error(error);
+        const response = await axios.put(`/admin/return/${returnCarId.value}`);
+        const sweet = Swal.fire({
+          icon: "error",
+          title: 'ยืนยันการคืนรถไม่สำเร็จ อาจเกิดข้อผิดพลาดบางอย่าง!', 
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#41BEB1'
+        })
+      }
+    }
+  }
+  
   return {
     myrentCar,
     mycar,
@@ -108,6 +151,11 @@ export const UsemyrentStore = defineStore('myrent', () => {
     hadPay,
     btnPickup,
     btnReturn,
-    hadReturn
+    hadReturn,
+    showConfirmReturnCar,
+    FetchReturncar,
+    allReturncar,
+    confirmVerified,
+    showAlertVerified
   }
 })
