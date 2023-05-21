@@ -43,7 +43,7 @@ onMounted(myrentStore.FetchReturncar);
             </div>
           </div>
     <table style="width: 100%" >
-      <tr class="has-background-link-light">
+      <tr style="background-color: hsl(217, 76%, 92%);" class="sticky">
         <th>รหัสผู้ใช้</th>
         <th>ชื่อลูกค้า</th>
         <th>หมายเลขรถ</th>

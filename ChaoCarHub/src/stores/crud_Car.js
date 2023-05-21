@@ -13,6 +13,27 @@ export const UsecrudCarStore = defineStore("car", () => {
     carvalue.value = fetchingData.data;
   };
 
+  //search input
+  const searchInput = ref("")
+
+  const toSearch = () => {
+    // console.log('searchInput toseach', searchInput.value)
+    searchValue()
+  }
+
+  const searchValue = async() =>{
+    console.log('searchInput searchValue', searchInput.value)
+    const fetchingData = await axios.get('http://localhost:3000/search',
+    {
+      params: {
+        searchInput: searchInput.value
+      }
+    }
+    )
+    console.log(fetchingData.data);
+    carvalue.value = fetchingData.data
+  }
+  
   const toyotacar = ref([])
   const FetchCarToyota = async () => {
     const fetchingData = await axios.get("http://localhost:3000/car/toyota");
@@ -360,5 +381,9 @@ export const UsecrudCarStore = defineStore("car", () => {
     validateCarBag,
     validateCarPrice,
     error,
+    searchInput,
+    toSearch,
+    searchValue,
+    
   };
 });
