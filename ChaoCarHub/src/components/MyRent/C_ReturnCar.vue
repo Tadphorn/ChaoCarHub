@@ -10,9 +10,7 @@ const isReturn = ref(false)
 </script>
 
 <template>
-  <div class="columns pb-6">
-    <div class="column is-half is-8 is-offset-2 pt-6">
-      <div class="has-text-centered pb-5" style="letter-spacing: 5px;"><b class="is-size-1">RETURN CAR</b> <br> <b>เมื่อคุณลูกค้ากดจองรถ รถที่คุณจองจะมาอยู่หน้านี้</b></div>
+    <div class="pb-6">
       <div class="card has-text-centered p-5">
         <div class="columns is-10">
           <div class="card-header-title columns is-7">
@@ -117,6 +115,5 @@ const isReturn = ref(false)
         </footer>
       </div>
     </div>
-  </div>
 </template>
 
