@@ -6,9 +6,6 @@ defineProps({
   item: Object,
 });
 const isReturn = ref(false)
-// onMounted(async () => {
-//   myrentStore.myrentCar();
-// });
 
 </script>
 

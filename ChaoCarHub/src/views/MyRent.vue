@@ -16,7 +16,7 @@ const myrentStore = UsemyrentStore();
 
 onMounted(async () => {
   const user = registerStore.onAuthChange();
-  myrentStore.myrentCar();
+  await myrentStore.myrentCar();
 });
 //value from status bar
 const receivedValue = ref("checkout");
