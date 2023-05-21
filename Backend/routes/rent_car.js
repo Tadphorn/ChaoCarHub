@@ -26,6 +26,7 @@ router.post("/search", async function (req, res, next) {
                                                                     FROM rental 
                                                                     where (r_day_pickup between ? and ?) 
                                                                     OR (r_day_return between ? and ?)
+                                                                    AND (r_status != 'history')
                                                                     )`,
         [minprice, maxprice, seat, start_date, end_date, start_date, end_date])
       return res.json(rows1)
@@ -64,7 +65,7 @@ router.post("/rent", async function (req, res, next) {
   await conn.beginTransaction()
   try {
     //check overlap car rent
-     const [rows1, fields1] = await pool.query('SELECT * FROM rental where ((r_day_pickup between ? and ?) OR (r_day_return between ? and ?)) and (car_id = ?);',
+     const [rows1, fields1] = await pool.query(`SELECT * FROM rental where ((r_day_pickup between ? and ?) OR (r_day_return between ? and ?)) and (car_id = ?) AND (r_status != 'history');`,
     [dayPickup, dayReturn, dayPickup, dayReturn, carId])
     console.log(rows1)
 
