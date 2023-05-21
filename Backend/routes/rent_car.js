@@ -76,11 +76,10 @@ router.post("/rent", async function (req, res, next) {
       [totalPrice, timePickup, dayPickup, timeReturn, dayReturn, placePickup, placeReturn, amountDays, carId, userId]);
       console.log("insert ", rows.insertId)
       console.log("done yay")
+      await conn.commit()
       return res.json(rows); 
-     
     }
     
-    await conn.commit()
     res.send({ message: 400 })
 
   } catch (err) {

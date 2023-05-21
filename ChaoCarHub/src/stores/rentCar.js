@@ -149,67 +149,26 @@ export const UserentCarStore = defineStore('rent', () => {
         userId: userId
       });
       //ถูกจองตัดหน้าไปแล้วจ้า
-      // if(fetchingData.data.message === 400){
-      //   console.log("cant rent jaa")
-      //   const sweet = Swal.fire({
-      //     title: 'ขออภัย รถคันนี้ถูกจองไปแล้ว กรุณาเลือกรถคันใหม่',
-      //     confirmButtonText: 'OK',
-      //     confirmButtonColor: '#41BEB1'
-      //   })
-      //   router.push('/showcar')
-      //   return;
-      // }
-      // const sweet = Swal.fire({
-      //   icon: "success",
-      //   title: 'กรุณากดชำระเงิน ในขั้นตอนถัดไป',
-      //   confirmButtonText: 'OK',
-      //   confirmButtonColor: '#41BEB1'
-      // })
+      if(fetchingData.data.message === 400){
+        console.log("cant rent jaa")
+        const sweet = Swal.fire({
+          title: 'ขออภัย รถคันนี้ถูกจองไปแล้ว กรุณาเลือกรถคันใหม่',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#41BEB1'
+        })
+        router.push('/showcar')
+        return;
+      }
+      const sweet = Swal.fire({
+        icon: "success",
+        title: 'กรุณากดชำระเงิน ในขั้นตอนถัดไป',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#41BEB1'
+      })
       router.push('/myrent')
     }catch(err){
       console.log("err", err)
     }
-
-    
-  //   if (rentInfo.placePickup === '' || rentInfo.placeReturn === '') {
-  //     const sweet = Swal.fire({
-  //       icon: 'info',
-  //       title: 'กรุณาเลือก สถานที่รับรถ/คืนรถ',
-  //       confirmButtonText: 'OK',
-  //       confirmButtonColor: '#41BEB1'
-  //     })
-  //     return;
-  //   }
-  //   const fetchingData = await axios.post("http://localhost:3000/rent", {
-  //     totalPrice: totalPrice,
-  //     timePickup: rentData.value.timePickup,
-  //     dayPickup: rentData.value.dayPickup,
-  //     timeReturn: rentData.value.timeReturn,
-  //     dayReturn: rentData.value.dayReturn,
-  //     placePickup: rentInfo.placePickup,
-  //     placeReturn: rentInfo.placeReturn,
-  //     amountDays: rentData.value.amountDays,
-  //     carId: carId,
-  //     userId: userId
-  //   });
-  //   //ถูกจองตัดหน้าไปแล้วจ้า
-  //   if(fetchingData.data.message === 400){
-  //     console.log("cant rent jaa")
-  //     const sweet = Swal.fire({
-  //       title: 'ขออภัย รถคันนี้ถูกจองไปแล้ว กรุณาเลือกรถคันใหม่',
-  //       confirmButtonText: 'OK',
-  //       confirmButtonColor: '#41BEB1'
-  //     })
-  //     router.push('/showcar')
-  //     return;
-  //   }
-  //   const sweet = Swal.fire({
-  //     icon: "success",
-  //     title: 'กรุณากดชำระเงิน ในขั้นตอนถัดไป',
-  //     confirmButtonText: 'OK',
-  //     confirmButtonColor: '#41BEB1'
-  //   })
-  //   router.push('/myrent')
   }
   
   async function reserveCar(item) {
