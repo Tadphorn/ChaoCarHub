@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from 'axios';
+import axios from "@/plugins/axios"
 import { computed, ref, reactive, onMounted } from "vue";
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
@@ -104,30 +104,46 @@ export const UseregisterStore = defineStore('register', () => {
       error.email !== "" ||
       error.phone !== ""
     ) {
-      alert("กรุณากรอกข้อมูลให้ถูกต้อง");
       return;
     }
 
-    axios.post("http://localhost:3000/user/signup", {
+    axios.post("/user/signup", {
       u_fname: fname.value,
       u_lname: lname.value,
       u_username: username.value,
       u_pass: passw.value,
       u_phone: phone.value,
       u_email: email.value,
+      cf_password: passw2.value
     })
 
       .then((res) => {
         // console.log(res)
         if (res.data.check === false) {
-          alert("This username is already exist");
+          const sweet = Swal.fire({
+            icon: 'error',
+            title: 'Username is already exist',
+            confirmButtonText: 'Close',
+            confirmButtonColor: '#41BEB1'
+          })
+          return
         }
-        alert("Sign up Success");
+        const sweet = Swal.fire({
+          icon: 'success',
+          title: 'Sign up success',
+          confirmButtonText: 'Close',
+          confirmButtonColor: '#41BEB1'
+        })
         router.push('/')
         window.location.href = '/sign_in'
       })
       .catch((err) => {
-        alert("Sign up Not Success");
+        const sweet = Swal.fire({
+          icon: 'error',
+          title: 'กรุณากรอกข้อมูลให้ถูกต้อง',
+          confirmButtonText: 'Close',
+          confirmButtonColor: '#41BEB1'
+        })
         console.log(err.response.data)
       });
   }
@@ -136,10 +152,15 @@ export const UseregisterStore = defineStore('register', () => {
     validateUsername()
     validatePassw()
     if (error.username !== '' || error.passw !== '') {
-      alert('กรุณากรอกข้อมูลให้ถูกต้อง')
+      const sweet = Swal.fire({
+        icon: 'error',
+        title: 'กรุณากรอกข้อมูลให้ถูกต้อง',
+        confirmButtonText: 'Close',
+        confirmButtonColor: '#41BEB1'
+      })
       return
     }
-    axios.post("http://localhost:3000/user/signin", {
+    axios.post("/user/signin", {
       username: username.value,
       password: passw.value
     })
@@ -152,7 +173,6 @@ export const UseregisterStore = defineStore('register', () => {
       })
       .catch(error => {
         console.log(error)
-        // alert("Incorrect username or password")
         const sweet = Swal.fire({
           icon: 'error',
           title: 'Incorrect username or password',
@@ -165,7 +185,7 @@ export const UseregisterStore = defineStore('register', () => {
   const userProfile = ref({})
   async function getUser() {
     const token = localStorage.getItem('token')
-    const fetchingData = await axios.get('http://localhost:3000/user/me', { headers: { Authorization: 'Bearer ' + token } })
+    const fetchingData = await axios.get('/user/me')
     const { data } = fetchingData;
     // console.log(data)
     userProfile.value = data

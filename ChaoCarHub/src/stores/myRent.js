@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import axios from "@/plugins/axios"
-// import axios from 'axios';
 import { computed, ref, reactive, onMounted } from "vue";
 import { useLocalStorage } from '@vueuse/core'
 import { useRouter } from 'vue-router'

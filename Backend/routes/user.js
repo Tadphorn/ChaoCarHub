@@ -13,7 +13,7 @@ const signupSchema = Joi.object({
     u_fname: Joi.string().required().max(150),
     u_lname: Joi.string().required().max(150),
     u_pass: Joi.string().required().min(6),
-    confirm_password: Joi.string().required().valid(Joi.ref('password')),
+    cf_password: Joi.string().required().valid(Joi.ref('u_pass')),
     u_username: Joi.string().required(),
 })
 
@@ -34,7 +34,7 @@ router.post('/user/signup', async (req, res, next) => {
     const conn = await pool.getConnection()
     await conn.beginTransaction()
 
-    const { u_fname, u_lname, u_username, u_pass, u_phone, u_email } = req.body
+    const { u_fname, u_lname, u_username, u_pass, u_phone, u_email, cf_password } = req.body
     // console.log(u_fname, u_lname, u_username, u_pass, u_phone, u_email)
     //เข้ารหัส u_pass
     bcrypt.hash(u_pass, 10, async function (err, hash) {
