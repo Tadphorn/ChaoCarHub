@@ -9,13 +9,13 @@ export const UseregisterStore = defineStore('register', () => {
 
   const router = useRouter()
 
-  const fname = ref("");
-  const lname = ref("");
+  const fname = ref("opal");
+  const lname = ref("naja");
   const username = ref("chompoo");
   const passw = ref("123456");
-  const passw2 = ref("");
-  const phone = ref("");
-  const email = ref("");
+  const passw2 = ref("123456");
+  const phone = ref("0624965265");
+  const email = ref("abc@gamil.com");
   const error = reactive({
     fname: "",
     lname: "",

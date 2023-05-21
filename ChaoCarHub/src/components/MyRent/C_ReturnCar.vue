@@ -10,8 +10,7 @@ const isReturn = ref(false)
 </script>
 
 <template>
-  <div class="columns pb-6">
-    <div class="column is-half is-8 is-offset-2 pt-6">
+    <div class="pb-6">
       <div class="card has-text-centered p-5">
         <div class="columns is-10">
           <div class="card-header-title columns is-7">
@@ -116,6 +115,5 @@ const isReturn = ref(false)
         </footer>
       </div>
     </div>
-  </div>
 </template>
 

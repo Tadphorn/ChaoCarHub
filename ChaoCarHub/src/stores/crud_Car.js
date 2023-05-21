@@ -183,7 +183,6 @@ export const UsecrudCarStore = defineStore("car", () => {
   const confirmInsert = async (result) => {
     confirmResult.value = result;
     showAlertUpdate.value = false;
-
     validateCarCode();
     validateCarBrand();
     validateCarModel();
@@ -224,8 +223,6 @@ export const UsecrudCarStore = defineStore("car", () => {
           confirmButtonText: 'OK',
           confirmButtonColor: '#41BEB1',
         });
-
-        router.push('/admin');
       } catch (error) {
         const sweet = Swal.fire({
           icon: 'error',
@@ -237,8 +234,8 @@ export const UsecrudCarStore = defineStore("car", () => {
       }
     }
   }
+  
   // add car
-
   const validateCarCode = () => {
     if (carCode.value === '') {
       error.carCode.value = 'กรุณากรอกรหัสรถ';
@@ -293,14 +290,24 @@ export const UsecrudCarStore = defineStore("car", () => {
       error.carPrice.value = "";
     }
   };
+  function validateFileType() {
+      var inputElement = document.getElementById('file');
+      var files = inputElement.files;
+      if(files.length==0){
+          alert("Please choose a file first...");
+          return false;
+      }
+  }
 
   async function addCar() {
+    console.log('addcar')
     validateCarCode();
     validateCarBrand();
     validateCarModel();
     validateCarSeat();
     validateCarBag();
     validateCarPrice();
+    validateFileType()
 
     let formData = new FormData();
     formData.append('car_code', carCode.value);
@@ -380,6 +387,7 @@ export const UsecrudCarStore = defineStore("car", () => {
     validateCarSeat,
     validateCarBag,
     validateCarPrice,
+    validateFileType,
     error,
     searchInput,
     toSearch,

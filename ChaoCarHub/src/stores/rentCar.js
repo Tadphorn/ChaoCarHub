@@ -47,6 +47,7 @@ export const UserentCarStore = defineStore('rent', () => {
 
  
   const filterCar = ref([])
+  const textFilterCar = ref("")
  //search car
   async function searchCar() {
     requiredInputCheck()
@@ -70,7 +71,10 @@ export const UserentCarStore = defineStore('rent', () => {
       end_date: rentData.value.dayReturn
     });
     filterCar.value = fetchingData.data;
-    // console.log(filterCar.value)
+    // console.log('filterCar', filterCar.value.length)
+    if(filterCar.value.length === 0) {
+      textFilterCar.value = 'ขออภัยไม่พบรถที่ท่านต้องการค้นหา'
+    }
     router.push('/showcar')
   }
 
@@ -197,6 +201,7 @@ export const UserentCarStore = defineStore('rent', () => {
     requiredInputCheck,
     carDetail,
     rentThisCar,
-    reserveCar
+    reserveCar,
+    textFilterCar
   }
 })

@@ -8,10 +8,8 @@ defineProps({
 });
 </script>
 
-<template> 
-  <!-- <h1> {{ item.car_id }}</h1> -->
-  <div class="columns pb-6">
-    <div class="column is-half is-8 is-offset-2 pt-6">
+<template>
+    <div class="pb-6">
       <div class="card has-text-centered p-5">
         <div class="columns is-10">
           <div class="card-header-title columns is-7">
@@ -20,7 +18,7 @@ defineProps({
               <div class="card-image image is-4by3">
                 <img :src="`http://localhost:3000/${item.car_img}`" />
               </div>
-            </div>
+            </div> 
             <div class="column pl-6">
               <div class="column pt-6">
                 <p class="subtitle is-size-7 column_number">
@@ -119,6 +117,5 @@ defineProps({
         </footer>
       </div>
     </div>
-  </div>
 </template>
 
