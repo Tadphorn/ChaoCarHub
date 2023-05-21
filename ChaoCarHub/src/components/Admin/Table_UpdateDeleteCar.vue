@@ -215,7 +215,7 @@ onMounted(CarStore.FetchCar);
                 </div>
               </div>
     <table style="width: 100%">
-      <tr class="has-background-danger-light">
+      <tr class="has-background-danger-light sticky">
         <th>หมายเลขรถ</th>
         <th>รูปรถ.....</th>
         <th>ชื่อรถ</th>

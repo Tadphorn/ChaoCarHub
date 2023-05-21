@@ -7,7 +7,7 @@ const registerStore  = UseregisterStore()
 
 const rentCarStore = UserentCarStore();
 const route = useRoute();
-const { id } = route.params;
+const { id } = route.params; 
 onMounted(async () => {
   rentCarStore.carDetail = await rentCarStore.fetchSingleCar(id);
   registerStore.onAuthChange()

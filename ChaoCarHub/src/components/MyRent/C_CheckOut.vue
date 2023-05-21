@@ -18,7 +18,7 @@ defineProps({
               <div class="card-image image is-4by3">
                 <img :src="`http://localhost:3000/${item.car_img}`" />
               </div>
-            </div>
+            </div> 
             <div class="column pl-6">
               <div class="column pt-6">
                 <p class="subtitle is-size-7 column_number">
