@@ -1,11 +1,14 @@
 <script setup>
-import { computed, ref, onMounted } from "vue";
 import { UsemyrentStore } from "@/stores/myRent"
+import { computed, ref, reactive, onMounted } from "vue";
 const myrentStore  = UsemyrentStore()
 defineProps({
   item: Object,
 });
 const isReturn = ref(false)
+// onMounted(async () => {
+//   myrentStore.myrentCar();
+// });
 
 </script>
 

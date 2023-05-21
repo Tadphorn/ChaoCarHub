@@ -123,6 +123,7 @@ export const UserentCarStore = defineStore('rent', () => {
   } 
 
   async function rentThisCar(userId, carId, totalPrice) {
+    console.log("uId ",userId, "cId ",carId,)
     //update localStorage
     console.log("price ", totalPrice)
     if (rentInfo.placePickup === '' || rentInfo.placeReturn === '') {
