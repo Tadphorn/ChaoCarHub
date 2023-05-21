@@ -1,7 +1,8 @@
 const express = require('express');
 const pool = require('../config.js')
 const { isLoggedIn } = require('../middlewares')
-const Joi = require('joi')
+const Joi = require('joi').extend(require('@joi/date'));
+
 
 router = express.Router(); 
 
@@ -22,7 +23,7 @@ router.get("/userpayment", async function (req, res, next) {
 const paySchema = Joi.object({
   pay_cr_name: Joi.string().required(),
   pay_cr_num: Joi.string().required().min(16).max(16),
-  pay_cr_exp: Joi.date().required(),
+  pay_cr_exp: Joi.date().format('DD/MM/YY').utc(),
   pay_cr_cvc: Joi.string().required().min(3).max(3),
   r_id: Joi.required()
 })

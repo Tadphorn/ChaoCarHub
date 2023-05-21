@@ -19,7 +19,7 @@ export const UsepaymentStore = defineStore('payment', () => {
     
     const name = ref("ทัตพร ต้นนารัตน์")
     const numbercreditcard = ref("0123456789123456")
-    const expirationdate = ref("2026-01-12")
+    const expirationdate = ref("05/11/22")
     const cvc = ref("999")
     const errorbill = reactive({
         name: '',
@@ -29,7 +29,7 @@ export const UsepaymentStore = defineStore('payment', () => {
     });
 
     function validateName() {
-        if (name === '') {
+        if (name.value === '') {
             errorbill.name = 'กรุณากรอกชื่อบนบัตรเคดิต'
             return
         }
@@ -37,24 +37,45 @@ export const UsepaymentStore = defineStore('payment', () => {
     }
 
     function validateNumbercreditcard() {
-        if (numbercreditcard === '') {
+        if (numbercreditcard.value === '') {
             errorbill.numbercreditcard = 'กรุณากรอกหมายเลขบัตร'
+            return
+        }
+        else if (isNaN(numbercreditcard.value)) {
+            errorbill.numbercreditcard = 'กรุณากรอกหมายเลขบัตรเป็นตัวเลข'
+            return
+        }
+        else if (numbercreditcard.value.length !== 16){
+            errorbill.numbercreditcard = 'กรุณากรอกหมายเลขบัตร 16 ตัว'
             return
         }
         errorbill.numbercreditcard = ''
     }
 
     function validateExpirationDate() {
-        if (expirationdate === '') {
-            errorbill.expirationdate = 'กรุณากรอกวันหมดอายุ'
+        const isValidDate = Date.parse(expirationdate.value);
+        console.log(isValidDate)
+        if (expirationdate.value === '') {
+            errorbill.expirationdate = 'กรุณากรอกวันหมดอายุบัตร'
+            return
+        } else if (isNaN(isValidDate)) {
+            errorbill.expirationdate = 'กรุณากรอกวันหมดอายุบัตรให้ถูกต้อง'
             return
         }
         errorbill.expirationdate = ''
     }
 
     function validateCvc() {
-        if (cvc === '') {
+        if (cvc.value === '') {
             errorbill.cvc = 'กรุณากรอก CVC'
+            return
+        }
+        else if (isNaN(cvc.value)) {
+            errorbill.cvc = 'กรุณากรอก CVC เป็นตัวเลข'
+            return
+        }
+        else if (cvc.value.length > 3) {
+            errorbill.cvc = 'กรุณากรอก CVC เป็นตัวเลข 3 หลัก'
             return
         }
 

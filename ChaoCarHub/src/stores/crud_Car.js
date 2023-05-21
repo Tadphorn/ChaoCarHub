@@ -258,7 +258,7 @@ export const UsecrudCarStore = defineStore("car", () => {
     } else {
       error.carModel.value = '';
     }
-  };
+  }; 
 
   const validateCarSeat = () => {
     if (carSeat.value === '') {

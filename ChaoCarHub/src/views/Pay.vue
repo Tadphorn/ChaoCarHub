@@ -31,13 +31,13 @@ const paymentStore  = UsepaymentStore()
                 <div class=" columns px-6 pt-2 ">
                     <div class="column ">
                         <label>วันหมดอายุ *</label>
-                        <input v-model="paymentStore.expirationdate" class="input input_calendar " type="text " placeholder="ddmmyyyy "
+                        <input v-model="paymentStore.expirationdate" class="input input_calendar " type="text " placeholder="DD/MM/YY "
                             :class="{ 'is-danger': paymentStore.errorbill.numbercreditcard }" @input="paymentStore.validateExpirationDate()">
                         <span class="has-text-danger ertext ml-3 ">{{ paymentStore.errorbill.expirationdate }}</span>
                     </div>
                     <div class=" column ">
                         <label>CVC *</label>
-                        <input v-model="paymentStore.cvc" class="input " type="text " placeholder="XXXX "
+                        <input v-model="paymentStore.cvc" class="input " type="text " placeholder="XXX "
                             :class="{ 'is-danger': paymentStore.errorbill.cvc }" @input="paymentStore.validateCvc()">
                         <span class="has-text-danger ertext ml-3 ">{{ paymentStore.errorbill.cvc }}</span>
                     </div>
