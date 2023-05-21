@@ -191,4 +191,17 @@ router.put("/updatecar/:id", upload.single("myImageCar"), async function (req, r
   }
 });
 
+router.get("/search", async function (req, res, next) {
+  const searchInput = req.query.searchInput
+  console.log(searchInput);
+  try {
+    const [rows1, fields1] = await pool.query("SELECT *  FROM car WHERE concat(car_code, ' ', car_brand, ' ', car_model, ' ', car_seat, ' ', car_bag, ' ', car_rentprice) LIKE ?",
+    [`%${searchInput}%`]);
+
+    return res.json(rows1);
+  } catch (err) {
+    console.log(err)
+    return next(err);
+  }
+});
 exports.router = router;

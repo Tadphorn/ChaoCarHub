@@ -10,7 +10,7 @@ onMounted(PaymentStore.FetchPayment);
   <div class="p-5 is-size-5 has-text-centered" >
       <div >
         <h1 class="is-size-4 p-5 has-text-centered">
-      <b class="has-background-warning"
+      <b class="has-background-warning has-text-white"
         >ตารางแสดงรายละเอียดการชำระเงินของลูกค้า</b
       ><br />
       <b
@@ -42,7 +42,7 @@ onMounted(PaymentStore.FetchPayment);
                 </div>
           </div>
     <table style="width: 100%" >
-      <tr class="has-background-warning-light">
+      <tr class="has-background-warning-light sticky">
         <th>รหัสผู้ใช้</th>
         <th>ชำระเงินผ่าน</th>
         <th>หมายเลขบัตร</th>

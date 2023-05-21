@@ -345,11 +345,22 @@ body {
 }
 
 /* Admin */
-table, th, td {
-    border: 1px solid black;
+  /* td {
+    padding-top: 15px;
+  } */
+  table {
     border-collapse: collapse;
+    width: 100%;
   }
   
+  th, td {
+    padding-top: 20px;
+    padding-bottom: 5px;
+    text-align: left;
+    border-bottom: 3px solid #e9e8e8;
+  }
+  
+  tr:hover {background-color: #ffffff;}
   .modal{
     position: fixed;
     top: 0;
@@ -373,8 +384,7 @@ table, th, td {
     text-align: center;
   }
 
-
-  td {
-    padding-top: 15px;
-  }
-
+  .sticky{
+    position: sticky;
+    top: 0;
+}
