@@ -158,13 +158,7 @@ onMounted(CarStore.FetchCar);
               <div class="control">
                 <button class="button is-info" @click="CarStore.addCar">Submit</button>
               </div>
-              <div class="control">
-                <router-link to="/admin">
-                  <button class="button is-info is-light">
-                    Cancel
-                  </button></router-link
-                >
-              </div>
+             
             </div>
           </div>
         </div>
@@ -172,14 +166,3 @@ onMounted(CarStore.FetchCar);
     </div>
   </section>
 </template>
-
-
-<!-- <script>
-  var loadFile = function(event) {
-    var output = document.getElementById('output');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-      URL.revokeObjectURL(output.src) // free memory
-    }
-  };
-</script> -->

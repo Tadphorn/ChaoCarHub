@@ -55,7 +55,7 @@ onMounted(CarStore.FetchCar);
                         </div>
                         <div class="column is-half">
                           <div class="field">
-                            <label class="label">รูปรถ</label>
+                            <label class="label">รูปรถ {{ CarStore.carImageURL }}</label>
                             <div class="file is-info has-name is-normal">
                               <label class="file-label">
                                 <input
@@ -64,11 +64,12 @@ onMounted(CarStore.FetchCar);
                                   name="myImageCar"
                                   accept="image/png, image/jpeg, image/webp"
                                   multiple
-                                  ref="file"
-                                  id="file"
+                                  ref="fileImg"
+                                  id="myImageCar"
                                   @change="CarStore.previewImage"
                                   onchange="document.getElementById('imgg').src = window.URL.createObjectURL(this.files[0])"
                                 />
+                                <!-- onchange="document.getElementById('imgg').src = window.URL.createObjectURL(this.files[0])" -->
                                 <span class="file-cta">
                                   <span class="file-icon">
                                     <i class="fas fa-upload"></i>
@@ -99,7 +100,7 @@ onMounted(CarStore.FetchCar);
                         </div>
                         <div class="column is-half">
                           <div class="field">
-                            <label class="label">รุ่นรถ</label>
+                            <label class="label">รุ่นรถ </label>
                             <div class="control">
                               <input
                                 style="border-radius: 5px"

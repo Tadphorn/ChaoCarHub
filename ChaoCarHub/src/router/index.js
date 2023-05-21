@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Swal from 'sweetalert2'
 
 const routes = [
     {
@@ -30,14 +31,14 @@ const routes = [
     {
         path: '/pay',
         name: 'pay',
-        meta: { user: true },
+        meta: { login: true,
+            user: true},
         component: () =>
             import('../views/Pay.vue')
     },
     {
         path: '/detailcar/:id',
         name: 'detailcar',
-        meta: { user: true },
         component: () =>
             import('../views/DetailCar.vue')
     },
@@ -66,17 +67,34 @@ router.beforeEach((to, from, next) => {
     const isAdmin = !!localStorage.getItem('isAdmin')
     // if not login
     if (to.meta.login && !isLoggedIn) {
-        alert('Please login first!');
+        // alert('Please login first!');
+        const sweet = Swal.fire({
+            icon: "warning",
+            title: 'Please login first!',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#41BEB1'
+          })
         next({ path: '/sign_in' });
     }
     // check if user is not logged in or not an admin
     if (to.meta.admin && (!isLoggedIn || !isAdmin)) {
-        alert('You are not authorized to access this page!');
+        // alert('You are not authorized to access this page!');
+        const sweet = Swal.fire({
+            icon: "warning",
+            title: 'You are not authorized to access this page!',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#41BEB1'
+          })
         next({ path: '/' });
     }
 
-    if (to.meta.user && (!isLoggedIn || isAdmin)) {
-        alert('You are not authorized to access this page!');
+    if (to.meta.user && (isAdmin)) {
+        const sweet = Swal.fire({
+            icon: "warning",
+            title: 'You are not authorized to access this page!',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#41BEB1'
+          })
         next({ path: '/' });
     }
 

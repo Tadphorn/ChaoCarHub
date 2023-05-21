@@ -107,7 +107,7 @@ router.post("/car", upload.single("myImageCar"), async function (req, res, next)
   const { car_code, car_brand, car_model, car_seat, car_bag, car_rentprice } = req.body
   const conn = await pool.getConnection();
   await conn.beginTransaction();
-  // console.log("filepath", file)
+
   try {
     const [rows1, fields1] = await conn.query('select car_code from car where car_code = ?',
       [car_code])
@@ -121,10 +121,6 @@ router.post("/car", upload.single("myImageCar"), async function (req, res, next)
     else {
       return res.json({ check: false })
   }
-    // const results = await conn.query(
-    //   "INSERT INTO car(`car_code`, `car_brand`, `car_model`, `car_seat`, `car_bag`, `car_rentprice`, `car_img`) VALUES(?, ?, ?, ?, ?, ?, ?)",
-    //   [car_code, car_brand, car_model, car_seat, car_bag, car_rentprice, file.path.substr(6)]
-    // );
 
     await conn.commit();
     return res.json({ message: "success" });
@@ -161,23 +157,25 @@ router.put("/updatecar/:id", upload.single("myImageCar"), async function (req, r
     return res.status(400).send(err)
   }
   const file = req.file;
-
-  if (!file) {
-    return res.status(400).json({ message: "Please upload a file" });
-  }
-
   const { car_code, car_brand, car_model, car_seat, car_bag, car_rentprice } = req.body
-  console.log('ทำไมถึงทำกับฉันได้ ', car_code, car_brand, car_model, car_seat, car_bag, car_rentprice, req.params.id, file.path.substr(6))
-  console.log(req.params.id)
+  console.log(file)
   const conn = await pool.getConnection();
   await conn.beginTransaction();
 
-
   try {
-    const results1 = await conn.query(
-      "UPDATE car SET car_code=?, car_brand=?, car_model=?, car_seat=?, car_bag=?, car_rentprice=?, car_img=? WHERE car_id=?",
-      [car_code, car_brand, car_model, car_seat, car_bag, car_rentprice, file.path.substr(6), req.params.id]
-    );
+    if (file != undefined){
+      const results1 = await conn.query(
+        "UPDATE car SET car_code=?, car_brand=?, car_model=?, car_seat=?, car_bag=?, car_rentprice=?, car_img=? WHERE car_id=?",
+        [car_code, car_brand, car_model, car_seat, car_bag, car_rentprice, file.path.substr(6), req.params.id]
+      );
+    }else{
+      const results2 = await conn.query(
+        "UPDATE car SET car_code=?, car_brand=?, car_model=?, car_seat=?, car_bag=?, car_rentprice=? WHERE car_id=?",
+        [car_code, car_brand, car_model, car_seat, car_bag, car_rentprice, req.params.id]
+      );
+    }
+   
+
 
     const results2 = await conn.query("SELECT * FROM car");
 
