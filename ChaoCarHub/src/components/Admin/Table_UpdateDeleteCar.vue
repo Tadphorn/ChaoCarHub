@@ -10,8 +10,15 @@ onMounted(CarStore.FetchCar);
 </script>
 
 <template>
-  <!-- <h1> {{ CarStore.carvalue[18] }}</h1> -->
   <div class="p-5 has-text-centered is-size-5">
+    <div class="field has-addons" style="float: right">
+      <div class="control">
+        <input @keyup.enter="CarStore.toSearch" class="input" type="text" placeholder="Find a repository" v-model="CarStore.searchInput"/>
+      </div>
+      <div class="control" @click="CarStore.toSearch">
+        <a class="button is-info"> Search </a>
+      </div>
+    </div><br>
     <h1 class="is-size-4 p-5">
       <b class="has-background-danger has-text-white"
         >ตารางแสดงรายละเอียดสำหรับอัพเดตและลบรถในระบบ</b
@@ -32,7 +39,7 @@ onMounted(CarStore.FetchCar);
                       <div class="columns">
                           <div class="column is-half is-offset-one-quarter">
                             <div class="card-image px-4">
-                              <img id="imgg" src="https://bulma.io/images/placeholders/640x360.png" width="250" height="200" />
+                              <img id="imgg" :src="`http://localhost:3000/${CarStore.carImageURL}`" width="250" height="200" />
                             </div>
                           </div>
                       </div>
@@ -55,7 +62,7 @@ onMounted(CarStore.FetchCar);
                         </div>
                         <div class="column is-half">
                           <div class="field">
-                            <label class="label">รูปรถ {{ CarStore.carImageURL }}</label>
+                            <label class="label">รูปรถ</label>
                             <div class="file is-info has-name is-normal">
                               <label class="file-label">
                                 <input

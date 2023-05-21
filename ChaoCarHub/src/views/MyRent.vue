@@ -28,12 +28,12 @@ provide("sharedValue", receivedValue);
   <StatusBar></StatusBar>
   <!-- <p>Received value from child: {{ receivedValue }}</p> -->
   <!-- <h1>{{ myrentStore.checkoutCar}}</h1> -->
-  <div class="section is-large pt-0">
+  <!-- <div class="section is-large pt-0"> -->
   <mCheckout v-if="receivedValue == 'checkout'" v-for="item in myrentStore.checkoutCar" :item="item"></mCheckout>
   <mPickupcar v-if="receivedValue == 'pickup'" v-for="item in myrentStore.pickupCar" :item="item"></mPickupcar>
   <mReturncar v-if="receivedValue == 'return'" v-for="item in myrentStore.returnCar" :item="item"></mReturncar>
   <mHistory v-if="receivedValue == 'history'" v-for="item in myrentStore.historyCar" :item="item"></mHistory>
-</div>
+<!-- </div> -->
 </template>
 
 <style></style>

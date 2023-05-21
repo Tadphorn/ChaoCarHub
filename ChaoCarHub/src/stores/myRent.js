@@ -61,6 +61,12 @@ export const UsemyrentStore = defineStore('myrent', () => {
         rentId: rentId.value
       })
       checkoutCar.value = checkoutCar.value.filter((car) => car.r_id !== rentId.value)
+      const sweet = Swal.fire({
+        icon: "success",
+        title: 'ยกเลิกการจองรถสำเร็จ',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#41BEB1'
+      })
     }
   }
 

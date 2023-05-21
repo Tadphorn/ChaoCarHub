@@ -7,6 +7,9 @@ defineProps({
 </script>
 
 <template>
+  <div>
+    test
+  </div>
   <div class="columns pb-6">
     <div class="column is-half is-8 is-offset-2 pt-6">
       <div class="card has-text-centered p-5">

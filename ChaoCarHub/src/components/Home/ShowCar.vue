@@ -24,6 +24,7 @@ onMounted(rentCarStore.searchCar);
   <div class="container is-max-desktop">
     <div class="column px-6">
         <div class="column px-6">
+          <div class="has-text-centered is-size-3" style="opacity: 30%;"> <b>{{ rentCarStore.textFilterCar }}</b></div>
           <div class="is-multiline is-variable columns is-1">
             <CardCar v-for="item in rentCarStore.filterCar" :item="item" id="card_product " class="column is-one-quarter"></CardCar>
           </div>
