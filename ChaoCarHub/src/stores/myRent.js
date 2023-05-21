@@ -66,8 +66,19 @@ export const UsemyrentStore = defineStore('myrent', () => {
 
   async function btnPickup(rId) {
     console.log("id ", rId)
-    const fetchingData = await axios.put(`/myrent/pickup/${rId}`)
-    pickupCar.value = pickupCar.value.filter((car) => car.r_id !== rId)
+    try{
+      const fetchingData = await axios.put(`/myrent/pickup/${rId}`)
+      pickupCar.value = pickupCar.value.filter((car) => car.r_id !== rId)
+      const sweet = Swal.fire({
+        icon: "success",
+        title: 'ยืนยันการรับรถ',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#41BEB1'
+      })
+    }catch(error){
+      console.log(error)
+    }
+   
   }
 
 

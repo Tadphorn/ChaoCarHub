@@ -84,7 +84,7 @@ defineProps({
               /><span class="pl-2"> ชำระเงินสำเร็จแล้ว</span>
             </p>
           </div>
-          <router-link to="/detailcar" class="column is-size-6">
+          <router-link to="/" class="column is-size-6">
             <button class="button btn has-text-white font" style="width: 100%">
               จองอีกครั้ง
             </button>
