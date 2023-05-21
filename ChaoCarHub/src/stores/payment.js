@@ -18,9 +18,9 @@ export const UsepaymentStore = defineStore('payment', () => {
     };
     
     const name = ref("ทัตพร ต้นนารัตน์")
-    const numbercreditcard = ref("0123456789123")
+    const numbercreditcard = ref("0123456789123456")
     const expirationdate = ref("2026-01-12")
-    const cvc = ref("9999")
+    const cvc = ref("999")
     const errorbill = reactive({
         name: '',
         numbercreditcard: '',
@@ -96,7 +96,12 @@ export const UsepaymentStore = defineStore('payment', () => {
             })
             .catch((err) => {
                 console.log(err)
-                alert("ชำระเงินไม่สำเร็จ");
+                const sweet = Swal.fire({
+                    icon: "warning",
+                    title: 'กรุณากรอกข้อมูลที่ถูกต้อง',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#41BEB1'
+                })
             });
     }
 

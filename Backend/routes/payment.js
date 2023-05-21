@@ -19,22 +19,20 @@ router.get("/userpayment", async function (req, res, next) {
 
 });
 
-// const paySchema = Joi.object({
-//   pay_cr_name: Joi.string().required().email(),
-//   pay_cr_num: Joi.string().required().pattern(/0[0-9]{9}/),
-//   pay_cr_exp: Joi.string().required().max(150),
-//   pay_cr_cvc: Joi.string().required().max(150),
-//   u_pass: Joi.string().required().min(6),
-//   confirm_password: Joi.string().required().valid(Joi.ref('password')),
-//   u_username: Joi.string().required(),
-// })
+const paySchema = Joi.object({
+  pay_cr_name: Joi.string().required(),
+  pay_cr_num: Joi.string().required().min(16).max(16),
+  pay_cr_exp: Joi.date().required(),
+  pay_cr_cvc: Joi.string().required().min(3).max(3),
+  r_id: Joi.required()
+})
 
 router.post("/userpayment", isLoggedIn, async function (req, res, next) {
-  // try {
-  //   await paySchema.validateAsync(req.body, { abortEarly: false })
-  // } catch (err) {
-  //   return res.status(400).send(err)
-  // }
+  try {
+    await paySchema.validateAsync(req.body, { abortEarly: false })
+  } catch (err) {
+    return res.status(400).send(err)
+  }
   console.log(req.user.u_id)
   const { pay_cr_name, pay_cr_num, pay_cr_exp, pay_cr_cvc, r_id} = req.body
   console.log('pay', pay_cr_name, pay_cr_num, pay_cr_exp, pay_cr_cvc, r_id)
@@ -75,7 +73,6 @@ router.put("/updatepayment/:pid" , async function (req, res, next) {
       "SELECT r_id FROM payment WHERE pay_id=?",
       [req.params.pid]
     );
-    // console.log(getId[0][0].r_id)
     //change rental status
     const results2 = await conn.query(
       "UPDATE rental SET r_status=? WHERE r_id=?",
