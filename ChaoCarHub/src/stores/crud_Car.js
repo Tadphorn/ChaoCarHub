@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 export const UsecrudCarStore = defineStore("car", () => {
   const router = useRouter()
 
+  //FetchCar
   const carvalue = ref([]);
   const FetchCar = async () => {
     const fetchingData = await axios.get("http://localhost:3000/car");
@@ -34,42 +35,47 @@ export const UsecrudCarStore = defineStore("car", () => {
     carvalue.value = fetchingData.data
   }
   
+  //FetchCarToyota
   const toyotacar = ref([])
   const FetchCarToyota = async () => {
     const fetchingData = await axios.get("http://localhost:3000/car/toyota");
     toyotacar.value = fetchingData.data;
   };
 
+  //FetchCarNissan
   const nissancar = ref([])
   const FetchCarNissan = async () => {
     const fetchingData = await axios.get("http://localhost:3000/car/nissan");
     nissancar.value = fetchingData.data;
   };
 
+  //FetchCarHonda
   const hondacar = ref([])
   const FetchCarHonda = async () => {
     const fetchingData = await axios.get("http://localhost:3000/car/honda");
     hondacar.value = fetchingData.data;
   };
 
+  //FetchCarOther
   const othercar = ref([])
   const FetchCarOther = async () => {
     const fetchingData = await axios.get("http://localhost:3000/car/other");
     othercar.value = fetchingData.data;
   };
 
+
+  //showConfirmation ยืนยันการลบรถ
   const showAlertDelete = ref(false);
   const alertMessage = ref('');
   const confirmResult = ref(null);
   const carId = ref(0)
-
   async function showConfirmation(carBrand, carModel, car_id) {
     showAlertDelete.value = true;
     alertMessage.value = `กรุณากดยืนยันการลบรถ ${carBrand} ${carModel} ออกจากระบบ`;
     carId.value = car_id
-    // console.log("car id ", carId.value)
   };
 
+  //confirmdeleteCar
   async function confirmdeleteCar(result) {
     confirmResult.value = result;
     showAlertDelete.value = false;
@@ -93,13 +99,12 @@ export const UsecrudCarStore = defineStore("car", () => {
     }
   }
 
+  //editCar
   const carupdate = ref([]);
   async function editCar(carId) {
     const fetchingData = await axios.get(`http://localhost:3000/car/${carId}`);
     carupdate.value = fetchingData.data;
     console.log(carupdate.value)
-
-    // router.push('/tableupdatecar')
   }
 
   //update delete
@@ -124,6 +129,7 @@ export const UsecrudCarStore = defineStore("car", () => {
     carPrice: ref(''),
   };
 
+  //previewImage โชว์รูป
   async function previewImage(event) {
     const file = event.target.files[0];
     fileImg.value = event.target.files[0];
@@ -155,6 +161,7 @@ export const UsecrudCarStore = defineStore("car", () => {
     }
   }
 
+  //fetchCarEdit fetch car เพื่อเอามาแก้ไข
   const fetchCarEdit = async (cId) => {
     try {
       const response = await axios.get(`http://localhost:3000/car/${cId}`)
@@ -244,6 +251,7 @@ export const UsecrudCarStore = defineStore("car", () => {
     }
   };
 
+  //validateCarBrand
   const validateCarBrand = () => {
     if (carBrand.value === '') {
       error.carBrand.value = 'กรุณากรอกยี่ห้อรถ';
@@ -252,6 +260,7 @@ export const UsecrudCarStore = defineStore("car", () => {
     }
   };
 
+  //validateCarModel
   const validateCarModel = () => {
     if (carModel.value === '') {
       error.carModel.value = 'กรุณากรอกรุ่นรถ';
@@ -260,47 +269,63 @@ export const UsecrudCarStore = defineStore("car", () => {
     }
   }; 
 
+  //validateCarSeat
   const validateCarSeat = () => {
     if (carSeat.value === '') {
       error.carSeat.value = 'กรุณากรอกจำนวนที่นั่งรถ';
     } else if (isNaN(carSeat.value)) {
       error.carSeat.value = 'กรุณากรอกจำนวนที่นั่งรถเป็นตัวเลข';
+    } else if ((carSeat.value) < 2) {
+      error.carSeat.value = 'กรุณากรอกจำนวนที่นั่งอย่างน้อย 2 ที่นั่ง';
+    } else if ((carSeat.value) > 20) {
+      error.carSeat.value = 'กรุณากรอกจำนวนที่นั่งไม่เกิน 20 ที่นั่ง';
     } else {
       error.carSeat.value = '';
     }
   };
 
+  //validateCarBag
   const validateCarBag = () => {
     if (carBag.value === '') {
       error.carBag.value = 'กรุณากรอกจำนวนที่วางกระเป๋า';
     } else if (isNaN(carBag.value)) {
       error.carBag.value = 'กรุณากรอกจำนวนที่วางกระเป๋าเป็นตัวเลข';
+    } else if ((carBag.value) < 2) {
+      error.carBag.value = 'กรุณากรอกจำนวนที่วางกระเป๋าอย่างน้อย 1 ที่';
+    } else if ((carBag.value) > 5) {
+      error.carBag.value = 'กรุณากรอกจำนวนที่วางกระเป๋าไม่เกิน 5 ที่';
     } else {
       error.carBag.value = '';
     }
   };
 
+  //validateCarPrice
   const validateCarPrice = () => {
     if (carPrice.value === '') {
       error.carPrice.value = "กรุณากรอกราคารถ";
-    }
-    else if (isNaN(carPrice.value)) {
+    } else if (isNaN(carPrice.value)) {
       error.carPrice.value = "กรุณากรอกราคารถเป็นตัวเลข";
+    } else if ((carPrice.value) < 500) {
+      error.carPrice.value = "กรุณากรอกราคารถอย่างน้อย 500 บาท";
+    } else if ((carPrice.value) > 50000) {
+      error.carPrice.value = "กรุณากรอกราคารถไม่เกิน 50000 บาท";
     } else {
       error.carPrice.value = "";
     }
   };
+
+  //validateFileType
   function validateFileType() {
       var inputElement = document.getElementById('file');
       var files = inputElement.files;
-      if(files.length==0){
-          alert("Please choose a file first...");
+      if(files.length ==0){
+          alert("กรุณาเลือกไฟล์รูป");
           return false;
       }
   }
 
+  //addCar
   async function addCar() {
-    console.log('addcar')
     validateCarCode();
     validateCarBrand();
     validateCarModel();

@@ -26,17 +26,14 @@ export const UserentCarStore = defineStore('rent', () => {
 
   const error = reactive({
     dayPickup: "",
-    // timePickup: "",
-    // timeReturn: "",
     incorrectDate: "",
     dayReturn: "",
   })
+
   //v-model select option
   const filBrand = ref('All')
   const filPrice = ref("0-20000")
   const filSeat = ref('4')
-
-
 
   //fetch single car 
   const carDetail = ref({})
@@ -45,7 +42,6 @@ export const UserentCarStore = defineStore('rent', () => {
     return (await axios.get(`http://localhost:3000/detailcar/${id}`)).data[0]
   }
 
- 
   const filterCar = ref([])
   const textFilterCar = ref("")
  //search car
@@ -123,13 +119,9 @@ export const UserentCarStore = defineStore('rent', () => {
       return
     }
     error.incorrectDate = ""
-    //  console.log(`The difference between ${rentDate} and ${returnDate} is ${differenceInDays} days.`);
   } 
 
   async function rentThisCar(userId, carId, totalPrice) {
-    console.log("uId ",userId, "cId ",carId,)
-    //update localStorage
-    console.log("price ", totalPrice)
     try{
       if (rentInfo.placePickup === '' || rentInfo.placeReturn === '') {
         const sweet = Swal.fire({

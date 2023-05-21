@@ -17,10 +17,10 @@ export const UsepaymentStore = defineStore('payment', () => {
         paymentvalue.value = fetchingData.data;
     };
     
-    const name = ref("ทัตพร ต้นนารัตน์")
-    const numbercreditcard = ref("0123456789123456")
-    const expirationdate = ref("05/11/22")
-    const cvc = ref("999")
+    const name = ref("")
+    const numbercreditcard = ref("")
+    const expirationdate = ref("")
+    const cvc = ref("")
     const errorbill = reactive({
         name: '',
         numbercreditcard: '',
@@ -53,12 +53,12 @@ export const UsepaymentStore = defineStore('payment', () => {
     }
 
     function validateExpirationDate() {
-        const isValidDate = Date.parse(expirationdate.value);
-        console.log(isValidDate)
+        const datePattern = /^(\d{2})-(\d{2})-(\d{4})$/;
+        const dExpirationDate = datePattern.test(expirationdate.value)
         if (expirationdate.value === '') {
             errorbill.expirationdate = 'กรุณากรอกวันหมดอายุบัตร'
             return
-        } else if (isNaN(isValidDate)) {
+        } else if (dExpirationDate === false) {
             errorbill.expirationdate = 'กรุณากรอกวันหมดอายุบัตรให้ถูกต้อง'
             return
         }

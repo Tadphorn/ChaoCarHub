@@ -11,9 +11,9 @@ const carSchema = Joi.object({
   car_code: Joi.string().required(), 
   car_brand: Joi.string().required(), 
   car_model: Joi.string().required(), 
-  car_seat: Joi.number().min(1).max(20).required(), 
-  car_bag: Joi.number().min(1).max(10).required(), 
-  car_rentprice: Joi.number().required(),
+  car_seat: Joi.number().min(2).max(20).required(), 
+  car_bag: Joi.number().min(1).max(5).max(50000).required(), 
+  car_rentprice: Joi.number().min(500).max(20000).required(),
 })
 
 // SET STORAGE 

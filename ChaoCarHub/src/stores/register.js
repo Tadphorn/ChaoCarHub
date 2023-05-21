@@ -9,13 +9,13 @@ export const UseregisterStore = defineStore('register', () => {
 
   const router = useRouter()
 
-  const fname = ref("opal");
-  const lname = ref("naja");
-  const username = ref("chompoo");
-  const passw = ref("123456");
-  const passw2 = ref("123456");
-  const phone = ref("0624965265");
-  const email = ref("abc@gamil.com");
+  const fname = ref("");
+  const lname = ref("");
+  const username = ref("");
+  const passw = ref("");
+  const passw2 = ref("");
+  const phone = ref("");
+  const email = ref("");
   const error = reactive({
     fname: "",
     lname: "",
@@ -25,68 +25,120 @@ export const UseregisterStore = defineStore('register', () => {
     phone: "",
     email: "",
   });
+
+  //validatefname
   function validatefname() {
-    console.log(fname);
+    console.log(typeof fname.value);
     if (fname.value === "") {
-      error.fname = "กรุณากรอกชื่อ";
+      error.fname = "กรุณากรอกชื่อจริง";
       return;
     }
+    else if (!isNaN(fname.value)) {
+      error.fname = "กรุณากรอกชื่อจรืงเป็นตัวอักษร";
+      return;
+    } 
     error.fname = "";
   }
+
+  //validatelname
   function validatelname() {
     if (lname.value === "") {
       error.lname = "กรุณากรอกนามสกุล";
       return;
     }
+    else if (!isNaN(lname.value)) {
+      error.lname = "กรุณากรอกนามสกุลเป็นตัวอักษร";
+      return;
+    }
     error.lname = "";
   }
+
+  //validateUsername
   function validateUsername() {
     if (username.value === "") {
       error.username = "กรุณากรอกชื่อผู้ใช้";
       return;
     }
+    else if (!isNaN(username.value)) {
+      error.username = "กรุณากรอกชื่อผู้ใช้เป็นตัวอักษร";
+      return;
+    }
+    else if (username.value.length < 5) {
+      error.username = "กรุณากรอกชื่อผู้ใช้มากกว่า 5 ตัวอักษร";
+      return;
+    }
+    else if (username.value.length > 50) {
+      error.username = "ชื่อผู้ใช้ห้ามยาวเกินไป";
+      return;
+    }
     error.username = "";
   }
+
+  //validatePassw
   function validatePassw() {
+  const hasUpperCase = /[A-Z]/.test(passw.value);
+  const hasLowerCase = /[a-z]/.test(passw.value);
+  const hasNumber = /[0-9]/.test(passw.value);
+
     if (passw.value === "") {
       error.passw = "กรุณากรอกรหัสผ่าน";
       return;
     }
-    if (passw.length < 6) {
-      error.passw = "รหัสผ่านห้ามน้อยกว่า 6 ตัวอักษร";
+    else if (passw.value.length < 8) {
+      error.passw = "รหัสผ่านห้ามน้อยกว่า 8 ตัวอักษร";
+      return;
+    }
+    else if (hasUpperCase === false || hasLowerCase === false || hasNumber === false) {
+      error.passw = 'รหัสผ่านจำเป็นต้องมีอักษรพิมพ์เล็ก-ใหญ่ และตัวเลข'
       return;
     }
     error.passw = "";
   }
+  
+  //validatePassw2
   function validatePassw2() {
     if (passw2.value === "") {
       error.passw2 = "กรุณากรอกยืนยันรหัสผ่าน";
       return;
     }
-    if (passw2.value !== passw.value) {
+    else if (passw2.value !== passw.value) {
       error.passw2 = "รหัสผ่านไม่ตรงกัน";
       return;
     }
     error.passw2 = "";
   }
+
+  //validateEmail
   function validateEmail() {
+    const emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const vEmail = emailPattern.test(email.value)
     if (email.value === "") {
       error.email = "กรุณากรอกอีเมล";
+      return;
+    } 
+    else if (vEmail === false) {
+      error.email = "กรุณากรอกอีเมลให้ถูกต้อง";
       return;
     }
     error.email = "";
   }
+
+  //validatePhone
   function validatePhone() {
+    const phonePattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+    const vPhone = phonePattern.test(phone.value)
     if (phone.value === "") {
       error.phone = "กรุณากรอกหมายเลขโทรศัพท์";
       return;
     }
-    if (phone.value.length !== 10) {
+    else if (vPhone === false) {
       error.phone = "กรุณากรอกหมายเลขโทรศัพท์ที่ถูกต้อง";
       return;
     }
     error.phone = "";
   }
+
+  //button signup
   async function submitSignup() {
     validatefname();
     validatelname();
@@ -118,7 +170,6 @@ export const UseregisterStore = defineStore('register', () => {
     })
 
       .then((res) => {
-        // console.log(res)
         if (res.data.check === false) {
           const sweet = Swal.fire({
             icon: 'error',
@@ -134,8 +185,8 @@ export const UseregisterStore = defineStore('register', () => {
           confirmButtonText: 'Close',
           confirmButtonColor: '#41BEB1'
         })
-        router.push('/')
-        window.location.href = '/sign_in'
+        router.push('/sign_in')
+        // window.location.href = '/sign_in'
       })
       .catch((err) => {
         const sweet = Swal.fire({
@@ -148,6 +199,7 @@ export const UseregisterStore = defineStore('register', () => {
       });
   }
 
+  //button signin
   async function submitSignin() {
     validateUsername()
     validatePassw()
@@ -167,7 +219,6 @@ export const UseregisterStore = defineStore('register', () => {
       .then(res => {
         const token = res.data.token;
         localStorage.setItem("token", token);
-        // this.$router.push({ path: "/" });
         console.log("ล็อกอินสำเร็จ")
         window.location.href = '/'
       })
@@ -181,13 +232,13 @@ export const UseregisterStore = defineStore('register', () => {
         })
       });
   }
+
   //get user from db
   const userProfile = ref({})
   async function getUser() {
     const token = localStorage.getItem('token')
     const fetchingData = await axios.get('/user/me')
     const { data } = fetchingData;
-    // console.log(data)
     userProfile.value = data
     //check role
     if (userProfile.value.role === 'admin') {
@@ -212,10 +263,10 @@ export const UseregisterStore = defineStore('register', () => {
     } 3
     userProfile.value = null
     window.location.href = '/sign_in'
-    // router.push('/sign_in')
   }
 
   const token = localStorage.getItem('token')
+
   return {
     fname,
     lname,

@@ -23,7 +23,7 @@ const paymentStore  = UsepaymentStore()
                 </div>
                 <div class="column px-6 ">
                     <label>หมายเลขบัตร *</label>
-                    <input v-model="paymentStore.numbercreditcard" class=" input input_kd " type="text " placeholder="0123456789012345 "
+                    <input v-model="paymentStore.numbercreditcard" class=" input input_kd " type="text " placeholder="Enter a sixteen number "
                         :class="{ 'is-danger': paymentStore.errorbill.numbercreditcard }" @input="paymentStore.validateNumbercreditcard()">
                     <span class="has-text-danger ertext ml-3 ">{{ paymentStore.errorbill.numbercreditcard }}</span>
                 </div>
@@ -31,13 +31,13 @@ const paymentStore  = UsepaymentStore()
                 <div class=" columns px-6 pt-2 ">
                     <div class="column ">
                         <label>วันหมดอายุ *</label>
-                        <input v-model="paymentStore.expirationdate" class="input input_calendar " type="text " placeholder="DD/MM/YY "
+                        <input v-model="paymentStore.expirationdate" class="input input_calendar " type="text " placeholder="DD-MM-YYYY "
                             :class="{ 'is-danger': paymentStore.errorbill.numbercreditcard }" @input="paymentStore.validateExpirationDate()">
                         <span class="has-text-danger ertext ml-3 ">{{ paymentStore.errorbill.expirationdate }}</span>
                     </div>
                     <div class=" column ">
                         <label>CVC *</label>
-                        <input v-model="paymentStore.cvc" class="input " type="text " placeholder="XXX "
+                        <input v-model="paymentStore.cvc" class="input " type="text " placeholder="Enter a three number "
                             :class="{ 'is-danger': paymentStore.errorbill.cvc }" @input="paymentStore.validateCvc()">
                         <span class="has-text-danger ertext ml-3 ">{{ paymentStore.errorbill.cvc }}</span>
                     </div>
