@@ -1,6 +1,6 @@
 <script setup>
-import { computed, ref, onMounted } from "vue";
 import { UsemyrentStore } from "@/stores/myRent"
+import { computed, ref, reactive, onMounted } from "vue";
 const myrentStore  = UsemyrentStore()
 defineProps({
   item: Object,

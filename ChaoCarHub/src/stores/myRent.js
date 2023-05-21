@@ -16,8 +16,8 @@ export const UsemyrentStore = defineStore('myrent', () => {
 
   const hadPay = ref([])
   const hadReturn = ref([])
+
   async function myrentCar() {
-    // const token = localStorage.getItem('token')
     const fetchingData = await axios.get("myrent/car")
     mycar.value = fetchingData.data
     // console.log(mycar.value.length)
@@ -74,6 +74,9 @@ export const UsemyrentStore = defineStore('myrent', () => {
     try{
       const fetchingData = await axios.put(`/myrent/pickup/${rId}`)
       pickupCar.value = pickupCar.value.filter((car) => car.r_id !== rId)
+
+      returnCar.value = mycar.value.filter((car) => car.r_status === 'return' || car.r_id === rId)
+      console.log("add", returnCar.value)
       const sweet = Swal.fire({
         icon: "success",
         title: 'ยืนยันการรับรถ',
