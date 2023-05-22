@@ -11,8 +11,8 @@ export const UseregisterStore = defineStore('register', () => {
 
   const fname = ref("");
   const lname = ref("");
-  const username = ref("");
-  const passw = ref("");
+  const username = ref("admin_chompoo");
+  const passw = ref("Chompoo12345");
   const passw2 = ref("");
   const phone = ref("");
   const email = ref("");

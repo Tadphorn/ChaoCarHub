@@ -202,4 +202,27 @@ router.get("/search", async function (req, res, next) {
     return next(err);
   }
 });
+
+router.get("/admin/cus", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query(`SELECT * FROM user`)
+    return res.json(rows)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+});
+
+router.get("/searchcus", async function (req, res, next) {
+  const searchInputCus = req.query.searchInputCus
+  console.log(searchInputCus);
+  try {
+    const [rows1, fields1] = await pool.query("SELECT *  FROM user WHERE concat(u_id, ' ', u_fname, ' ', u_lname) LIKE ?",
+    [`%${searchInputCus}%`]);
+
+    return res.json(rows1);
+  } catch (err) {
+    console.log(err)
+    return next(err);
+  }
+});
 exports.router = router;
