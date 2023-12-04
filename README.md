@@ -1,5 +1,5 @@
 # ChaoCarHub
-Web Programming
+Car rental platform
 ## Run Project
 ```
 npm install 
